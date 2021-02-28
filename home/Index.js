@@ -26,7 +26,7 @@ class Home extends React.Component {
 
                 <main>
                     <div className="coming-soon-ticker">
-                        <Ticker>
+                        <Ticker speed={12}>
                             {({ index }) => (
                                 <>
                                     <h1>COMING SOON /&nbsp;</h1>
