@@ -1,1 +1,1 @@
-web: yarn run prod-start
+web: npm run prod-start
