@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import { Container } from 'next/app';
 import 'styles/global.css';
 
 function MyApp({ Component, pageProps }) {
     return (
-        <Container>
+        <>
             <Head>
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link
@@ -13,7 +12,7 @@ function MyApp({ Component, pageProps }) {
                 />
             </Head>
             <Component {...pageProps} />
-        </Container>
+        </>
     );
 }
 

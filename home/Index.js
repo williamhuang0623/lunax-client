@@ -15,12 +15,13 @@ const Footer = (
         <ul className="footer-links">
             {footerLinks.map((link, i) => {
                 return (
-                    <a href={link.href} target="_blank">
+                    <a href={link.href} target="_blank" key={i}>
                         <li key={i}>{link.label}</li>
                     </a>
                 );
             })}
         </ul>
+        <style jsx>{homeStyles}</style>
     </footer>
 );
 
