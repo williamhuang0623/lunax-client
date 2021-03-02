@@ -7,7 +7,7 @@ export const homeStyles = css`
     }
 
     .main {
-        background-image: url('/home/sample.jpg');
+        background-image: url('/home/chess.png');
         background-size: contain;
         background-position: center;
         background-attachment: fixed;

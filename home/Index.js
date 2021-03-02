@@ -10,6 +10,20 @@ const footerLinks = [
     },
 ];
 
+const Footer = (
+    <footer>
+        <ul className="footer-links">
+            {footerLinks.map((link, i) => {
+                return (
+                    <a href={link.href} target="_blank">
+                        <li key={i}>{link.label}</li>
+                    </a>
+                );
+            })}
+        </ul>
+    </footer>
+);
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -36,17 +50,6 @@ class Home extends React.Component {
                     </div>
                 </main>
 
-                <footer>
-                    <ul className="footer-links">
-                        {footerLinks.map((link, i) => {
-                            return (
-                                <a href={link.href} target="_blank">
-                                    <li key={i}>{link.label}</li>
-                                </a>
-                            );
-                        })}
-                    </ul>
-                </footer>
                 <style jsx>{homeStyles}</style>
             </div>
         );
