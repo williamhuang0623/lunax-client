@@ -85,7 +85,7 @@ class Devil extends React.Component {
     }
 
     render() {
-        return <div></div>;
+        return <div>HELLO I AM DEVIL</div>;
     }
 }
 
