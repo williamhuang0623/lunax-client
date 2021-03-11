@@ -59,3 +59,7 @@ export const homeStyles = css`
         color: ${colors.pureWhite};
     }
 `;
+
+/* 
+@media (max-width: ${breakpoints.sm}) {}
+*/
