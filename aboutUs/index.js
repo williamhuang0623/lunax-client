@@ -2,6 +2,7 @@ import React from 'react';
 import FullScreenDiv from 'component/FullScreenDiv';
 import { aboutStyle } from './style';
 import Image from 'next/image';
+import Ticker from 'react-ticker';
 
 const footerLinks = [
     {
@@ -68,16 +69,36 @@ function Section2(props) {
     return (
         <div className="main">
             <div id="quoteSection"> 
-
+                <h1> 
+                    “Another flaw in the human character is that everybody wants to build and nobody wants to do maintenance.” <br></br>
+                    ― Kurt Vonnegut, Hocus Pocus
+                </h1>
             </div>
             <div id="ourStoriesSection"> 
 
             </div>
             <div id="quote2Section"> 
-
+                 <div id="aston1"> \
+                    <h1> 
+                    “Another flaw in the human character is that everybody wants to build and nobody wants to do maintenance.”
+                        ― Kurt Vonnegut, Hocus Pocus
+                    </h1> 
+                </div>
+                <div id="aston2"> 
+                </div>
+                <div id="starWars"> 
+                </div>
             </div>
             <div id="comingSoonSection"> 
-
+                <div className="coming-soon-ticker">
+                        <Ticker speed={12}>
+                            {({ index }) => (
+                                <>
+                                    <h1>COMING SOON /&nbsp;</h1>
+                                </>
+                            )}
+                        </Ticker>
+                    </div>
             </div>
             <style jsx>{aboutStyle}</style>
         </div>
