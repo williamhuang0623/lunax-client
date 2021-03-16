@@ -2,6 +2,10 @@ import css from 'styled-jsx/css';
 import { colors } from '../styles/vars';
 
 export const aboutStyle = css`
+    main {
+        scroll-behavior: smooth;
+    }
+
     #section1 {
         background-image: url('/about/goalsSection.png');
         filter: grayscale(100%);
@@ -12,7 +16,19 @@ export const aboutStyle = css`
         background-color: black;
         height: 100vh;
         width: 100vw;
-        box-shadow: inset 0 0 100px black;
+        position: static;
+    }
+
+    #transitionGradient {
+        height: 300px;
+        background-image: url('/about/fadeIn.png');
+        margin-top: -75px;
+        width: 100vw;
+        background-size: cover;
+        position: relative;
+        background-repeat: no-repeat;
+
+
     }
 
     #section2 {
@@ -20,7 +36,9 @@ export const aboutStyle = css`
         background-attachment: fixed;
         background-repeat: no-repeat;
         height: 100vh;
-        width: 100vw;        
+        width: 100vw;     
+        position: static;
+        margin-top: -73px;
     }
 
     #quoteSection {
@@ -43,7 +61,6 @@ export const aboutStyle = css`
         background-size: cover;
         width: 100vw;
         height: 600px;
-
     }
 
     #quote2Section {
@@ -187,8 +204,8 @@ export const aboutStyle = css`
 
     .navigation {
         position:absolute;
-        bottom:0;
-        right:0;
+        bottom:50px;
+        right:50px;
         scroll-behavior: smooth;
 
     }
@@ -219,13 +236,16 @@ export const aboutStyle = css`
         display: flex;
         align-items: center;
     }
+
     .footer-links {
         list-style-type: none;
         display: flex;
     }
+
     .footer-links a {
         text-decoration: none;
     }
+
     .footer-links a,
     .footer-links li {
         font-size: 12px;

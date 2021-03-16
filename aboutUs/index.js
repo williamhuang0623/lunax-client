@@ -176,6 +176,9 @@ function AboutUs(props) {
                     <GoalsChild />
                 </FullScreenDiv>
             </div>
+            <div id="transitionGradient">
+
+            </div>
             <div id="section2"> 
                 <Section2 />
             </div>
