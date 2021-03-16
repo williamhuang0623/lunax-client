@@ -12,6 +12,7 @@ export const aboutStyle = css`
         background-color: black;
         height: 100vh;
         width: 100vw;
+        box-shadow: inset 0 0 100px black;
     }
 
     #section2 {
@@ -30,8 +31,9 @@ export const aboutStyle = css`
         width: 100vw;
         height: 600px;
         display: flex;
-        justify-content: center; /* align horizontal */
-        align-items: center; /* align vertical */
+        justify-content: center; 
+        align-items: center; 
+        box-shadow: inset 0 0 100px black;
     }
 
     #ourStoriesSection {
@@ -62,7 +64,28 @@ export const aboutStyle = css`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        display: flex;
+        justify-content: center;
      }
+
+     #aston1Hover {
+        background: url(/about/aston3.png);
+        width: 34%;
+        position: absolute;
+        left: 0px;
+        height: 600px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        filter: grayscale(100%);
+     }
+
+     #center {
+         align-self: center;
+     }
+
 
      #aston2 {
         background: url(/about/aston2.png);
@@ -73,7 +96,24 @@ export const aboutStyle = css`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        display: flex;
+        justify-content: center;
      }
+
+     #aston2Hover {
+        background: url(/about/aston2.png);
+        width: 33%;
+        position: absolute;
+        right: 33%;
+        height: 600px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        filter: grayscale(100%);
+     }
+
 
      #starWars {
         background: url(/about/starWars.png);
@@ -84,6 +124,23 @@ export const aboutStyle = css`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        display: flex;
+        justify-content: center;
+     }
+
+     #starWarsHover {
+        background: url(/about/starWars.png);
+        width: 33%;
+        position: absolute;
+        right: 0px;
+        height: 600px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        filter: grayscale(100%);
+
      }
 
     #comingSoonSection {
@@ -93,16 +150,19 @@ export const aboutStyle = css`
         background-size: cover;
         width: 100vw;
         height: 600px;
+        position: relative;
+        top: 50%;
     }
 
     .coming-soon-ticker {
         font-size: 20px;
         color: ${colors.pureWhite};
+
     }
 
     .comingSoonSection {
         position: relative;
-        top: 50%;
+        
     }
 
     .coming-soon-ticker h1 {
@@ -129,6 +189,12 @@ export const aboutStyle = css`
         position:absolute;
         bottom:0;
         right:0;
+        scroll-behavior: smooth;
+
+    }
+
+    main {
+        scroll-behavior: smooth;
     }
 
     .goals {
@@ -144,4 +210,28 @@ export const aboutStyle = css`
         padding: 15px;
         margin-top: 25px;
     }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        padding: 22px;
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+    }
+    .footer-links {
+        list-style-type: none;
+        display: flex;
+    }
+    .footer-links a {
+        text-decoration: none;
+    }
+    .footer-links a,
+    .footer-links li {
+        font-size: 12px;
+        color: ${colors.pureWhite};
+    }
+
+
+
 `;
