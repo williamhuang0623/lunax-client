@@ -2,10 +2,6 @@ import css from 'styled-jsx/css';
 import { colors } from '../styles/vars';
 
 export const aboutStyle = css`
-    main {
-        scroll-behavior: smooth;
-    }
-
     #section1 {
         background-image: url('/about/goalsSection.png');
         filter: grayscale(100%);
@@ -27,8 +23,6 @@ export const aboutStyle = css`
         background-size: cover;
         position: relative;
         background-repeat: no-repeat;
-
-
     }
 
     #section2 {
@@ -103,7 +97,6 @@ export const aboutStyle = css`
          align-self: center;
      }
 
-
      #aston2 {
         background: url(/about/aston2.png);
         width: 33%;
@@ -130,7 +123,6 @@ export const aboutStyle = css`
         justify-content: center;
         filter: grayscale(100%);
      }
-
 
      #starWars {
         background: url(/about/starWars.png);
@@ -167,19 +159,12 @@ export const aboutStyle = css`
         background-size: cover;
         width: 100vw;
         height: 600px;
-        position: relative;
-        top: 50%;
+        position: absolute;
     }
 
     .coming-soon-ticker {
         font-size: 20px;
         color: ${colors.pureWhite};
-
-    }
-
-    .comingSoonSection {
-        position: relative;
-        
     }
 
     .coming-soon-ticker h1 {
@@ -189,7 +174,7 @@ export const aboutStyle = css`
         border-bottom: 2px solid ${colors.pureWhite};
     }
 
-    h1 {
+    p {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         color: white;
@@ -200,6 +185,7 @@ export const aboutStyle = css`
 
     .image-wrapper {
         padding: 22px;
+        cursor: pointer
     }
 
     .navigation {
