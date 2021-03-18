@@ -58,7 +58,6 @@ function Section2(props) {
     const onHover = (e) => {
         const id = e.target.getAttribute('id');
         if (id === 'aston1') {
-            console.log(e.target.getAttribute('id'));
             setHover({
                 ...hover,
                 [1]: true,
