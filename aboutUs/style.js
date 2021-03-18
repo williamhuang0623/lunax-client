@@ -165,6 +165,7 @@ export const aboutStyle = css`
     .coming-soon-ticker {
         font-size: 20px;
         color: ${colors.pureWhite};
+        margin-top: 250px;
     }
 
     .coming-soon-ticker h1 {
@@ -192,12 +193,6 @@ export const aboutStyle = css`
         position:absolute;
         bottom:50px;
         right:50px;
-        scroll-behavior: smooth;
-
-    }
-
-    main {
-        scroll-behavior: smooth;
     }
 
     .goals {
@@ -216,6 +211,7 @@ export const aboutStyle = css`
 
     footer {
         position: absolute;
+        width: 100%;
         bottom: 0;
         padding: 22px;
         padding-left: 0;
@@ -226,6 +222,10 @@ export const aboutStyle = css`
     .footer-links {
         list-style-type: none;
         display: flex;
+        width: 100%;
+        justify-content: center;
+        position: absolute;
+
     }
 
     .footer-links a {
@@ -236,8 +236,30 @@ export const aboutStyle = css`
     .footer-links li {
         font-size: 12px;
         color: ${colors.pureWhite};
+
     }
 
+    #HOME {
+        margin: 10px;
+        font-size: 20px;
 
+    }
+
+    #WORK {
+        margin: 10px;
+        font-size: 20px;
+
+    }
+
+    #NFT {
+        margin: 10px;
+        font-size: 20px;
+
+    }
+
+    #Instagram {
+        margin: 10px;
+        font-size: 20px;
+    }
 
 `;

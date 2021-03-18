@@ -7,7 +7,7 @@ import Ticker from 'react-ticker';
 
 function GoalsChild(props) {
     return (
-        <div id="TEST">
+        <div>
             <div className="header">
                 <div className="image-wrapper">
                     <a href="https://newkino.studio/">
@@ -55,45 +55,46 @@ function Section2(props) {
         3: false
       });
 
-      const onHover = (e) => {
+    const onHover = (e) => {
         const id = e.target.getAttribute('id');
-        if (id === "aston1") {
+        if (id === 'aston1') {
+            console.log(e.target.getAttribute('id'));
             setHover({
                 ...hover,
-                [1]: true
-              });       
-        } else if (id === "aston2") {
-            setHover({ 
-                ...hover,
-                [2]: true
-              });
-        } else if (id === "starWars") {
+                [1]: true,
+            });
+        } else if (id === 'aston2') {
             setHover({
                 ...hover,
-                [3]: true
-              });
+                [2]: true,
+            });
+        } else if (id === 'starWars') {
+            setHover({
+                ...hover,
+                [3]: true,
+            });
         }
-      };
+    };
 
-      const onLeave = (e) => {
+    const onLeave = (e) => {
         const id = e.target.getAttribute('id');
-        if (id === "aston1") {
+        if (id === 'aston1Hover') {
             setHover({
                 ...hover,
-                [1]: false
-              });       
-        } else if (id === "aston2") {
+                [1]: false,
+            });
+        } else if (id === 'aston2Hover') {
             setHover({
                 ...hover,
-                [2]: false
-              });
-        } else if (id === "starWars") {
+                [2]: false,
+            });
+        } else if (id === 'starWarsHover') {
             setHover({
                 ...hover,
-                [3]: false
-              });
+                [3]: false,
+            });
         }
-      };
+    };
 
     return (
         <div className="main">
@@ -173,20 +174,22 @@ function Footer (props) {
             href: 'https://www.instagram.com/newkinostudios/',
         },
     ];
-    return(
+    return (
         <footer>
             <div className="image-wrapper">
-                <Image src="/global/logo.jpg" width={81} height={81} alt="newkino_logo" />
-             </div>
-            {/* <ul className="footer-links">
+                <a href="https://newkino.studio/">
+                    <Image src="/global/logo.jpg" width={81} height={81} alt="newkino_logo" />
+                </a>{' '}
+            </div>
+            <ul className="footer-links">
                 {footerLinks.map((link, i) => {
                     return (
                         <a href={link.href} target="_blank" key={i}>
-                            <li key={i} id={i}>{link.label}</li>
+                            <li key={i} id={link.label}>{link.label}</li>
                         </a>
                     );
                 })}
-            </ul> */}
+            </ul>
             <style jsx>{aboutStyle}</style>
         </footer>
     );
