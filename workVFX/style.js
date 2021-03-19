@@ -4,7 +4,7 @@ import { colors } from '../styles/vars';
 export const workVFXStyles = css`
     .header {
         position: absolute;
-        align-self: left
+        align-self: left;
     }
 
     .main {
@@ -22,64 +22,70 @@ export const workVFXStyles = css`
         padding: 22px;
     }
 
-    main {
-        position: relative;
-        top: 50%;
-    }
-
-    .filters {
+    .filterSection {
         display: flex;
     }
 
     #allButton {
-        left: 210px; 
+        left: 210px;
         top: 65px;
         position: absolute;
         border: none;
         background: none;
         outline: none;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     #VFXButton {
-        left: 285px; 
+        left: 285px;
         top: 65px;
         position: absolute;
         border: none;
         background: none;
         outline: none;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     #filmButton {
-        left: 360px; 
+        left: 360px;
         top: 65px;
         position: absolute;
         border: none;
         background: none;
         outline: none;
-        cursor:pointer;
+        cursor: pointer;
     }
 
-    footer {
+    #workTable {
         position: absolute;
-        bottom: 0;
-        padding: 22px;
-        padding-left: 0;
+        top: 150px;
+        width: 100vw;
     }
 
-    .footer-links {
-        list-style-type: none;
+    .table {
+        width: 100vw;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
     }
 
-    .footer-links a {
-        text-decoration: none;
+    .tile {
+        margin-left: 50px;
+        margin-right: 50px;
+        cursor: pointer;
+        overflow: hidden;
+        width: 350px;
+        height: 479px;
     }
 
-    .footer-links a,
-    .footer-links li {
-        font-size: 12px;
-        color: ${colors.pureWhite};
+    .tile.img {
+        width: 100%;
+        transition: transform 500ms ease;
+    }
+
+    .tile.img.hover {
+        transform: scale(1.1);
     }
 `;
 
