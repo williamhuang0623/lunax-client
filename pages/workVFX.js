@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkVFXPage from 'workVFX/Index'
+import WorkVFXPage from 'work/Index'
 
 class WorkVFX extends React.Component {
     constructor(props) {
