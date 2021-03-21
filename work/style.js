@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css';
 import { colors } from '../styles/vars';
 
-export const workVFXStyles = css`
+export const workStyles = css`
     .header {
         position: absolute;
         align-self: left;

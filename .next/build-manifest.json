@@ -29,10 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/about.js"
     ],
-    "/workVFX": [
+    "/work": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/workVFX.js"
+      "static/chunks/pages/work.js"
     ]
   },
   "ampFirstPages": []
