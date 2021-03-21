@@ -68,25 +68,26 @@ const Tile = (props) => {
     };
     
     const workSelected = () => {
-        if(open === false) {
-            setOpen(true);
-        } else {
-            setOpen(false);
-        }
+        // if(open === false) {
+        //     setOpen(true);
+        // } else {
+        //     setOpen(false);
+        // }
     }
     return (
         <div className="tile">
-            <img
-                onMouseEnter={mouseEnter}
-                onMouseLeave={mouseLeave}
-                onClick={workSelected}
-                src={props.data.image}
-                alt={props.data.name}
-                // id = {open === true ? "openTile" : "closedTile"}  
-            />
-            <p id="workDetails"> {hover ? (props.data.artist + " - " + props.data.name) : ""}</p>
+            <a href={props.data.link} target="_blank">
+                <img
+                    onMouseEnter={mouseEnter}
+                    onMouseLeave={mouseLeave}
+                    onClick={workSelected}
+                    src={props.data.image}
+                    alt={props.data.name}
+                    // id = {open === true ? "openTile" : "closedTile"}
+                />
+                <p id="workDetails"> {hover ? props.data.artist + ' - ' + props.data.name : ''}</p>
+            </a>
             <style jsx>{workStyles}</style>
-
         </div>
     );
 }
