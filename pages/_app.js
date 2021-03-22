@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import 'styles/global.css';
+import 'node_modules/react-modal-video/scss/modal-video.scss';
 
 function MyApp({ Component, pageProps }) {
     return (

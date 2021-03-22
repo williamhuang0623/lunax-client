@@ -3,6 +3,7 @@ import { workStyles } from './style';
 import Image from 'next/image';
 import Ticker from 'react-ticker';
 import works from '../public/work/works/works.js'
+import ModalVideo from 'react-modal-video'
 
 
 function Filters(props)  {
@@ -52,7 +53,7 @@ const WorkTable = (props) => {
 }
 
 const Tile = (props) => {
-    const [open, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(false)
     const [hover, setHover]  = useState(false);
 
     const mouseEnter = () => {
@@ -66,27 +67,26 @@ const Tile = (props) => {
             setHover(false);
         }
     };
-    
-    const workSelected = () => {
-        // if(open === false) {
-        //     setOpen(true);
-        // } else {
-        //     setOpen(false);
-        // }
-    }
+
     return (
         <div className="tile">
-            <a href={props.data.link} target="_blank">
+            <React.Fragment>
+                <ModalVideo
+                    channel="vimeo"
+                    isOpen={isOpen}
+                    videoId={props.data.videoId}
+                    onClose={() => setOpen(false)}
+                    autoplay
+                />
                 <img
                     onMouseEnter={mouseEnter}
                     onMouseLeave={mouseLeave}
-                    onClick={workSelected}
                     src={props.data.image}
                     alt={props.data.name}
-                    // id = {open === true ? "openTile" : "closedTile"}
+                    onClick={()=> setOpen(true)}
                 />
                 <p id="workDetails"> {hover ? props.data.artist + ' - ' + props.data.name : ''}</p>
-            </a>
+            </React.Fragment>
             <style jsx>{workStyles}</style>
         </div>
     );
@@ -135,13 +135,7 @@ export class Work extends React.Component {
     };
     filterDeselected(e) {
         const id = e.currentTarget.getAttribute('id');
-        if(id === "allButton") {
-            this.setState({
-                allButton: false,
-                VFXButton: false,
-                filmButton: false
-            });
-        } else if(id === "VFXButton") {
+        if(id === "VFXButton") {
             if (this.state.allButton === true) {
                 this.setState({
                     allButton: false,
