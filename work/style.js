@@ -58,7 +58,7 @@ export const workStyles = css`
 
     #workTable {
         position: absolute;
-        top: 150px;
+        top: 100px;
         width: 100vw;
     }
 
@@ -73,6 +73,7 @@ export const workStyles = css`
     .tile {
         margin-left: 50px;
         margin-right: 50px;
+        margin-top: 50px;
         cursor: pointer;
         overflow: hidden;
         width: 350px;
@@ -100,6 +101,8 @@ export const workStyles = css`
         left: 16px;
     }
 
-
+    #modal {
+        height: 1000px;
+    }
 `;
 

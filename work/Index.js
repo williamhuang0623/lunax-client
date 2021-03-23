@@ -72,11 +72,13 @@ const Tile = (props) => {
         <div className="tile">
             <React.Fragment>
                 <ModalVideo
-                    channel="vimeo"
+                    channel={props.data.platform}
                     isOpen={isOpen}
                     videoId={props.data.videoId}
                     onClose={() => setOpen(false)}
-                    autoplay
+                    autoplay="true"
+                    portrait="false"
+                    color="black"
                 />
                 <img
                     onMouseEnter={mouseEnter}
