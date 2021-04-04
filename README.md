@@ -32,3 +32,38 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+### How to use Prettier
+
+First remember to run
+
+```
+npm install
+```
+
+**For VS Code**
+
+1. Head to Code > Preferences > Extensions and search for the ESCode and Prettier extensions and install them.
+2. Make a settings file at .vscode/settings.json and add the following configuration:
+
+```
+
+{
+    "editor.formatOnSave": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
+```
+
+**For Atom**
+Install the prettier-atom package.
+
+Head to Packages > prettier and check "Format on Save" and "Format on Prettier Config" and then restart Atom.

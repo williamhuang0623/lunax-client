@@ -40,3 +40,6 @@ yarn-error.log*
 
 #Env variables
 .env*.local
+
+.ebextensions*
+.elasticbeanstalk
