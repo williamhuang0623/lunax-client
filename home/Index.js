@@ -98,14 +98,21 @@ class Home extends React.Component {
                             width={35}
                             height={35}
                         />
-                        <Image
-                            src={
-                                this.state.vidPaused === true ? '/home/play.png' : '/home/pause.png'
-                            }
-                            onClick={this.pauseClick}
-                            width={35}
-                            height={35}
-                        />
+                        {this.state.vidPaused === true ? (
+                            <Image
+                                src="/home/play.png"
+                                onClick={this.pauseClick}
+                                width={35}
+                                height={35}
+                            />
+                        ) : (
+                            <Image
+                                src="/home/pause.png"
+                                onClick={this.pauseClick}
+                                width={35}
+                                height={35}
+                            />
+                        )}
                         <Image
                             src="/home/right.png"
                             onClick={this.rightClick}
