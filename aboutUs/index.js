@@ -8,7 +8,7 @@ import { aboutStyle } from './style';
 
 function GoalsChild(props) {
     return (
-        <div className="Section1">
+        <div className="section">
             <div className="aboutUsSection1">
                 <p>
                     NewKino is a world creation studio dedicated to exploring the intersection of

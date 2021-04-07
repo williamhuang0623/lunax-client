@@ -6,25 +6,19 @@ export const homeStyles = css`
         height: 35px;
         width: 35px;
     }
+
     .main {
         height: 100vh;
         width: 100vw;
         background: black;
         position: relative;
-        // overflow: hidden;
         display: flex;
         object-fit: fill !important;
     }
 
-    #videoBG {
-        position: fixed;
-        top: 50%;
-        align-item: center;
-    }
-
     video {
-        min-width: 100%;
-        min-height: 100%;
+        width: 100%;
+        height: auto;
         object-fit: cover;
     }
 
@@ -81,8 +75,12 @@ export const homeStyles = css`
     }
 
     @media (max-width: ${breakpoints.xs}) {
-        .video-nav-wrapper {
-            display: none;
+        video {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            margin-top: auto;
+            margin-bottom: auto;
         }
     }
 `;

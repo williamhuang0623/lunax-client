@@ -59,7 +59,6 @@ export const aboutStyle = css`
         width: 100vw;
     }
 
-
     #quote2Section {
         width: 100vw;
         height: auto;
@@ -170,7 +169,7 @@ export const aboutStyle = css`
         right: 50px;
     }
 
-    .Section1 {
+    .section {
         display: flex;
         height: 100%;
     }
@@ -295,7 +294,6 @@ export const aboutStyle = css`
             display: block;
         }
 
-
         #imageOneHover,
         #imageTwoHover,
         #imageThreeHover,
@@ -309,6 +307,14 @@ export const aboutStyle = css`
         .contact-details h3 {
             margin: 0;
             font-size: 24px;
+        }
+
+        #section1 {
+            background-image: url('/about/mobile_bg.png');
+        }
+
+        #quoteSection {
+            background-image: url('/about/mobile_quote_bg.png');
         }
     }
 `;
