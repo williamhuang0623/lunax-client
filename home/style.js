@@ -2,6 +2,10 @@ import css from 'styled-jsx/css';
 import { colors, breakpoints } from '../styles/vars';
 
 export const homeStyles = css`
+    .icon {
+        height: 35px;
+        width: 35px;
+    }
     .main {
         height: 100vh;
         width: 100vw;
