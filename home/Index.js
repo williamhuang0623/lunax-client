@@ -91,7 +91,7 @@ class Home extends React.Component {
                     ></source>
                 </video>
                 <div className="navigation">
-                    <div className="image-wrapper">
+                    <div className="image-wrapper video-nav-wrapper">
                         <Image
                             src="/home/left.png"
                             onClick={this.leftClick}

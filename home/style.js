@@ -79,6 +79,12 @@ export const homeStyles = css`
             object-fit: cover;
         }
     }
+
+    @media (max-width: ${breakpoints.xs}) {
+        .video-nav-wrapper {
+            display: none;
+        }
+    }
 `;
 
 /* 
