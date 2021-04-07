@@ -80,9 +80,9 @@ class Home extends React.Component {
                 <video
                     id="videoBg"
                     key={this.getBackgroundVideo().toString()}
-                    autoPlay
-                    muted={false}
+                    autoPlay={true}
                     loop
+                    muted
                 >
                     <source
                         id="video"
