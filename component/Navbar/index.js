@@ -40,19 +40,13 @@ class NavBar extends React.Component {
                 </div>
                 <div className="links">
                     <h2>
-                        <Link>
-                            <a href="/">HOME</a>
-                        </Link>
+                        <a href="/">HOME</a>
                     </h2>
                     <h2>
-                        <Link>
-                            <a href="/about">ABOUT</a>
-                        </Link>
+                        <a href="/about">ABOUT</a>
                     </h2>
                     <h2>
-                        <Link>
-                            <a href="/work">VFX/FILM</a>
-                        </Link>
+                        <a href="/work">VFX/FILM</a>
                     </h2>
                     {/* <h2>
                     <a href="http://localhost:3000/">NFTs*</a>
