@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import HomePage from 'home/Index.js';
+import HomePage from 'home';
 import ExampleApi from 'lib/api/Example';
 
 export default function Home({ result }) {
