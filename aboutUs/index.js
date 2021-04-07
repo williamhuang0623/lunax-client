@@ -1,40 +1,22 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
+
 import FullScreenDiv from 'component/FullScreenDiv';
 import { aboutStyle } from './style';
-import Image from 'next/image';
-import Ticker from 'react-ticker';
-
 
 function GoalsChild(props) {
     return (
-        <div>
-            <div className="header">
-                <div className="image-wrapper">
-                    <a href="https://newkino.studio/">
-                        <Image src="/global/logo.jpg" width={81} height={81} alt="newkino_logo" />
-                    </a>
-                </div>
-            </div>
-            <div className="goals">
-                <div className="left">
-                    <p> NewKino</p>
-                </div>
-                <div className="right">
-                    <p>
-                        Our goal is to build a unique NFT experience through <br></br>
-                        NewKino’s expertise in design, storytelling, and technology.
-                    </p>
-                    <hr></hr>
-                    <p>
-                        We recognize that the value of NFTs is directly correlated to <br></br>
-                        the storyline(s) we craft.
-                    </p>
-                    <hr></hr>
-                    <p>
-                        We will ensure the authenticity of each NFT to prevent <br></br>
-                        misprints & fraud.
-                    </p>
-                </div>
+        <div className="Section1">
+            <div className="aboutUsSection1">
+                <p>
+                    NewKino is a world creation studio dedicated to exploring the intersection of
+                    art and technology. As a collective, we are a group of engineers, creatives, and
+                    wizards passionate about building immersive and democratized digital experiences
+                    with our creative partners. We believe that as technology evolves rapidly, art
+                    must also grow to continue to inspire and tell the stories worth telling.
+                </p>
             </div>
             <div className="navigation">
                 <div className="image-wrapper">
@@ -52,22 +34,22 @@ function Section2(props) {
     const [hover, setHover] = useState({
         1: false,
         2: false,
-        3: false
-      });
+        3: false,
+    });
 
     const onHover = (e) => {
         const id = e.target.getAttribute('id');
-        if (id === 'aston1') {
+        if (id === 'imageOne') {
             setHover({
                 ...hover,
                 [1]: true,
             });
-        } else if (id === 'aston2') {
+        } else if (id === 'imageTwo') {
             setHover({
                 ...hover,
                 [2]: true,
             });
-        } else if (id === 'starWars') {
+        } else if (id === 'imageThree') {
             setHover({
                 ...hover,
                 [3]: true,
@@ -77,17 +59,17 @@ function Section2(props) {
 
     const onLeave = (e) => {
         const id = e.target.getAttribute('id');
-        if (id === 'aston1Hover') {
+        if (id === 'imageOneHover') {
             setHover({
                 ...hover,
                 [1]: false,
             });
-        } else if (id === 'aston2Hover') {
+        } else if (id === 'imageTwoHover') {
             setHover({
                 ...hover,
                 [2]: false,
             });
-        } else if (id === 'starWarsHover') {
+        } else if (id === 'imageThreeHover') {
             setHover({
                 ...hover,
                 [3]: false,
@@ -96,103 +78,92 @@ function Section2(props) {
     };
 
     return (
-        <div className="main">
+        <div>
             <div id="quoteSection">
                 <p>
-                    “Another flaw in the human character is that everybody wants to build and nobody
-                    wants to do maintenance.” <br></br>
-                    <br></br>― Kurt Vonnegut, Hocus Pocus
+                    “Imagination is the only weapon in the war against reality.” <br></br>
+                    <br></br>― Cheshire Cat
                 </p>
             </div>
-            <div id="ourStoriesSection"></div>
+            <div id="ourStoriesSection">
+                <img id="ourStory" src="/about/ourStory.png"></img>
+            </div>
             <div id="quote2Section">
-                <div id={hover[1] ? 'aston1Hover' : "aston1"} onMouseEnter={onHover} onMouseLeave={onLeave}>
-                    {hover[1] ?  <p id="center">
-                        “Another flaw in the human <br></br>
-                        character is that everybody <br></br>
-                        wants to build and nobody <br></br>
-                        wants to do maintenance.”<br></br>
-                        <br></br>― Kurt Vonnegut, Hocus <br></br>
-                        Pocus
-                    </p>: null}
+                <div
+                    id={hover[1] ? 'imageOneHover' : 'imageOne'}
+                    className="quote-image"
+                    onMouseEnter={onHover}
+                    onMouseLeave={onLeave}
+                >
+                    {hover[1] ? <p id="center"></p> : null}
                 </div>
-                <div id={hover[2] ? 'aston2Hover' : "aston2"}  onMouseEnter={onHover} onMouseLeave={onLeave}>
-                    {hover[2] ?  <p id="center">
-                        “Another flaw in the human <br></br>
-                        character is that everybody <br></br>
-                        wants to build and nobody <br></br>
-                        wants to do maintenance.”<br></br>
-                        <br></br>― Kurt Vonnegut, Hocus <br></br>
-                        Pocus
-                    </p>: null}
+                <div
+                    id={hover[2] ? 'imageTwoHover' : 'imageTwo'}
+                    className="quote-image"
+                    onMouseEnter={onHover}
+                    onMouseLeave={onLeave}
+                >
+                    {hover[2] ? <p id="center"></p> : null}
                 </div>
-                <div id={hover[3] ? 'starWarsHover' : "starWars"} onMouseEnter={onHover} onMouseLeave={onLeave}>
-                    {hover[3] ?  <p id="center">
-                        “Another flaw in the human <br></br>
-                        character is that everybody <br></br>
-                        wants to build and nobody <br></br>
-                        wants to do maintenance.”<br></br>
-                        <br></br>― Kurt Vonnegut, Hocus <br></br>
-                        Pocus
-                    </p>: null}
+                <div
+                    id={hover[3] ? 'imageThreeHover' : 'imageThree'}
+                    className="quote-image"
+                    onMouseEnter={onHover}
+                    onMouseLeave={onLeave}
+                >
+                    {hover[3] ? <p id="center"></p> : null}
                 </div>
             </div>
-            <div id="comingSoonSection">
-                <div className="coming-soon-ticker">
-                    <Ticker speed={12}>
-                        {({ index }) => (
-                            <>
-                                <h1>COMING SOON /&nbsp;</h1>
-                            </>
-                        )}
-                    </Ticker>
-                </div>
-                <Footer />
-            </div>
+            <Footer />
             <style jsx>{aboutStyle}</style>
         </div>
     );
 }
 
-function Footer (props) {
+function Footer(props) {
+    const fontSize = 'large';
     const footerLinks = [
-        {
-            label: 'HOME',
-            href: 'https://newkino.studio/',
-        },
-        {
-            label: 'WORK',
-            href: 'https://newkino.studio/',
-        },
-        {
-            label: 'NFT',
-            href: 'https://newkino.studio/',
-        },
         {
             label: 'Instagram',
             href: 'https://www.instagram.com/newkinostudios/',
+            icon: <InstagramIcon fontSize={fontSize} />,
+        },
+        {
+            label: 'Twitter',
+            href: 'https://twitter.com/newkinostudios',
+            icon: <TwitterIcon fontSize={fontSize} />,
         },
     ];
+
     return (
-        <footer>
-            <div className="image-wrapper">
-                <a href="https://newkino.studio/">
-                    <Image src="/global/logo.jpg" width={81} height={81} alt="newkino_logo" />
-                </a>{' '}
+        <footer className="footer">
+            <div className="contact-details">
+                <h3>Reach out to us at</h3>
+                <a href="mailto:contact@newkin.studio">
+                    <h3>contact@newkino.studio</h3>
+                </a>
             </div>
-            <ul className="footer-links">
-                {footerLinks.map((link, i) => {
-                    return (
-                        <a href={link.href} target="_blank" key={i}>
-                            <li key={i} id={link.label}>{link.label}</li>
-                        </a>
-                    );
-                })}
-            </ul>
+
+            <div className="sub-footer">
+                <div className="footer-logo">
+                    <Image src="/global/logo.png" width={120} height={68} />
+                </div>
+                <ul className="footer-links">
+                    {footerLinks.map((link, i) => {
+                        return (
+                            <a href={link.href} target="_blank" key={i}>
+                                <li key={i} id={link.label}>
+                                    {link.icon}
+                                </li>
+                            </a>
+                        );
+                    })}
+                </ul>
+            </div>
             <style jsx>{aboutStyle}</style>
         </footer>
     );
-};
+}
 
 function AboutUs(props) {
     return (

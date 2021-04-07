@@ -7,7 +7,6 @@ export default function Home({ result }) {
         <div>
             <Head>
                 <title>NewKino</title>
-                <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <HomePage />

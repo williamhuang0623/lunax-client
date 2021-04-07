@@ -1,41 +1,38 @@
 import css from 'styled-jsx/css';
-import { colors } from '../styles/vars';
+import { colors, breakpoints } from '../styles/vars';
 
 export const homeStyles = css`
-    .header {
-        position: absolute;
-    }
-
     .main {
-        background-image: url('/home/chess.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-color: black;
         height: 100vh;
         width: 100vw;
+        background: black;
+        position: relative;
+        // overflow: hidden;
+        display: flex;
+        object-fit: fill !important;
+    }
+
+    #videoBG {
+        position: fixed;
+        top: 50%;
+        align-item: center;
+    }
+
+    video {
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
     }
 
     .image-wrapper {
         padding: 22px;
+        cursor: pointer;
     }
 
-    main {
-        position: relative;
-        top: 50%;
-    }
-
-    .coming-soon-ticker {
-        font-size: 20px;
-        color: ${colors.pureWhite};
-    }
-
-    .coming-soon-ticker h1 {
-        margin: 0;
-        padding: 8px 0;
-        border-top: 2px solid ${colors.pureWhite};
-        border-bottom: 2px solid ${colors.pureWhite};
+    .navigation {
+        position: absolute;
+        bottom: 35px;
+        right: 50px;
     }
 
     footer {
@@ -57,6 +54,26 @@ export const homeStyles = css`
     .footer-links li {
         font-size: 12px;
         color: ${colors.pureWhite};
+    }
+
+    .navBarContainer {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+    }
+
+    @media (max-width: ${breakpoints.xl}) {
+        .image-wrapper {
+            padding: 0;
+        }
+    }
+
+    @media (max-width: ${breakpoints.md}) {
+        video {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
     }
 `;
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { homeStyles } from './style';
 import Image from 'next/image';
 import Ticker from 'react-ticker';
+import BGVideos from '../public/home/BGVideos.js';
+import NavBarContainer from 'component/NavBarContainer/index.js';
 
 const footerLinks = [
     {
@@ -28,29 +30,90 @@ const Footer = (
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentBackgroundVideo: 1,
+            vidPaused: false,
+        };
+        this.leftClick = this.leftClick.bind(this);
+        this.rightClick = this.rightClick.bind(this);
+        this.pauseClick = this.pauseClick.bind(this);
+    }
+
+    leftClick(e) {
+        if (this.state.currentBackgroundVideo != 1) {
+            this.setState((prevState) => ({
+                currentBackgroundVideo: prevState.currentBackgroundVideo - 1,
+                vidPaused: false,
+            }));
+        }
+    }
+
+    rightClick(e) {
+        if (this.state.currentBackgroundVideo != BGVideos.length) {
+            this.setState((prevState) => ({
+                currentBackgroundVideo: prevState.currentBackgroundVideo + 1,
+                vidPaused: false,
+            }));
+        }
+    }
+
+    getBackgroundVideo() {
+        const filteredVideo = BGVideos.filter((video) => {
+            return video.id === this.state.currentBackgroundVideo;
+        });
+        return filteredVideo[0].path;
+    }
+
+    pauseClick(e) {
+        if (this.state.vidPaused) {
+            document.getElementById('videoBg').play();
+            this.setState({ vidPaused: false });
+        } else {
+            document.getElementById('videoBg').pause();
+            this.setState({ vidPaused: true });
+        }
     }
 
     render() {
         return (
             <div className="main">
-                <div className="header">
+                <video
+                    id="videoBg"
+                    key={this.getBackgroundVideo().toString()}
+                    autoPlay
+                    muted={false}
+                    loop
+                >
+                    <source
+                        id="video"
+                        src={this.getBackgroundVideo().toString()}
+                        type="video/mp4"
+                    ></source>
+                </video>
+                <div className="navigation">
                     <div className="image-wrapper">
-                        <Image src="/global/logo.jpg" width={81} height={81} alt="newkino_logo" />
+                        <Image
+                            src="/home/left.png"
+                            onClick={this.leftClick}
+                            width={35}
+                            height={35}
+                        />
+                        <Image
+                            src={
+                                this.state.vidPaused === true ? '/home/play.png' : '/home/pause.png'
+                            }
+                            onClick={this.pauseClick}
+                            width={35}
+                            height={35}
+                        />
+                        <Image
+                            src="/home/right.png"
+                            onClick={this.rightClick}
+                            width={35}
+                            height={35}
+                        />
                     </div>
                 </div>
-
-                <main>
-                    <div className="coming-soon-ticker">
-                        <Ticker speed={12}>
-                            {({ index }) => (
-                                <>
-                                    <h1>COMING SOON /&nbsp;</h1>
-                                </>
-                            )}
-                        </Ticker>
-                    </div>
-                </main>
-
                 <style jsx>{homeStyles}</style>
             </div>
         );

@@ -2,20 +2,12 @@ import css from 'styled-jsx/css';
 import { colors } from '../styles/vars';
 
 export const workStyles = css`
-    .header {
-        position: absolute;
-        align-self: left;
-    }
-
     .main {
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
         background-color: black;
+        width: 100%;
         height: 100vh;
-        width: 100vw;
         display: flex;
+        padding-bottom: 250px;
     }
 
     .image-wrapper {
@@ -26,48 +18,20 @@ export const workStyles = css`
         display: flex;
     }
 
-    #allButton {
-        left: 210px;
-        top: 65px;
-        position: absolute;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
-    }
-
-    #VFXButton {
-        left: 285px;
-        top: 65px;
-        position: absolute;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
-    }
-
-    #filmButton {
-        left: 360px;
-        top: 65px;
-        position: absolute;
-        border: none;
-        background: none;
-        outline: none;
-        cursor: pointer;
-    }
-
     #workTable {
-        position: absolute;
+        position: relative;
         top: 100px;
-        width: 100vw;
+        width: 100%;
     }
 
     .table {
         width: 100vw;
+        background-color: #000;
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: center;
+        padding-bottom: 50px;
     }
 
     .tile {
@@ -83,16 +47,14 @@ export const workStyles = css`
         color: white;
     }
 
-    .tile.img {
-        width: 100%;
+    .tile img {
         transition: transform 500ms ease;
-        background-color: white
-
+        width: 100%;
+        height: auto;
     }
 
-    img:hover {
+    .tile img:hover {
         transform: scale(1.1);
-        opacity: 1;
     }
 
     #workDetails {
@@ -106,3 +68,16 @@ export const workStyles = css`
     }
 `;
 
+export const filtersStyle = css`
+    .filters {
+        padding-left: 30px;
+        margin-top: 30px;
+    }
+
+    .filters button {
+        border: none;
+        background: none;
+        outline: none;
+        cursor: pointer;
+    }
+`;

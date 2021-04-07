@@ -1,5 +1,5 @@
 import css from 'styled-jsx/css';
-import { colors } from '../styles/vars';
+import { colors, breakpoints } from '../styles/vars';
 
 export const aboutStyle = css`
     #section1 {
@@ -12,7 +12,7 @@ export const aboutStyle = css`
         background-color: black;
         height: 100vh;
         width: 100vw;
-        position: static;
+        position: relative;
     }
 
     #transitionGradient {
@@ -30,46 +30,47 @@ export const aboutStyle = css`
         background-attachment: fixed;
         background-repeat: no-repeat;
         height: 100vh;
-        width: 100vw;     
-        position: static;
+        width: 100vw;
+        position: relative;
         margin-top: -73px;
     }
 
     #quoteSection {
-        background-image: url('/about/aston.png');    
+        background-image: url('/about/aston.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         width: 100vw;
         height: 600px;
         display: flex;
-        justify-content: center; 
-        align-items: center; 
+        justify-content: center;
+        text-align: center;
+        align-items: center;
         box-shadow: inset 0 0 100px black;
     }
 
     #ourStoriesSection {
-        background-image: url('/about/ourStory.png');    
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100vw;
-        height: 600px;
+        position: relative;
+        margin-bottom: -10px;
+        margin-top: -10px;
     }
+
+    #ourStory {
+        width: 100vw;
+    }
+
 
     #quote2Section {
-        background-image: url('/about/aston.png'); 
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
         width: 100vw;
-        height: 600px;
+        height: auto;
+        display: flex;
+        flex-direction: row;
     }
 
-    #aston1 {
-        background: url(/about/aston3.png);
-        width: 34%;
-        position: absolute;
+    #imageOne {
+        background: url(/about/NEWKINOCYBERPUNK.png);
+        flex: 1;
+        position: relative;
         left: 0px;
         height: 600px;
         background-position: center;
@@ -77,12 +78,12 @@ export const aboutStyle = css`
         background-size: cover;
         display: flex;
         justify-content: center;
-     }
+    }
 
-     #aston1Hover {
-        background: url(/about/aston3.png);
-        width: 34%;
-        position: absolute;
+    #imageOneHover {
+        background: url(/about/NEWKINOCYBERPUNK.png);
+        flex: 1;
+        position: relative;
         left: 0px;
         height: 600px;
         background-position: center;
@@ -91,30 +92,27 @@ export const aboutStyle = css`
         display: flex;
         justify-content: center;
         filter: grayscale(100%);
-     }
+    }
 
-     #center {
-         align-self: center;
-     }
+    #center {
+        align-self: center;
+    }
 
-     #aston2 {
-        background: url(/about/aston2.png);
-        width: 33%;
-        position: absolute;
-        right: 33%;
+    #imageTwo {
+        background: url(/about/NEWKINOFLOWERS.png);
+        flex: 1;
         height: 600px;
+        position: relative;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         display: flex;
-        justify-content: center;
-     }
+    }
 
-     #aston2Hover {
-        background: url(/about/aston2.png);
-        width: 33%;
-        position: absolute;
-        right: 33%;
+    #imageTwoHover {
+        background: url(/about/NEWKINOFLOWERS.png);
+        flex: 1;
+        position: relative;
         height: 600px;
         background-position: center;
         background-repeat: no-repeat;
@@ -122,12 +120,12 @@ export const aboutStyle = css`
         display: flex;
         justify-content: center;
         filter: grayscale(100%);
-     }
+    }
 
-     #starWars {
-        background: url(/about/starWars.png);
-        width: 33%;
-        position: absolute;
+    #imageThree {
+        background: url(/about/NEWKINOLINES.png);
+        flex: 1;
+        position: relative;
         right: 0px;
         height: 600px;
         background-position: center;
@@ -135,12 +133,12 @@ export const aboutStyle = css`
         background-size: cover;
         display: flex;
         justify-content: center;
-     }
+    }
 
-     #starWarsHover {
-        background: url(/about/starWars.png);
-        width: 33%;
-        position: absolute;
+    #imageThreeHover {
+        background: url(/about/NEWKINOLINES.png);
+        flex: 1;
+        position: relative;
         right: 0px;
         height: 600px;
         background-position: center;
@@ -149,117 +147,168 @@ export const aboutStyle = css`
         display: flex;
         justify-content: center;
         filter: grayscale(100%);
-
-     }
-
-    #comingSoonSection {
-        background-image: url('/home/chess.png');    
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100vw;
-        height: 600px;
-        position: absolute;
-    }
-
-    .coming-soon-ticker {
-        font-size: 20px;
-        color: ${colors.pureWhite};
-        margin-top: 250px;
-    }
-
-    .coming-soon-ticker h1 {
-        margin: 0;
-        padding: 8px 0;
-        border-top: 2px solid ${colors.pureWhite};
-        border-bottom: 2px solid ${colors.pureWhite};
     }
 
     p {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         color: white;
-        font-size: 25px;
+        font-size: 20px;
         margin-bottom: 1cm;
         margin-top: 1cm;
+        text-align: center;
     }
 
     .image-wrapper {
         padding: 22px;
-        cursor: pointer
+        cursor: pointer;
     }
 
     .navigation {
-        position:absolute;
-        bottom:50px;
-        right:50px;
-    }
-
-    .goals {
-        display: flex;
         position: absolute;
+        bottom: 50px;
+        right: 50px;
     }
 
-    .left {
-        padding: 40px;
+    .Section1 {
+        display: flex;
+        height: 100%;
     }
 
-    .right {
-        padding: 15px;
-        margin-top: 25px;
+    .aboutUsSection1 {
+        height: 100%;
+        width: 880px;
+        margin: auto;
+        line-height: 1.6;
+        align-items: center;
+        position: relative;
+        justify-content: center;
+        display: flex;
+        padding: 30px;
     }
 
     footer {
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        padding: 22px;
+        background-color: black;
         padding-left: 0;
+    }
+
+    .sub-footer {
         display: flex;
-        align-items: center;
+        justify-content: space-between;
+        padding-left: 34px;
+        padding-top: 110px;
+        padding-bottom: 48px;
     }
 
     .footer-links {
         list-style-type: none;
         display: flex;
-        width: 100%;
-        justify-content: center;
-        position: absolute;
-
+        margin-right: 40px;
     }
 
     .footer-links a {
         text-decoration: none;
-    }
-
-    .footer-links a,
-    .footer-links li {
-        font-size: 12px;
         color: ${colors.pureWhite};
-
+        margin-right: 8px;
+        margin-top: 3px;
     }
 
-    #HOME {
-        margin: 10px;
-        font-size: 20px;
-
+    .x-links {
+        list-style-type: none;
+        display: flex;
+        position: absolute;
+        justify-content: center;
     }
 
-    #WORK {
-        margin: 10px;
-        font-size: 20px;
-
+    .contact-details {
+        padding-left: 48px;
+        padding-top: 48px;
+        color: ${colors.pureWhite};
     }
 
-    #NFT {
-        margin: 10px;
-        font-size: 20px;
-
+    .contact-details h3 {
+        margin: 0;
+        font-size: 30px;
     }
 
-    #Instagram {
-        margin: 10px;
-        font-size: 20px;
+    .contact-details a {
+        color: ${colors.red};
+        cursor: pointer;
+        text-decoration: none;
     }
 
+    .contact-details a:hover {
+        text-decoration: underline;
+    }
+
+    @media (min-width: ${breakpoints.xxl}) {
+        #transitionGradient {
+            height: 400px;
+            background-image: url(/about/fadeIn.png);
+            margin-top: -120px;
+            width: 100vw;
+            background-size: cover;
+            position: relative;
+            background-repeat: no-repeat;
+        }
+
+        #section2 {
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            margin-top: -100px;
+        }
+
+        p {
+            font-size: 22px;
+        }
+    }
+
+    @media (max-width: ${breakpoints.md}) {
+        p {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            color: white;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        #quoteSection {
+            height: 400px;
+            width: 100%;
+        }
+
+        #quoteSection p {
+            padding: 40px 20px;
+        }
+
+        .navigation {
+            display: none;
+        }
+    }
+
+    @media (max-width: ${breakpoints.xs}) {
+        #quote2Section {
+            display: block;
+        }
+
+
+        #imageOneHover,
+        #imageTwoHover,
+        #imageThreeHover,
+        #imageOne,
+        #imageTwo,
+        #imageThree {
+            width: 100%;
+            height: 300px;
+        }
+
+        .contact-details h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+    }
 `;
