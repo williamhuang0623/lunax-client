@@ -26,14 +26,15 @@ export const navBarStyle = css`
         overflow: hidden;
     }
 
-    #flyOutNavBar h2 {
+    #flyOutNavBar h2 a {
         color: ${colors.pureWhite};
         margin-left: 15vw;
         font-size: 6vw;
         cursor: pointer;
+        text-decoration: none;
     }
 
-    #flyOutNavBar h2:hover {
+    #flyOutNavBar h2 a:hover {
         text-decoration: underline;
     }
 

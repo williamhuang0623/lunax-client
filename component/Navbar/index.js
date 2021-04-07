@@ -50,9 +50,6 @@ class NavBar extends React.Component {
                     <h2>
                         <a href="/work">VFX/FILM</a>
                     </h2>
-                    {/* <h2>
-                    <a href="http://localhost:3000/">NFTs*</a>
-                </h2>    */}
                 </div>
 
                 <style jsx>{navBarStyle}</style>
