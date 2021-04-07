@@ -77,7 +77,7 @@ export const homeStyles = css`
     @media (max-width: ${breakpoints.xs}) {
         video {
             width: 100%;
-            height: 500px;
+            height: 400px;
             border-radius: 10px;
             margin-top: auto;
             margin-bottom: auto;
