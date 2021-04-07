@@ -1,4 +1,5 @@
 import css from 'styled-jsx/css';
+import { colors } from 'styles/vars';
 
 export const navBarStyle = css`
     #flyOutNavBar {
@@ -25,19 +26,15 @@ export const navBarStyle = css`
         overflow: hidden;
     }
 
-    #flyOutNavBar h2 a {
-        color: white;
+    #flyOutNavBar h2 {
+        color: ${colors.pureWhite};
         margin-left: 15vw;
         font-size: 6vw;
-        text-decoration: none;
+        cursor: pointer;
     }
 
-    #flyOutNavBar h2 a:hover {
+    #flyOutNavBar h2:hover {
         text-decoration: underline;
-    }
-
-    .links {
-        position: relative;
     }
 
     .closeNav {

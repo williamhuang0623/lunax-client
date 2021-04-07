@@ -20,6 +20,7 @@ export const navBarContainerStyle = css`
         position: absolute;
         top: 35px;
         right: 35px;
+        cursor: pointer;
     }
 
     @media (max-width: ${breakpoints.xl}) {

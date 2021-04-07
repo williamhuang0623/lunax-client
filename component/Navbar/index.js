@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { navBarStyle } from './style';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { Link } from '@material-ui/core';
+import Link from 'next/Link';
+
+import { navBarStyle } from './style';
 
 class NavBar extends React.Component {
     constructor(props) {
