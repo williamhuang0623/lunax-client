@@ -1,9 +1,21 @@
 import React from 'react';
-import { homeStyles } from './style';
 import Image from 'next/image';
-import Ticker from 'react-ticker';
-import BGVideos from '../public/home/BGVideos.js';
+
 import NavBarContainer from 'component/NavBarContainer/index.js';
+import { homeStyles } from './style';
+
+const BGVideos = [
+    {
+        id: 1,
+        name: 'NEWKINO_REEL_v2',
+        path: '/home/NEWKINO_MICROCHIP.mp4',
+    },
+    {
+        id: 2,
+        name: 'UNFORTUNATE_SPACEMAN',
+        path: '/home/UNFORTUNATE_SPACEMAN.mp4',
+    },
+];
 
 const footerLinks = [
     {
