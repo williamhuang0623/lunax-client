@@ -93,7 +93,7 @@ class Home extends React.Component {
                     id="videoBg"
                     key={this.getBackgroundVideo().toString()}
                     autoPlay={true}
-                    playsinline
+                    playsInline={true}
                     loop
                     muted
                 >
@@ -110,6 +110,7 @@ class Home extends React.Component {
                             onClick={this.leftClick}
                             width={35}
                             height={35}
+                            className="video-nav-button"
                         />
                         {this.state.vidPaused === true ? (
                             <Image
@@ -117,6 +118,7 @@ class Home extends React.Component {
                                 onClick={this.pauseClick}
                                 width={35}
                                 height={35}
+                                className="video-nav-button"
                             />
                         ) : (
                             <Image
@@ -124,6 +126,7 @@ class Home extends React.Component {
                                 onClick={this.pauseClick}
                                 width={35}
                                 height={35}
+                                className="video-nav-button"
                             />
                         )}
                         <Image
@@ -131,6 +134,7 @@ class Home extends React.Component {
                             onClick={this.rightClick}
                             width={35}
                             height={35}
+                            className="video-nav-button"
                         />
                     </div>
                 </div>
