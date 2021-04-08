@@ -82,6 +82,11 @@ export const homeStyles = css`
             margin-top: auto;
             margin-bottom: auto;
         }
+
+        .navigation {
+            bottom: 60px;
+            right: 25px;
+        }
     }
 `;
 
