@@ -8,7 +8,6 @@ export default function Home({ result }) {
             <Head>
                 <title>NewKino Studios</title>
             </Head>
-
             <HomePage />
         </div>
     );

@@ -311,6 +311,7 @@ export const aboutStyle = css`
 
         #section1 {
             background-image: url('/about/mobile_bg_2.png');
+            background-size: contain;
         }
 
         #quoteSection {

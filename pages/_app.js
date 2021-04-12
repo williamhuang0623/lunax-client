@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
                 <meta name="author" content="NewKino Studios" />
                 <meta
                     name="description"
-                    content="NewKino Studios is a digital world creation studio.  We collaborate with artists, musicians, and brands to build immersive worlds and tell compelling stories"
+                    content="NewKino Studios is a digital world creation studio.  We collaborate with artists, musicians, and brands to build immersive worlds and tell compelling stories."
                 />
                 <meta
                     name="keywords"
@@ -37,13 +37,16 @@ function MyApp({ Component, pageProps }) {
                 <meta property="og:url" content="https://newkino.studio" />
                 <meta property="og:site_name" content="NewKino Studios" />
                 <meta property="og:type" content="website" />
-                <meta property="og:description" content="" />
+                <meta
+                    property="og:description"
+                    content="NewKino Studios is a digital world creation studio."
+                />
 
                 {/* Twitter Cards */}
-                <meta name="twitter:title" content="NewKino Studios" data-react-helmet="true" />
+                <meta name="twitter:title" content="NewKino Studios" />
                 <meta
                     name="twitter:description"
-                    content="NewKino Studios is a digital world creation studio.  We collaborate with artists, musicians, and brands to build immersive worlds and tell compelling stories"
+                    content="NewKino Studios is a digital world creation studio."
                 />
                 <meta
                     name="twitter:image"
