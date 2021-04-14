@@ -12,39 +12,25 @@ function Filters(props) {
     return (
         <div className="filters">
             <button
+                className={props.allButton ? 'buttonSelected' : 'buttonDeselected'}
                 id="allButton"
-                onClick={props.allButton ? props.filterDeselected : props.filterSelected}
+                onClick={props.handleFilterClick}
             >
-                <Image
-                    src={props.allButton ? '/work/filter/allSelected.png' : '/work/filter/all.png'}
-                    width={width}
-                    height={height}
-                    alt="newkino_logo"
-                />
+                All
             </button>
             <button
+                className={props.VFXButton ? 'buttonSelected' : 'buttonDeselected'}
                 id="VFXButton"
-                onClick={props.VFXButton ? props.filterDeselected : props.filterSelected}
+                onClick={props.handleFilterClick}
             >
-                <Image
-                    src={props.VFXButton ? '/work/filter/VFXSelected.png' : '/work/filter/VFX.png'}
-                    width={width}
-                    height={height}
-                    alt="newkino_logo"
-                />
+                VFX
             </button>
             <button
+                className={props.filmButton ? 'buttonSelected' : 'buttonDeselected'}
                 id="filmButton"
-                onClick={props.filmButton ? props.filterDeselected : props.filterSelected}
+                onClick={props.handleFilterClick}
             >
-                <Image
-                    src={
-                        props.filmButton ? '/work/filter/filmSelected.png' : '/work/filter/film.png'
-                    }
-                    width={width}
-                    height={height}
-                    alt="newkino_logo"
-                />
+                Film
             </button>
             <style jsx>{filtersStyle}</style>
         </div>
@@ -52,22 +38,25 @@ function Filters(props) {
 }
 
 const WorkTable = (props) => {
-    const [filteredData, setFilteredData] = useState(props.data);
+    const { allFilter, VFXFilter, filmFilter, data } = props;
+    const [filteredData, setFilteredData] = useState(data);
 
     useEffect(() => {
-        if (props.allFilter === true) {
-            setFilteredData(props.data);
-        } else if (props.VFXFilter === true) {
-            setFilteredData(props.data.filter((data) => data.type === 'VFX'));
-        } else if (props.filmFilter === true) {
-            setFilteredData(props.data.filter((data) => data.type === 'Film'));
+        if (!allFilter && !VFXFilter && !filmFilter) {
+            setFilteredData([]);
+        } else if (allFilter === true) {
+            setFilteredData(data);
+        } else if (VFXFilter === true) {
+            setFilteredData(data.filter((d) => d.type === 'VFX'));
+        } else if (filmFilter === true) {
+            setFilteredData(data.filter((d) => d.type === 'Film'));
         }
-    }, [props.allFilter, props.VFXFilter, props.filmFilter]);
+    }, [allFilter, VFXFilter, filmFilter]);
 
     return (
         <div className="table">
-            {filteredData.map((data) => {
-                return <Tile data={data} key={filteredData.id} />;
+            {filteredData.map((d) => {
+                return <Tile data={d} key={filteredData.id} />;
             })}
             <style jsx>{workStyles}</style>
         </div>
@@ -109,7 +98,18 @@ const Tile = (props) => {
                     alt={props.data.name}
                     onClick={() => setOpen(true)}
                 />
-                <p id="workDetails"> {hover ? props.data.artist + ' - ' + props.data.name : ''}</p>
+                <p id="workDetailsNonMobile">
+                    {' '}
+                    <span className="formattingTitle">
+                        {hover ? props.data.artist + ' - ' + props.data.name : ''}
+                    </span>
+                </p>
+                <p id="workDetailsMobile">
+                    {' '}
+                    <span className="formattingTitle">
+                        {props.data.artist + ' - ' + props.data.name}
+                    </span>
+                </p>
             </React.Fragment>
             <style jsx>{workStyles}</style>
         </div>
@@ -124,64 +124,40 @@ export class Work extends React.Component {
             VFXButton: true,
             filmButton: true,
         };
-        this.filterSelected = this.filterSelected.bind(this);
-        this.filterDeselected = this.filterDeselected.bind(this);
+        this.handleFilterClick = this.handleFilterClick.bind(this);
     }
 
-    filterSelected(e) {
+    handleFilterClick(e) {
+        const { allButton, VFXButton, filmButton } = this.state;
         const id = e.currentTarget.getAttribute('id');
+
         if (id === 'allButton') {
-            this.setState({
-                allButton: true,
-                VFXButton: true,
-                filmButton: true,
-            });
-        } else if (id === 'VFXButton') {
-            this.setState({
-                VFXButton: true,
-            });
-            if (this.state.filmButton === true) {
-                this.setState({
-                    allButton: true,
-                });
-            }
-        } else if (id === 'filmButton') {
-            this.setState({
-                filmButton: true,
-            });
-            if (this.state.VFXButton === true) {
-                this.setState({
-                    allButton: true,
-                });
-            }
-        }
-    }
-    filterDeselected(e) {
-        const id = e.currentTarget.getAttribute('id');
-        if (id === 'VFXButton') {
-            if (this.state.allButton === true) {
+            if (allButton) {
                 this.setState({
                     allButton: false,
                     VFXButton: false,
+                    filmButton: false,
+                });
+            } else {
+                this.setState({
+                    allButton: true,
+                    VFXButton: true,
                     filmButton: true,
                 });
-            } else {
-                this.setState({
-                    VFXButton: false,
-                });
             }
-        } else if (id === 'filmButton') {
-            if (this.state.allButton === true) {
-                this.setState({
-                    allButton: false,
-                    VFXButton: true,
-                    filmButton: false,
-                });
+
+            return;
+        } else {
+            const newState = { ...this.state };
+            newState[id] = !this.state[id];
+
+            if (newState.VFXButton && newState.filmButton) {
+                newState.allButton = true;
             } else {
-                this.setState({
-                    filmButton: false,
-                });
+                newState.allButton = false;
             }
+
+            this.setState(newState);
         }
     }
 
@@ -194,8 +170,7 @@ export class Work extends React.Component {
                             allButton={this.state.allButton}
                             VFXButton={this.state.VFXButton}
                             filmButton={this.state.filmButton}
-                            filterSelected={this.filterSelected}
-                            filterDeselected={this.filterDeselected}
+                            handleFilterClick={this.handleFilterClick}
                         />
                     </div>
                     <WorkTable

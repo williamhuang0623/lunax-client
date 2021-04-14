@@ -1,5 +1,5 @@
 import css from 'styled-jsx/css';
-import { colors } from '../styles/vars';
+import { colors, breakpoints } from '../styles/vars';
 
 export const workStyles = css`
     .main {
@@ -44,7 +44,7 @@ export const workStyles = css`
         height: 479px;
         position: relative;
         text-align: center;
-        color: white;
+        color: ${colors.pureWhite};
     }
 
     .tile img {
@@ -57,14 +57,37 @@ export const workStyles = css`
         transform: scale(1.1);
     }
 
-    #workDetails {
+    #workDetailsNonMobile {
         position: absolute;
         top: 8px;
         left: 16px;
     }
 
+    #workDetailsMobile {
+        display: none;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .formattingTitle {
+        background: rgba(0, 0, 0, 0.3);
+    }
+
     #modal {
         height: 1000px;
+    }
+
+    @media (max-width: ${breakpoints.md}) {
+        #workDetailsNonMobile {
+            display: none;
+        }
+
+        #workDetailsMobile {
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            display: block;
+            text-align: left;
+        }
     }
 `;
 
@@ -75,9 +98,30 @@ export const filtersStyle = css`
     }
 
     .filters button {
-        border: none;
-        background: none;
-        outline: none;
         cursor: pointer;
+        margin: 10px;
+        font-weight: 500;
+    }
+
+    .buttonSelected {
+        width: 70px;
+        height: 30px;
+        border: 2px solid ${colors.pureWhite};
+        border-radius: 40px;
+        background: ${colors.pureWhite};
+        color: black;
+        font-size: 15px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .buttonDeselected {
+        width: 70px;
+        height: 30px;
+        border: 2px solid ${colors.pureWhite};
+        border-radius: 40px;
+        background: black;
+        color: white;
+        font-size: 15px;
+        font-family: 'Roboto', sans-serif;
     }
 `;

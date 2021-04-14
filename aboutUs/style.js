@@ -17,12 +17,20 @@ export const aboutStyle = css`
 
     #transitionGradient {
         height: 300px;
-        background-image: url('/about/fadeIn.png');
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.7469362745098039) 25%,
+            rgba(0, 0, 0, 0.8) 50%,
+            rgba(0, 0, 0, 0.75) 75%,
+            rgba(0, 0, 0, 0) 100%
+        );
         margin-top: -75px;
         width: 100vw;
         background-size: cover;
         position: relative;
         background-repeat: no-repeat;
+        z-index: 12;
     }
 
     #section2 {
@@ -32,7 +40,7 @@ export const aboutStyle = css`
         height: 100vh;
         width: 100vw;
         position: relative;
-        margin-top: -73px;
+        margin-top: -100px;
     }
 
     #quoteSection {
