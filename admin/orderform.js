@@ -1,9 +1,8 @@
 import React from 'react';
-
 import OrderAPI from '../lib/api/Order';
 
 const Form = () => {
-    const createOrder = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const orderAPI = new OrderAPI();
         await orderAPI.postOrder({
@@ -13,7 +12,7 @@ const Form = () => {
     };
     return (
         <div className="create-order">
-            <form onSubmit={createOrder}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="link">Link:</label>
                 <input type="text" id="link" name="link" required />
                 <label htmlFor="quantity_ordered">Quantity wanted:</label>
