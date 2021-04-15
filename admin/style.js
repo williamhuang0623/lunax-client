@@ -6,9 +6,10 @@ export const adminStyles = css`
         width: 100vw;
         background: black;
         color: white;
-        position: relative;
-        // overflow: hidden;
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         object-fit: fill !important;
     }
     .buffer {

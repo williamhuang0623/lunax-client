@@ -4,4 +4,8 @@ export default {
         root: '/example',
         all: '/all',
     },
+    order: {
+        root: '/order',
+        all: '/all',
+    },
 };
