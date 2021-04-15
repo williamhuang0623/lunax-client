@@ -2,18 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import OrderAPI from '../lib/api/Order';
 
-function OrderList() {
-    const [orders, setOrders] = useState([]);
-
-    useLayoutEffect(async () => {
-        const orderapi = new OrderAPI();
-        const res = await orderapi.getAllOrders();
-        setOrders(orders.concat(res));
-        return () => {
-            setOrders([]);
-        };
-    }, [orders]);
-
+function OrderList({ orders }) {
     const columns = React.useMemo(
         () => [
             {
@@ -39,6 +28,10 @@ function OrderList() {
             {
                 Header: 'Updated At',
                 accessor: 'updatedAt',
+            },
+            {
+                Header: 'Delete Order',
+                accessor: '_id',
             },
         ],
         []

@@ -1,18 +1,10 @@
 import React from 'react';
 import OrderAPI from '../lib/api/Order';
 
-const Form = () => {
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const orderAPI = new OrderAPI();
-        await orderAPI.postOrder({
-            link: event.target.link.value,
-            quantity_ordered: event.target.quantity_ordered.value,
-        });
-    };
+const Form = (props) => {
     return (
         <div className="create-order">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={props.handleSubmit}>
                 <label htmlFor="link">Link:</label>
                 <input type="text" id="link" name="link" required />
                 <label htmlFor="quantity_ordered">Quantity wanted:</label>
