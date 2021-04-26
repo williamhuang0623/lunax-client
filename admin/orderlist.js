@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import OrderAPI from '../lib/api/Order';
 
-function OrderList({ orders }) {
+function OrderList({ orders, handleDelete }) {
     const columns = React.useMemo(
         () => [
             {
@@ -88,7 +88,15 @@ function OrderList({ orders }) {
                                                         alt="Picture of product"
                                                     />
                                                 );
-                                            } else {
+                                            } 
+                                            else if (cell.column.Header == 'Delete Order') {
+                                                return (
+                                                    <button onClick={() => handleDelete(cell.value)}>
+                                                        Cancel order
+                                                    </button>
+                                                );
+                                            }
+                                            else {
                                                 return (
                                                     <td {...cell.getCellProps()}>
                                                         {
