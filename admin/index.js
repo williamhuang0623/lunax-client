@@ -26,12 +26,18 @@ function AdminDashboard(props) {
         setOrders([...res]);
     }, orders);
 
+    const deleteOrder = async(order_id) => {
+        const deleted = await new OrderAPI().deleteOrder(order_id)
+        const newOrderList = orders.filter((item) => item._id !== deleted.deleted_id)
+        setOrders([...newOrderList])
+    }
+
     return (
         <>
             <div className="buffer" />
             <div className="admin-container">
                 <Form handleSubmit={handleSubmit} />
-                <OrderList orders={orders} />
+                <OrderList orders={orders} handleDelete={deleteOrder} />
             </div>
             <style jsx>{adminStyles}</style>
         </>
