@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 import { useTable, useSortBy } from 'react-table';
-import OrderAPI from '../lib/api/Order';
 
 function OrderList({ orders, handleDelete }) {
     const columns = React.useMemo(
@@ -20,6 +19,18 @@ function OrderList({ orders, handleDelete }) {
             {
                 Header: 'Quantity',
                 accessor: 'quantity_ordered',
+            },
+            {
+                Header: 'Filled',
+                accessor: 'quantity_filled',
+            },
+            {
+                Header: 'Times Ran',
+                accessor: 'times_ran',
+            },
+            {
+                Header: 'Flow State',
+                accessor: 'flow_state',
             },
             {
                 Header: 'Status',
@@ -44,6 +55,7 @@ function OrderList({ orders, handleDelete }) {
 
     return (
         <div className="order-list">
+            
             <table {...getTableProps()}>
                 <thead>
                     {
@@ -80,15 +92,28 @@ function OrderList({ orders, handleDelete }) {
                                             // Apply the cell props
                                             console.log(cell.value);
                                             if (cell.column.Header == 'Product') {
-                                                return (
+                                                if(cell.value){
+                                                    return (
+                                                        <img
+                                                            src={cell.value}
+                                                            width={100}
+                                                            height={100}
+                                                            alt="Picture of product"
+                                                        />
+                                                    );
+                                                }
+                                                else {
+                                                    return (
                                                     <img
-                                                        src={cell.value}
+                                                        src="https://pbs.twimg.com/profile_images/1366407963435560962/3qsLxc7t.jpg"
                                                         width={100}
                                                         height={100}
-                                                        alt="Picture of product"
-                                                    />
-                                                );
-                                            } 
+                                                        alt="Loading picture"
+                                                        />
+                                                        );
+                                                }
+                                            }
+                                    
                                             else if (cell.column.Header == 'Delete Order') {
                                                 return (
                                                     <button onClick={() => handleDelete(cell.value)}>
