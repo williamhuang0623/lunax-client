@@ -1,17 +1,26 @@
 import React from 'react';
 import OrderAPI from '../lib/api/Order';
+import { FormControl, InputLabel, Input, TextField, Button } from '@material-ui/core';
 
 const Form = (props) => {
     return (
-        <div className="create-order">
+        <>
             <form onSubmit={props.handleSubmit}>
-                <label htmlFor="link">Link:</label>
-                <input type="text" id="link" name="link" required />
-                <label htmlFor="quantity_ordered">Quantity wanted:</label>
-                <input type="text" id="quantity_ordered" name="quantity_ordered" required />
-                <button type="submit">Create</button>
+                <div>
+                    <TextField color="primary" id="link" name="link" label="Link" />
+                </div>
+                <TextField
+                    color="primary"
+                    id="quantity_ordered"
+                    name="quantity_ordered"
+                    label="Quantity"
+                />
+
+                <Button color="primary" type="submit">
+                    Create
+                </Button>
             </form>
-        </div>
+        </>
     );
 };
 
