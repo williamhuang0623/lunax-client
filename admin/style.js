@@ -2,15 +2,13 @@ import css from 'styled-jsx/css';
 
 export const adminStyles = css`
     .admin-container {
-        height: 100vh;
+        /* height: 100vh;
         width: 100vw;
         background: black;
         color: white;
-        display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        object-fit: fill !important;
+        object-fit: fill !important; */
     }
     .buffer {
         height: 120px;
