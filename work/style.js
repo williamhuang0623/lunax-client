@@ -50,7 +50,7 @@ export const workStyles = css`
     .tile img {
         transition: transform 500ms ease;
         width: 100%;
-        height: auto;
+        height: 100%;
     }
 
     .tile img:hover {
