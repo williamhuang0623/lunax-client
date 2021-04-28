@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import LanguageIcon from '@material-ui/icons/Language';
 
 import FullScreenDiv from 'component/FullScreenDiv';
 import { aboutStyle } from './style';
@@ -132,6 +133,11 @@ function Footer(props) {
             label: 'Twitter',
             href: 'https://twitter.com/newkinostudios',
             icon: <TwitterIcon fontSize={fontSize} />,
+        },
+        {
+            label: 'Foundation',
+            href: 'https://foundation.app/newkino',
+            icon: <LanguageIcon fontSize={fontSize} />,
         },
     ];
 
