@@ -7,5 +7,6 @@ export default {
     order: {
         root: '/order',
         all: '/all',
+        cancel: '/cancel/', // :id is passed after that is why we end in /
     },
 };
