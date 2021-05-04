@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Order = ({ order, handleDelete }) => {
+const Order = ({ order, handleDelete, handleCancel }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -86,7 +86,7 @@ const Order = ({ order, handleDelete }) => {
                     <Button
                         variant="contained"
                         color="secondary"
-                        onClick={() => handleDelete(order._id)}
+                        onClick={() => handleCancel(order._id)}
                     >
                         Cancel
                     </Button>
