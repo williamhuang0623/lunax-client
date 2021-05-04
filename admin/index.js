@@ -63,11 +63,16 @@ function AdminDashboard(props) {
         const newOrderList = orders.filter((item) => item._id !== deleted.deleted_id);
         setOrders([...newOrderList]);
     };
+    const cancelOrder = async (order_id) => {
+        const canceled = await new OrderAPI().cancelOrder(order_id);
+        const newOrderList = orders.filter((item) => item.status !== 'canceled');
+        setOrders([...newOrderList]);
+    };
 
     return (
         <ThemeProvider theme={theme}>
             <div className="buffer" />
-            <Container maxWidth="fixed">
+            <Container maxWidth="md">
                 <div className={classes.root}>
                     <Typography color="primary" component="h3" variant="h3">
                         Order List
@@ -83,7 +88,7 @@ function AdminDashboard(props) {
                         <Form handleSubmit={handleSubmit} />
                     </DialogContent>
                 </Dialog>
-                <OrderList orders={orders} handleDelete={deleteOrder} />
+                <OrderList orders={orders} handleDelete={deleteOrder} handleCancel={cancelOrder} />
             </Container>
             <style jsx>{adminStyles}</style>
         </ThemeProvider>
