@@ -9,4 +9,13 @@ export default {
         all: '/all',
         cancel: '/cancel/', // :id is passed after that is why we end in /
     },
+    auth: {
+        root: '/auth',
+        register: '/register',
+        login: '/login',
+    },
+    user: {
+        root: '/user',
+        me: '/me',
+    },
 };

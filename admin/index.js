@@ -14,6 +14,8 @@ import {
     DialogTitle,
     DialogContent,
 } from '@material-ui/core';
+import { useUser } from '../lib/hooks';
+
 const useStyles = makeStyles((theme) => ({
     order_list_header: {
         display: 'flex',
@@ -43,6 +45,7 @@ function AdminDashboard(props) {
         });
 
         setOrders([updated, ...orders]);
+        handleClose();
     };
 
     useEffect(async () => {
@@ -69,29 +72,47 @@ function AdminDashboard(props) {
         setOrders([...newOrderList]);
     };
 
+    const user = useUser({ redirectTo: '/login' });
+    if (!user || !localStore.getItem('token')) {
+        return <h1>Loading...</h1>;
+    }
     return (
-        <ThemeProvider theme={theme}>
-            <div className="buffer" />
-            <Container maxWidth="md">
-                <div className={classes.root}>
-                    <Typography color="primary" component="h3" variant="h3">
-                        Order List
-                    </Typography>
-                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                        <AddIcon /> New
-                    </Button>
-                </div>
+        <>
+            {user ? (
+                <ThemeProvider theme={theme}>
+                    <div className="buffer" />
+                    <Container maxWidth="lg">
+                        <div className={classes.root}>
+                            <Typography color="primary" component="h3" variant="h3">
+                                Order List
+                            </Typography>
+                            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                                <AddIcon /> New
+                            </Button>
+                        </div>
 
-                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">New Order</DialogTitle>
-                    <DialogContent>
-                        <Form handleSubmit={handleSubmit} />
-                    </DialogContent>
-                </Dialog>
-                <OrderList orders={orders} handleDelete={deleteOrder} handleCancel={cancelOrder} />
-            </Container>
-            <style jsx>{adminStyles}</style>
-        </ThemeProvider>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">New Order</DialogTitle>
+                            <DialogContent>
+                                <Form handleSubmit={handleSubmit} />
+                            </DialogContent>
+                        </Dialog>
+                        <OrderList
+                            orders={orders}
+                            handleDelete={deleteOrder}
+                            handleCancel={cancelOrder}
+                        />
+                    </Container>
+                    <style jsx>{adminStyles}</style>
+                </ThemeProvider>
+            ) : (
+                <h1>Wrong side</h1>
+            )}
+        </>
     );
 }
 

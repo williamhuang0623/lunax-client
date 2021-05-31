@@ -3,7 +3,10 @@ import 'styles/global.css';
 import 'node_modules/react-modal-video/scss/modal-video.scss';
 import NavBarContainer from 'component/NavBarContainer';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
+    if (router.pathname.startsWith('/admin')) {
+        return <Component {...pageProps} />;
+    }
     return (
         <>
             <Head>
