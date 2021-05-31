@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { adminStyles } from './style';
+import { makeStyles } from '@material-ui/styles';
+
 import Form from './orderform';
 import OrderList from './orderlist';
 import OrderAPI from '../lib/api/Order';
-import { ThemeProvider, makeStyles } from '@material-ui/styles';
-import { theme } from '../styles/admin-theme';
 import AddIcon from '@material-ui/icons/Add';
 import {
     Container,
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function AdminDashboard(props) {
+function AdminDashboard(props, { user }) {
     const [orders, setOrders] = useState([]);
     const [open, setOpen] = useState(false);
     const classes = useStyles();
@@ -71,7 +71,7 @@ function AdminDashboard(props) {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <div className="buffer" />
             <Container maxWidth="lg">
                 <div className={classes.root}>
@@ -81,6 +81,7 @@ function AdminDashboard(props) {
                     <Button variant="outlined" color="primary" onClick={handleClickOpen}>
                         <AddIcon /> New
                     </Button>
+                    {user}
                 </div>
 
                 <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -92,7 +93,7 @@ function AdminDashboard(props) {
                 <OrderList orders={orders} handleDelete={deleteOrder} handleCancel={cancelOrder} />
             </Container>
             <style jsx>{adminStyles}</style>
-        </ThemeProvider>
+        </>
     );
 }
 

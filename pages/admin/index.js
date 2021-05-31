@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import AdminDashboard from 'admin';
-import Sidebar from 'component/AdminSideBar';
+import { ThemeProvider, makeStyles } from '@material-ui/styles';
+import { theme } from '../../styles/admin-theme';
 import { useRouter } from 'next/router';
 import UserApi from '../../lib/api/User';
 import { isEmpty } from '../../lib/utils';
+
 function authParams() {
     const token = JSON.parse(localStorage.getItem('token'));
     if (token) {
@@ -12,6 +14,7 @@ function authParams() {
         return {};
     }
 }
+
 export default function Admin() {
     const [user, setUser] = useState();
     const router = useRouter();
@@ -27,5 +30,15 @@ export default function Admin() {
         }
     }, []);
 
-    return <>{user ? <AdminDashboard router={router} /> : <h1>Loading...</h1>}</>;
+    return (
+        <>
+            {user ? (
+                <ThemeProvider theme={theme}>
+                    <AdminDashboard user={user} />{' '}
+                </ThemeProvider>
+            ) : (
+                <h1>Loading...</h1>
+            )}
+        </>
+    );
 }
