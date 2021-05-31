@@ -14,7 +14,6 @@ import {
     DialogTitle,
     DialogContent,
 } from '@material-ui/core';
-import { useUser } from '../lib/hooks';
 
 const useStyles = makeStyles((theme) => ({
     order_list_header: {
@@ -23,9 +22,10 @@ const useStyles = makeStyles((theme) => ({
         margin: 20,
     },
 }));
+
 function AdminDashboard(props) {
     const [orders, setOrders] = useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const classes = useStyles();
 
     const handleClickOpen = () => {
@@ -51,12 +51,10 @@ function AdminDashboard(props) {
     useEffect(async () => {
         const orderapi = new OrderAPI();
         const res = await orderapi.getAllOrders();
-
         setOrders([...res]);
         setInterval(async () => {
             const orderapi = new OrderAPI();
             const res = await orderapi.getAllOrders();
-
             setOrders([...res]);
         }, 3000);
     }, []);
@@ -72,47 +70,29 @@ function AdminDashboard(props) {
         setOrders([...newOrderList]);
     };
 
-    const user = useUser({ redirectTo: '/login' });
-    if (!user || !localStore.getItem('token')) {
-        return <h1>Loading...</h1>;
-    }
     return (
-        <>
-            {user ? (
-                <ThemeProvider theme={theme}>
-                    <div className="buffer" />
-                    <Container maxWidth="lg">
-                        <div className={classes.root}>
-                            <Typography color="primary" component="h3" variant="h3">
-                                Order List
-                            </Typography>
-                            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                                <AddIcon /> New
-                            </Button>
-                        </div>
+        <ThemeProvider theme={theme}>
+            <div className="buffer" />
+            <Container maxWidth="lg">
+                <div className={classes.root}>
+                    <Typography color="primary" component="h3" variant="h3">
+                        Order List
+                    </Typography>
+                    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+                        <AddIcon /> New
+                    </Button>
+                </div>
 
-                        <Dialog
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="form-dialog-title"
-                        >
-                            <DialogTitle id="form-dialog-title">New Order</DialogTitle>
-                            <DialogContent>
-                                <Form handleSubmit={handleSubmit} />
-                            </DialogContent>
-                        </Dialog>
-                        <OrderList
-                            orders={orders}
-                            handleDelete={deleteOrder}
-                            handleCancel={cancelOrder}
-                        />
-                    </Container>
-                    <style jsx>{adminStyles}</style>
-                </ThemeProvider>
-            ) : (
-                <h1>Wrong side</h1>
-            )}
-        </>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">New Order</DialogTitle>
+                    <DialogContent>
+                        <Form handleSubmit={handleSubmit} />
+                    </DialogContent>
+                </Dialog>
+                <OrderList orders={orders} handleDelete={deleteOrder} handleCancel={cancelOrder} />
+            </Container>
+            <style jsx>{adminStyles}</style>
+        </ThemeProvider>
     );
 }
 
