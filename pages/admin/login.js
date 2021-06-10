@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { loginStyles } from './styles.js';
+import { loginStyles } from 'admin/style';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';

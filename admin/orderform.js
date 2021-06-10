@@ -1,5 +1,5 @@
 import React from 'react';
-import OrderAPI from '../lib/api/Order';
+import OrderAPI from 'lib/api/Order';
 import { FormControl, InputLabel, Input, TextField, Button } from '@material-ui/core';
 
 const Form = (props) => {
