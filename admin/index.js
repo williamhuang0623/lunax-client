@@ -52,11 +52,6 @@ function AdminDashboard(props, { user }) {
         const orderapi = new OrderAPI();
         const res = await orderapi.getAllOrders();
         setOrders([...res]);
-        setInterval(async () => {
-            const orderapi = new OrderAPI();
-            const res = await orderapi.getAllOrders();
-            setOrders([...res]);
-        }, 3000);
     }, []);
 
     const deleteOrder = async (order_id) => {
