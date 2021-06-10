@@ -61,7 +61,7 @@ function AdminDashboard(props, { user }) {
     };
     const cancelOrder = async (order_id) => {
         const canceled = await new OrderAPI().cancelOrder(order_id);
-        const newOrderList = orders.filter((item) => item.status !== 'canceled');
+        const newOrderList = orders.filter((item) => item._id !== canceled.canceled_id);
         setOrders([...newOrderList]);
     };
 
