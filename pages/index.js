@@ -6,7 +6,7 @@ export default function Home({ result }) {
     return (
         <div>
             <Head>
-                <title>NewKino Studios</title>
+                <title>NewKino</title>
             </Head>
             <HomePage />
         </div>
