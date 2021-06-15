@@ -55,8 +55,8 @@ const WorkTable = (props) => {
 
     return (
         <div className="table">
-            {filteredData.map((d) => {
-                return <Tile data={d} key={filteredData.id} />;
+            {filteredData.map((d, i) => {
+                return <Tile data={d} key={filteredData.id} key={i} />;
             })}
             <style jsx>{workStyles}</style>
         </div>
@@ -81,36 +81,34 @@ const Tile = (props) => {
 
     return (
         <div className="tile">
-            <React.Fragment>
-                <ModalVideo
-                    channel={props.data.platform}
-                    isOpen={isOpen}
-                    videoId={props.data.videoId}
-                    onClose={() => setOpen(false)}
-                    autoplay="true"
-                    portrait="false"
-                    color="black"
-                />
-                <img
-                    onMouseEnter={mouseEnter}
-                    onMouseLeave={mouseLeave}
-                    src={props.data.image}
-                    alt={props.data.name}
-                    onClick={() => setOpen(true)}
-                />
-                <p id="workDetailsNonMobile">
-                    {' '}
-                    <span className="formattingTitle">
-                        {hover ? props.data.artist + ' - ' + props.data.name : ''}
-                    </span>
-                </p>
-                <p id="workDetailsMobile">
-                    {' '}
-                    <span className="formattingTitle">
-                        {props.data.artist + ' - ' + props.data.name}
-                    </span>
-                </p>
-            </React.Fragment>
+            <ModalVideo
+                channel={props.data.platform}
+                isOpen={isOpen}
+                videoId={props.data.videoId}
+                onClose={() => setOpen(false)}
+                autoplay="true"
+                portrait="false"
+                color="black"
+            />
+            <img
+                onMouseEnter={mouseEnter}
+                onMouseLeave={mouseLeave}
+                src={props.data.image}
+                alt={props.data.name}
+                onClick={() => setOpen(true)}
+            />
+            <p id="workDetailsNonMobile">
+                {' '}
+                <span className="formattingTitle">
+                    {hover ? props.data.artist + ' - ' + props.data.name : ''}
+                </span>
+            </p>
+            <p id="workDetailsMobile">
+                {' '}
+                <span className="formattingTitle">
+                    {props.data.artist + ' - ' + props.data.name}
+                </span>
+            </p>
             <style jsx>{workStyles}</style>
         </div>
     );
