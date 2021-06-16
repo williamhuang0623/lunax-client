@@ -1,5 +1,5 @@
 import css from 'styled-jsx/css';
-import { colors, breakpoints } from '../styles/vars';
+import { colors, breakpoints } from 'styles/vars';
 
 export const aboutStyle = css`
     #section1 {
@@ -194,60 +194,6 @@ export const aboutStyle = css`
         padding: 30px;
     }
 
-    footer {
-        background-color: black;
-        padding-left: 0;
-    }
-
-    .sub-footer {
-        display: flex;
-        justify-content: space-between;
-        padding-left: 34px;
-        padding-top: 110px;
-        padding-bottom: 48px;
-    }
-
-    .footer-links {
-        list-style-type: none;
-        display: flex;
-        margin-right: 40px;
-    }
-
-    .footer-links a {
-        text-decoration: none;
-        color: ${colors.pureWhite};
-        margin-right: 8px;
-        margin-top: 3px;
-    }
-
-    .x-links {
-        list-style-type: none;
-        display: flex;
-        position: absolute;
-        justify-content: center;
-    }
-
-    .contact-details {
-        padding-left: 48px;
-        padding-top: 48px;
-        color: ${colors.pureWhite};
-    }
-
-    .contact-details h3 {
-        margin: 0;
-        font-size: 30px;
-    }
-
-    .contact-details a {
-        color: ${colors.red};
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .contact-details a:hover {
-        text-decoration: underline;
-    }
-
     @media (min-width: ${breakpoints.xxl}) {
         #transitionGradient {
             height: 400px;
@@ -312,14 +258,8 @@ export const aboutStyle = css`
             height: 300px;
         }
 
-        .contact-details h3 {
-            margin: 0;
-            font-size: 24px;
-        }
-
         #section1 {
             background-image: url('/about/mobile_bg_2.png');
-            background-size: contain;
         }
 
         #quoteSection {
