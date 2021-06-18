@@ -18,4 +18,8 @@ export default {
         root: '/user',
         me: '/me',
     },
+    job: {
+        root: '/job-postings',
+        department: '/departments',
+    },
 };

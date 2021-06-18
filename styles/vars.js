@@ -21,7 +21,10 @@ export const fontWeights = {
 
 export const colors = {
     pureWhite: '#ffffff',
+    whiteTwo: '#FFFEFF',
     black: '#000',
     cyan: '#00fff0',
     red: '#ff0000',
+    lightGray: '#C4C4C4',
+    darkGray: '#333333',
 };
