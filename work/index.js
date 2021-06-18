@@ -5,6 +5,8 @@ import Ticker from 'react-ticker';
 import works from '../public/work/works/works.js';
 import ModalVideo from 'react-modal-video';
 
+const isServer = () => typeof window === 'undefined';
+
 function Filters(props) {
     const width = 70;
     const height = 30;
@@ -81,15 +83,17 @@ const Tile = (props) => {
 
     return (
         <div className="tile">
-            <ModalVideo
-                channel={props.data.platform}
-                isOpen={isOpen}
-                videoId={props.data.videoId}
-                onClose={() => setOpen(false)}
-                autoplay="true"
-                portrait="false"
-                color="black"
-            />
+            {!isServer() && (
+                <ModalVideo
+                    channel={props.data.platform}
+                    isOpen={isOpen}
+                    videoId={props.data.videoId}
+                    onClose={() => setOpen(false)}
+                    autoplay="true"
+                    portrait="false"
+                    color="black"
+                />
+            )}
             <img
                 onMouseEnter={mouseEnter}
                 onMouseLeave={mouseLeave}
