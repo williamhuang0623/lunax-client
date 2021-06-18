@@ -10,6 +10,14 @@ function JobPosting(props) {
     const router = useRouter();
     const pid = props.query.pid || router.query.pid || '';
 
+    function handleFilterClick(e) {
+        const { id } = e.target;
+
+        if (id) {
+            setDisplay(id);
+        }
+    }
+
     useEffect(async () => {
         const jobApi = new JobApi();
 
@@ -19,7 +27,7 @@ function JobPosting(props) {
         }
     }, [pid]);
 
-    return <Posting job={job} />;
+    return <Posting job={job} display={display} handleFilterClick={handleFilterClick} />;
 }
 
 JobPosting.getInitialProps = async ({ query }) => {

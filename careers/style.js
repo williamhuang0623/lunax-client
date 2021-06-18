@@ -150,12 +150,20 @@ export const careerStyles = css`
 `;
 
 export const postingStyles = css`
+    h1,
+    h2,
+    h3,
+    p {
+        margin: 0;
+    }
+
     .job-container {
         margin: 0;
         padding-left: 297px;
         padding-right: 343px;
         padding-top: 122px;
         padding-bottom: 122px;
+        color: ${colors.whiteTwo};
     }
 
     .job-container .back span {
@@ -164,5 +172,45 @@ export const postingStyles = css`
         color: #81f0e7;
         margin-left: 8px;
         cursor: pointer;
+    }
+
+    .job-container h1 {
+        font-weight: bold;
+        font-size: 48px;
+        line-height: 56px;
+        margin: 24px 0px;
+    }
+
+    .job-container .job-info {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 19px;
+        margin-bottom: 64px;
+    }
+
+    .display-filters button {
+        padding: 10px 39px;
+        color: ${colors.whiteTwo};
+        background: ${colors.black};
+        border: 1px solid ${colors.whiteTwo};
+        margin-right: 16px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .display-filters button.selected {
+        color: ${colors.black};
+        background: ${colors.whiteTwo};
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 3px;
+    }
+
+    .display-filters button:hover {
+        color: ${colors.black};
+        background: ${colors.whiteTwo};
+    }
+
+    .display-filters {
+        margin-bottom: 24px;
     }
 `;

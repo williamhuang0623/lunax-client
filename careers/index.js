@@ -3,6 +3,7 @@ import JobApi from 'lib/api/Job';
 import { withRouter } from 'next/router';
 
 import { careerStyles } from './style';
+import { printJobType } from './util';
 
 class CareersPage extends React.Component {
     constructor(props) {
@@ -58,28 +59,6 @@ class CareersPage extends React.Component {
         const id = e.currentTarget.getAttribute('id');
 
         await this.props.router.push(`/careers/${id}`);
-    }
-
-    printJobType(job_type) {
-        let job = '';
-        switch (job_type) {
-            case 'contractor':
-                job = 'Contractor';
-                break;
-            case 'internship':
-                job = 'Internship';
-                break;
-            case 'full':
-                job = 'Full-time';
-                break;
-            case 'part':
-                job = 'Part-time';
-                break;
-            default:
-                break;
-        }
-
-        return job;
     }
 
     render() {
@@ -139,7 +118,7 @@ class CareersPage extends React.Component {
                                               <div>
                                                   <span>{job.location.toUpperCase()}</span>
                                                   {' • '}
-                                                  <span>{this.printJobType(job.job_type)}</span>
+                                                  <span>{printJobType(job.job_type)}</span>
                                               </div>
                                           </div>
                                       );
