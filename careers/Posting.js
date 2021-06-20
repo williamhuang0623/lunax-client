@@ -5,8 +5,12 @@ import ReactMarkdown from 'react-markdown';
 import { postingStyles } from './style';
 import { printJobType } from './util';
 
+// Rewrite styles in markdown
+const components = {
+    a: ({ node, ...props }) => <a style={{ color: '#81f0e7' }} {...props} />,
+};
+
 function Posting({ job, display, handleFilterClick }) {
-    console.log({ job });
     if (job) {
         return (
             <div className="job-container">
@@ -39,12 +43,14 @@ function Posting({ job, display, handleFilterClick }) {
                             How to apply
                         </button>
                     </div>
-                    <div className="">
+                    <div className="copy-container">
                         {display === 'ROLE' && job.copy && (
-                            <ReactMarkdown>{job.copy}</ReactMarkdown>
+                            <ReactMarkdown components={components}>{job.copy}</ReactMarkdown>
                         )}
                         {display === 'APPLY' && job.how_to_apply && (
-                            <ReactMarkdown>{job.how_to_apply}</ReactMarkdown>
+                            <ReactMarkdown components={components}>
+                                {job.how_to_apply}
+                            </ReactMarkdown>
                         )}
                     </div>
                 </div>

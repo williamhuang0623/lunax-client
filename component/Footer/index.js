@@ -11,12 +11,12 @@ function Footer(props) {
     const footerLinks = [
         {
             label: 'Instagram',
-            href: 'https://www.instagram.com/newkinostudios/',
+            href: 'https://www.instagram.com/newkinostudio/',
             icon: <InstagramIcon fontSize={fontSize} />,
         },
         {
             label: 'Twitter',
-            href: 'https://twitter.com/newkinostudios',
+            href: 'https://twitter.com/newkinostudio',
             icon: <TwitterIcon fontSize={fontSize} />,
         },
         {

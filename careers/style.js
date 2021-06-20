@@ -213,4 +213,10 @@ export const postingStyles = css`
     .display-filters {
         margin-bottom: 24px;
     }
+
+    .copy-container {
+        border-top: 1px solid #646464;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
 `;
