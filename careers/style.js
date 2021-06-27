@@ -83,7 +83,7 @@ export const careerStyles = css`
         padding-top: 24px;
         box-sizing: border-box;
         border-top: 1px solid ${colors.lightGray};
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
     }
 
     .jobs-filters {
@@ -145,6 +145,42 @@ export const careerStyles = css`
         .text-container h1 {
             font-size: 34px;
             margin-bottom: 0;
+        }
+    }
+
+    @media (max-width: ${breakpoints.sm}) {
+        .jobs-description {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .jobs-container {
+            padding: 40px 0px;
+        }
+
+        .jobs-filters {
+            width: 100%;
+            border-right: none;
+            padding-bottom: 48px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .jobs-wrapper {
+            border: none;
+        }
+
+        .jobs-description p {
+            margin: 0;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #646464;
+        }
+
+        .jobs-listings {
+            width: 100%;
+            flex-grow: 1;
+            padding-left: 64px;
+            padding-left: 0;
         }
     }
 `;
@@ -218,5 +254,16 @@ export const postingStyles = css`
         border-top: 1px solid #646464;
         padding-top: 24px;
         padding-bottom: 24px;
+    }
+
+    @media (max-width: ${breakpoints.sm}) {
+        .job-container {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .display-filters button {
+            padding: 10px 24px;
+        }
     }
 `;
