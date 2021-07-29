@@ -7,19 +7,81 @@ export const homeStyles = css`
         width: 35px;
     }
 
-    .main {
-        height: 100vh;
-        width: 100vw;
-        background: black;
+    .jumbotron-container {
         position: relative;
-        display: flex;
-        object-fit: fill !important;
+        width: 100vw;
+        height: 100vh;
     }
 
     video {
+        position: absolute;
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
+        z-index: 1;
+    }
+
+    .main-text {
+        position: absolute;
+        z-index: 2;
+        width: 780px;
+        padding-left: 224px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .main-text h1 {
+        background: linear-gradient(
+            90deg,
+            #ff004f -2%,
+            #81f0e7 15.32%,
+            #fffeff 26.26%,
+            rgba(255, 254, 255, 0) 85.5%
+        );
+        color: transparent;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 60px;
+        line-height: 120%;
+    }
+
+    .main-text .description {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 120%;
+        color: ${colors.whiteTwo};
+        background: linear-gradient(90deg, #fffeff -2%, rgba(255, 254, 255, 0) 97.16%);
+        color: transparent;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+
+    .cta-wrapper button {
+        background: linear-gradient(90deg, #00ffd1 0%, ${colors.turquoise} 100%);
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+        padding: 10px 40px;
+        margin-bottom: 16px;
+        border: none;
+        cursor: pointer;
+        color: ${colors.black};
+    }
+
+    .cta-wrapper a {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 120%;
+        color: ${colors.turquoise};
+        text-decoration: none;
+        cursor: pointer;
     }
 
     .image-wrapper {
@@ -33,31 +95,53 @@ export const homeStyles = css`
         right: 50px;
     }
 
-    footer {
-        position: absolute;
-        bottom: 0;
-        padding: 22px;
-        padding-left: 0;
+    .brand-container {
+        padding: 52px 0px;
+        padding-bottom: 260px;
+        color: ${colors.lightGray};
     }
 
-    .footer-links {
-        list-style-type: none;
+    .brand-container p {
+        font-size: 14px;
+        text-align: center;
     }
 
-    .footer-links a {
-        text-decoration: none;
+    .all-brands {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
     }
 
-    .footer-links a,
-    .footer-links li {
-        font-size: 12px;
-        color: ${colors.pureWhite};
+    .all-brands img {
+        margin-right: 85px;
     }
 
-    .navBarContainer {
-        position: absolute;
-        top: 50px;
-        right: 50px;
+    .all-brands img:last-child {
+        margin-right: 0;
+    }
+
+    .project-highlights-container {
+        padding: 0px 224px;
+        color: ${colors.whiteTwo};
+    }
+
+    .project-highlights-container h1 {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 60px;
+        line-height: 120%;
+        margin-bottom: 56px;
+    }
+
+    .project-highlights-container .description {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 120%;
+        max-width: 600px;
+        color: ${colors.mediumGray};
     }
 
     @media (max-width: ${breakpoints.xl}) {
@@ -75,21 +159,9 @@ export const homeStyles = css`
     }
 
     @media (max-width: ${breakpoints.xs}) {
-        video {
-            width: 100%;
-            height: 400px;
-            border-radius: 10px;
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-
         .navigation {
             bottom: 60px;
             right: 25px;
         }
     }
 `;
-
-/* 
-@media (max-width: ${breakpoints.sm}) {}
-*/

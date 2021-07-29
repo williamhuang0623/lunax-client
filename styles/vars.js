@@ -26,5 +26,11 @@ export const colors = {
     cyan: '#00fff0',
     red: '#ff0000',
     lightGray: '#C4C4C4',
+    mediumGray: '#808080',
     darkGray: '#333333',
+    turquoise: '#81f0e7',
 };
+
+// @media (hover: hover) and (pointer: fine) {
+//   a:hover { color: red; }
+// }

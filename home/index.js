@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 
-import NavBarContainer from 'component/NavBarContainer/index.js';
 import { homeStyles } from './style';
 
 const BGVideos = [
@@ -45,10 +44,18 @@ class Home extends React.Component {
         this.state = {
             currentBackgroundVideo: 1,
             vidPaused: false,
+            timeout: 10000,
         };
         this.leftClick = this.leftClick.bind(this);
         this.rightClick = this.rightClick.bind(this);
         this.pauseClick = this.pauseClick.bind(this);
+    }
+
+    componentDidMount() {
+        const { timeout } = this.state;
+        setInterval(() => {
+            this.rightClick();
+        }, timeout);
     }
 
     leftClick(e) {
@@ -61,11 +68,19 @@ class Home extends React.Component {
     }
 
     rightClick(e) {
-        if (this.state.currentBackgroundVideo != BGVideos.length) {
-            this.setState((prevState) => ({
-                currentBackgroundVideo: prevState.currentBackgroundVideo + 1,
+        let { currentBackgroundVideo } = this.state;
+        const nextBgVideo = currentBackgroundVideo + 1;
+
+        if (nextBgVideo > BGVideos.length) {
+            this.setState({
+                currentBackgroundVideo: 1,
                 vidPaused: false,
-            }));
+            });
+        } else {
+            this.setState({
+                currentBackgroundVideo: nextBgVideo,
+                vidPaused: false,
+            });
         }
     }
 
@@ -73,6 +88,7 @@ class Home extends React.Component {
         const filteredVideo = BGVideos.filter((video) => {
             return video.id === this.state.currentBackgroundVideo;
         });
+
         return filteredVideo[0].path;
     }
 
@@ -88,22 +104,63 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div className="main">
-                <video
-                    id="videoBg"
-                    key={this.getBackgroundVideo().toString()}
-                    autoPlay={true}
-                    playsInline={true}
-                    loop
-                    muted
-                >
-                    <source
-                        id="video"
-                        src={this.getBackgroundVideo().toString()}
-                        type="video/mp4"
-                    ></source>
-                </video>
-                <div className="navigation">
+            <>
+                <div className="jumbotron-container">
+                    <video
+                        id="videoBg"
+                        key={this.getBackgroundVideo().toString()}
+                        autoPlay={true}
+                        playsInline={true}
+                        loop
+                        muted
+                    >
+                        <source
+                            id="video"
+                            src={this.getBackgroundVideo().toString()}
+                            type="video/mp4"
+                        ></source>
+                    </video>
+                    <div className="main-text">
+                        <h1>We are World Builders</h1>
+                        <p className="description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat.
+                        </p>
+                        <div className="cta-wrapper">
+                            <a href="/work">
+                                <button>Explore our work</button>
+                            </a>
+                            <div>
+                                <a href="https://foundation.app/newkino" target="_blank">
+                                    Visit our Foundation &gt;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="brand-container">
+                    <p>Brands our team has worked with</p>
+                    <div className="all-brands">
+                        <img src="/home/brands/88rising.png" alt="88_rising_logo" />
+                        <img src="/home/brands/dgtl.png" alt="dgtl_logo" />
+                        <img src="/home/brands/estee-lauder.png" alt="estee_lauder_logo" />
+                        <img src="/home/brands/nike.png" alt="nike_logo" />
+                        <img src="/home/brands/sony.png" alt="sony_logo" />
+                    </div>
+                </div>
+                <div className="project-highlights-container">
+                    <h1>Project Highlights</h1>
+                    <p className="description">
+                        Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
+                        incididunt ut labore et dolore magna amet, consectetur adipiscing elit
+                        aliqua. Ut enim amet, consectetur adipiscing elit veniam amet, consectetur
+                        adipiscing elit, website link.
+                    </p>
+                </div>
+                {/* 
+                    <div className="navigation">
                     <div className="image-wrapper video-nav-wrapper">
                         <Image
                             src="/home/left.png"
@@ -137,9 +194,9 @@ class Home extends React.Component {
                             className="video-nav-button"
                         />
                     </div>
-                </div>
+                </div> */}
                 <style jsx>{homeStyles}</style>
-            </div>
+            </>
         );
     }
 }

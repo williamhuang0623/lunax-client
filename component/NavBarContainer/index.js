@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { navBarContainerStyle } from './style';
 import Image from 'next/image';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import LanguageIcon from '@material-ui/icons/Language';
+
 import NavBar from 'component/Navbar/index.js';
+import { navBarContainerStyle } from './style';
 
 class NavBarContainer extends React.Component {
     constructor(props) {
@@ -24,11 +28,29 @@ class NavBarContainer extends React.Component {
     }
 
     render() {
+        const fontSize = 'small';
         return (
             <div className="navBar">
                 <div className="logo">
                     <a href="/">
-                        <Image src="/global/logo.png" width={120} height={68} alt="newkino_logo" />
+                        <Image src="/global/logo.png" width={48} height={30} alt="newkino_logo" />
+                    </a>
+                </div>
+                <div className="links-wrapper">
+                    <a href="/">Home</a>
+                    <a href="/work">Work</a>
+                    <a href="https://foundation.app/newkino">Foundation</a>
+                    <a href="/careers">Careers</a>
+                </div>
+                <div className="social-links">
+                    <a href="https://www.instagram.com/newkinostudio/" target="_blank">
+                        <InstagramIcon fontSize={fontSize} />
+                    </a>
+                    <a href="https://twitter.com/newkinostudio" target="_blank">
+                        <TwitterIcon fontSize={fontSize} />
+                    </a>
+                    <a href="https://foundation.app/newkino" target="_blank">
+                        <LanguageIcon fontSize={fontSize} />
                     </a>
                 </div>
                 <div className="navbar-button">
