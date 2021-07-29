@@ -16,27 +16,24 @@ const BGVideos = [
     },
 ];
 
-const footerLinks = [
-    {
-        label: 'Instagram',
-        href: 'https://www.instagram.com/newkinostudios/',
-    },
-];
+const images = [{}];
 
-const Footer = (
-    <footer>
-        <ul className="footer-links">
-            {footerLinks.map((link, i) => {
-                return (
-                    <a href={link.href} target="_blank" key={i}>
-                        <li key={i}>{link.label}</li>
-                    </a>
-                );
-            })}
-        </ul>
-        <style jsx>{homeStyles}</style>
-    </footer>
-);
+function ImageGridItem(image) {
+    const style = {
+        gridColumnEnd: `span ${getSpanEstimate(image.width)}`,
+        gridRowEnd: `span ${getSpanEstimate(image.height)}`,
+    };
+
+    return <img style={style} src={image.url} alt={image.alt} />;
+}
+
+function getSpanEstimate(size) {
+    if (size > 250) {
+        return 2;
+    }
+
+    return 1;
+}
 
 class Home extends React.Component {
     constructor(props) {
@@ -158,6 +155,8 @@ class Home extends React.Component {
                         aliqua. Ut enim amet, consectetur adipiscing elit veniam amet, consectetur
                         adipiscing elit, website link.
                     </p>
+
+                    <div className="gridContainer"></div>
                 </div>
                 {/* 
                     <div className="navigation">

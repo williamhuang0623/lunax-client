@@ -144,6 +144,14 @@ export const homeStyles = css`
         color: ${colors.mediumGray};
     }
 
+    .gridContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-rows: repeat(auto-fit, 260px);
+        grid-auto-flow: dense;
+        grid-gap: 0.3rem;
+    }
+
     @media (max-width: ${breakpoints.xl}) {
         .image-wrapper {
             padding: 0;
