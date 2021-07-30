@@ -6,6 +6,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 
 import NavBar from 'component/Navbar/index.js';
 import { navBarContainerStyle } from './style';
+import { s3Url } from 'lib/constants';
 
 class NavBarContainer extends React.Component {
     constructor(props) {
@@ -33,7 +34,12 @@ class NavBarContainer extends React.Component {
             <div className="navBar">
                 <div className="logo">
                     <a href="/">
-                        <Image src="/global/logo.png" width={48} height={30} alt="newkino_logo" />
+                        <Image
+                            src={`${s3Url}/global/logo.png`}
+                            width={48}
+                            height={30}
+                            alt="newkino_logo"
+                        />
                     </a>
                 </div>
                 <div className="links-wrapper">
@@ -55,7 +61,7 @@ class NavBarContainer extends React.Component {
                 </div>
                 <div className="navbar-button">
                     <Image
-                        src="/global/navButton.png"
+                        src={`${s3Url}/global/navButton.png`}
                         id="navBarButton"
                         onClick={this.handleMouseDown}
                         width={35}

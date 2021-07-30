@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { workStyles, filtersStyle } from './style';
 import Image from 'next/image';
 import Ticker from 'react-ticker';
-import works from '../public/work/works/works.js';
+
+import { workStyles, filtersStyle } from './style';
+import works from './works.js';
 import ModalVideo from 'react-modal-video';
 
 const isServer = () => typeof window === 'undefined';

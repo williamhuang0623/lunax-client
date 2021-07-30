@@ -2,17 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 
 import { homeStyles } from './style';
+import { s3Url } from 'lib/constants';
 
 const BGVideos = [
     {
         id: 1,
         name: 'NEWKINO_REEL_v2',
-        path: '/home/NEWKINO_MICROCHIP.mp4',
+        path: `${s3Url}/home/NEWKINO_MICROCHIP.mp4`,
     },
     {
         id: 2,
         name: 'UNFORTUNATE_SPACEMAN',
-        path: '/home/UNFORTUNATE_SPACEMAN.mp4',
+        path: `${s3Url}/home/UNFORTUNATE_SPACEMAN.mp4`,
     },
 ];
 
@@ -140,11 +141,14 @@ class Home extends React.Component {
                 <div className="brand-container">
                     <p>Brands our team has worked with</p>
                     <div className="all-brands">
-                        <img src="/home/brands/88rising.png" alt="88_rising_logo" />
-                        <img src="/home/brands/dgtl.png" alt="dgtl_logo" />
-                        <img src="/home/brands/estee-lauder.png" alt="estee_lauder_logo" />
-                        <img src="/home/brands/nike.png" alt="nike_logo" />
-                        <img src="/home/brands/sony.png" alt="sony_logo" />
+                        <img src={`${s3Url}/home/brands/88rising.png`} alt="88_rising_logo" />
+                        <img src={`${s3Url}/home/brands/dgtl.png`} alt="dgtl_logo" />
+                        <img
+                            src={`${s3Url}/home/brands/estee-lauder.png`}
+                            alt="estee_lauder_logo"
+                        />
+                        <img src={`${s3Url}/home/brands/nike.png`} alt="nike_logo" />
+                        <img src={`${s3Url}/home/brands/sony.png`} alt="sony_logo" />
                     </div>
                 </div>
                 <div className="project-highlights-container">
@@ -158,42 +162,6 @@ class Home extends React.Component {
 
                     <div className="gridContainer"></div>
                 </div>
-                {/* 
-                    <div className="navigation">
-                    <div className="image-wrapper video-nav-wrapper">
-                        <Image
-                            src="/home/left.png"
-                            onClick={this.leftClick}
-                            width={35}
-                            height={35}
-                            className="video-nav-button"
-                        />
-                        {this.state.vidPaused === true ? (
-                            <Image
-                                src="/home/play.png"
-                                onClick={this.pauseClick}
-                                width={35}
-                                height={35}
-                                className="video-nav-button"
-                            />
-                        ) : (
-                            <Image
-                                src="/home/pause.png"
-                                onClick={this.pauseClick}
-                                width={35}
-                                height={35}
-                                className="video-nav-button"
-                            />
-                        )}
-                        <Image
-                            src="/home/right.png"
-                            onClick={this.rightClick}
-                            width={35}
-                            height={35}
-                            className="video-nav-button"
-                        />
-                    </div>
-                </div> */}
                 <style jsx>{homeStyles}</style>
             </>
         );

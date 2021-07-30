@@ -1,5 +1,6 @@
 import css from 'styled-jsx/css';
 import { colors, breakpoints } from 'styles/vars';
+import { s3Url } from 'lib/constants';
 
 export const careerStyles = css`
     .careers-container {
@@ -9,7 +10,7 @@ export const careerStyles = css`
     .banner {
         height: 373px;
         width: 100%;
-        background: url(/careers/mothership.png);
+        background: url(${s3Url}/careers/mothership.png);
         background-position: center;
         background-size: cover;
     }

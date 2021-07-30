@@ -3,7 +3,7 @@ import { colors, breakpoints } from 'styles/vars';
 
 export const aboutStyle = css`
     #section1 {
-        background-image: url('/about/goalsSection.png');
+        background-image: url(${s3Url}/about/goalsSection.png);
         filter: grayscale(100%);
         background-size: cover;
         background-position: center;
@@ -44,7 +44,7 @@ export const aboutStyle = css`
     }
 
     #quoteSection {
-        background-image: url('/about/aston.png');
+        background-image: url(${s3Url}/about/aston.png);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -75,7 +75,7 @@ export const aboutStyle = css`
     }
 
     #imageOne {
-        background: url(/about/NEWKINOCYBERPUNK.png);
+        background: url(${s3Url}/about/NEWKINOCYBERPUNK.png);
         flex: 1;
         position: relative;
         left: 0px;
@@ -88,7 +88,7 @@ export const aboutStyle = css`
     }
 
     #imageOneHover {
-        background: url(/about/NEWKINOCYBERPUNK.png);
+        background: url(${s3Url}/about/NEWKINOCYBERPUNK.png);
         flex: 1;
         position: relative;
         left: 0px;
@@ -106,7 +106,7 @@ export const aboutStyle = css`
     }
 
     #imageTwo {
-        background: url(/about/NEWKINOFLOWERS.png);
+        background: url(${s3Url}/about/NEWKINOFLOWERS.png);
         flex: 1;
         height: 600px;
         position: relative;
@@ -117,7 +117,7 @@ export const aboutStyle = css`
     }
 
     #imageTwoHover {
-        background: url(/about/NEWKINOFLOWERS.png);
+        background: url(${s3Url}/about/NEWKINOFLOWERS.png);
         flex: 1;
         position: relative;
         height: 600px;
@@ -130,7 +130,7 @@ export const aboutStyle = css`
     }
 
     #imageThree {
-        background: url(/about/NEWKINOLINES.png);
+        background: url(${s3Url}/about/NEWKINOLINES.png);
         flex: 1;
         position: relative;
         right: 0px;
@@ -143,7 +143,7 @@ export const aboutStyle = css`
     }
 
     #imageThreeHover {
-        background: url(/about/NEWKINOLINES.png);
+        background: url(${s3Url}/about/NEWKINOLINES.png);
         flex: 1;
         position: relative;
         right: 0px;
@@ -197,7 +197,7 @@ export const aboutStyle = css`
     @media (min-width: ${breakpoints.xxl}) {
         #transitionGradient {
             height: 400px;
-            background-image: url(/about/fadeIn.png);
+            background-image: url(${s3Url}/about/fadeIn.png);
             margin-top: -120px;
             width: 100vw;
             background-size: cover;
@@ -259,11 +259,11 @@ export const aboutStyle = css`
         }
 
         #section1 {
-            background-image: url('/about/mobile_bg_2.png');
+            background-image: url(${s3Url}/about/mobile_bg_2.png);
         }
 
         #quoteSection {
-            background-image: url('/about/mobile_quote_bg.png');
+            background-image: url(${s3Url}/about/mobile_quote_bg.png);
         }
     }
 `;

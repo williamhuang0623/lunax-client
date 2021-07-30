@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { postingStyles } from './style';
 import { printJobType } from './util';
+import { s3Url } from 'lib/constants';
 
 // Rewrite styles in markdown
 const components = {
@@ -15,7 +16,7 @@ function Posting({ job, display, handleFilterClick }) {
         return (
             <div className="job-container">
                 <div className="back">
-                    <img src="/careers/left-arrow.svg" />
+                    <img src={`${s3Url}/careers/left-arrow.svg`} />
                     <Link href="/careers">
                         <span>EXPLORE OTHER JOBS</span>
                     </Link>

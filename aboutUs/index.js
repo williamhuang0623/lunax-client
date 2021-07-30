@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Footer from 'component/Footer';
 import FullScreenDiv from 'component/FullScreenDiv';
 import { aboutStyle } from './style';
+import { s3Url } from 'lib/constants';
 
 function GoalsChild(props) {
     return (
@@ -20,7 +21,7 @@ function GoalsChild(props) {
             <div className="navigation">
                 <div className="image-wrapper">
                     <a href="#section2">
-                        <Image src="/about/downCTA.png" width={35} height={35} />
+                        <Image src={`${s3Url}/about/downCTA.png`} width={35} height={35} />
                     </a>
                 </div>
             </div>
@@ -85,7 +86,7 @@ function Section2(props) {
                 </p>
             </div>
             <div id="ourStoriesSection">
-                <img id="ourStory" src="/about/ourStory.png"></img>
+                <img id="ourStory" src={`${s3Url}/about/ourStory.png`}></img>
             </div>
             <div id="quote2Section">
                 <div

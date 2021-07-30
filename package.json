@@ -35,5 +35,8 @@
     },
     "moduleRoots": [
         ""
+    ],
+    "cacheDirectories": [
+        ".next/cache"
     ]
 }
