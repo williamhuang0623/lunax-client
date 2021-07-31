@@ -41,7 +41,7 @@ export const homeStyles = css`
             #ff004f -2%,
             #81f0e7 15.32%,
             #fffeff 26.26%,
-            rgba(255, 254, 255, 0.5) 85.5%
+            rgba(255, 254, 255, 0.7) 85.5%
         );
         color: transparent;
         background-clip: text;
@@ -61,7 +61,7 @@ export const homeStyles = css`
         font-size: 34px;
         line-height: 120%;
         color: ${colors.whiteTwo};
-        background: linear-gradient(90deg, #fffeff -2%, rgba(255, 254, 255, 0.5) 97.16%);
+        background: linear-gradient(90deg, #fffeff -2%, rgba(255, 254, 255, 0.7) 97.16%);
         color: transparent;
         background-clip: text;
         -webkit-text-fill-color: transparent;
