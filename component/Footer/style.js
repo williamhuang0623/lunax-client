@@ -5,12 +5,13 @@ export const footerStyles = css`
     footer {
         background-color: black;
         padding-left: 0;
+        padding: 0 224px;
+        box-sizing: border-box;
     }
 
     .sub-footer {
         display: flex;
         justify-content: space-between;
-        padding: 0 224px;
         padding-bottom: 48px;
     }
 
@@ -27,8 +28,8 @@ export const footerStyles = css`
     }
 
     .contact-details {
-        padding: 0 224px;
         color: ${colors.pureWhite};
+        margin-bottom: 16px;
     }
 
     .contact-details h3 {
@@ -46,10 +47,20 @@ export const footerStyles = css`
         text-decoration: underline;
     }
 
+    @media (max-width: ${breakpoints.md}) {
+        footer {
+            padding: 0 48px;
+        }
+    }
+
     @media (max-width: ${breakpoints.xs}) {
         .contact-details h3 {
             margin: 0;
             font-size: 24px;
+        }
+
+        footer {
+            padding: 0 24px;
         }
     }
 `;

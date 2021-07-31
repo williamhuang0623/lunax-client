@@ -40,8 +40,8 @@ export const navBarStyle = css`
 
     .closeNav {
         position: absolute;
-        top: 35px;
-        right: 35px;
+        top: 24px;
+        right: 24px;
         cursor: pointer;
     }
 `;

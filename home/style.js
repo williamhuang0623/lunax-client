@@ -26,6 +26,7 @@ export const homeStyles = css`
     }
 
     .main-text {
+        box-sizing: border-box;
         position: absolute;
         z-index: 2;
         width: 780px;
@@ -40,7 +41,7 @@ export const homeStyles = css`
             #ff004f -2%,
             #81f0e7 15.32%,
             #fffeff 26.26%,
-            rgba(255, 254, 255, 0) 85.5%
+            rgba(255, 254, 255, 0.5) 85.5%
         );
         color: transparent;
         background-clip: text;
@@ -60,7 +61,7 @@ export const homeStyles = css`
         font-size: 34px;
         line-height: 120%;
         color: ${colors.whiteTwo};
-        background: linear-gradient(90deg, #fffeff -2%, rgba(255, 254, 255, 0) 97.16%);
+        background: linear-gradient(90deg, #fffeff -2%, rgba(255, 254, 255, 0.5) 97.16%);
         color: transparent;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -112,6 +113,7 @@ export const homeStyles = css`
     }
 
     .all-brands {
+        box-sizing: border-box;
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
@@ -126,9 +128,13 @@ export const homeStyles = css`
     }
 
     .project-highlights-container {
-        padding: 0px 224px;
         color: ${colors.whiteTwo};
         margin-bottom: 177px;
+    }
+
+    .project-highlights-container,
+    .nft-highlights-container {
+        padding: 0px 224px;
     }
 
     .nft-highlights-container h1,
@@ -155,7 +161,6 @@ export const homeStyles = css`
     }
 
     .nft-highlights-container {
-        padding: 0px 224px;
         margin-bottom: 177px;
     }
 
@@ -214,24 +219,51 @@ export const homeStyles = css`
         object-fit: cover;
     }
 
-    @media (max-width: ${breakpoints.xl}) {
-        .image-wrapper {
-            padding: 0;
-        }
-    }
-
     @media (max-width: ${breakpoints.md}) {
-        video {
+        .main-text {
             width: 100%;
-            height: auto;
-            object-fit: cover;
+            padding: 48px;
+        }
+
+        .nft-highlights-container h1,
+        .project-highlights-container h1,
+        .main-text h1 {
+            font-size: 48px;
+        }
+
+        .nft-highlights-container .description,
+        .project-highlights-container .description,
+        .main-text .description {
+            font-size: 24px;
+        }
+
+        .all-brands {
+            padding: 48px;
+        }
+
+        .all-brands img {
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+
+        .project-highlights-container,
+        .nft-highlights-container {
+            padding: 0px 48px;
         }
     }
 
     @media (max-width: ${breakpoints.xs}) {
-        .navigation {
-            bottom: 60px;
-            right: 25px;
+        .project-highlights-container,
+        .nft-highlights-container {
+            padding: 0px 24px;
+        }
+
+        .all-brands {
+            padding: 24px;
+        }
+
+        .main-text {
+            padding: 24px;
         }
     }
 `;

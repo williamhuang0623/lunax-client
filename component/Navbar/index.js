@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 
 import { navBarStyle } from './style';
+import { s3Url } from 'lib/constants';
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class NavBar extends React.Component {
             >
                 <div className="closeNav">
                     <Image
-                        src="/global/closeNav.png"
+                        src={`${s3Url}/global/closeNav.png`}
                         id="navBarButton"
                         onClick={this.handleMouseDown}
                         width={35}

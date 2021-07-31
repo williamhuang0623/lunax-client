@@ -89,6 +89,12 @@ export const workStyles = css`
             display: block;
             text-align: left;
         }
+
+        .tile {
+            margin-left: 24px;
+            margin-right: 24px;
+            margin-top: 24px;
+        }
     }
 `;
 

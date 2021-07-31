@@ -12,6 +12,7 @@ export const navBarContainerStyle = css`
         align-items: self;
         padding: 16px 0px;
         font-size: 14px;
+        box-sizing: border-box;
     }
 
     .links-wrapper a {
@@ -50,9 +51,6 @@ export const navBarContainerStyle = css`
 
     .navbar-button {
         display: none;
-        position: absolute;
-        top: 35px;
-        right: 35px;
         cursor: pointer;
     }
 
@@ -63,11 +61,13 @@ export const navBarContainerStyle = css`
     }
 
     @media (max-width: ${breakpoints.sm}) {
+        .navBar {
+            justify-content: space-between;
+            padding: 24px;
+        }
+
         .navbar-button {
             display: block;
-            position: absolute;
-            top: 35px;
-            right: 35px;
             cursor: pointer;
         }
 
