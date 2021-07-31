@@ -29,7 +29,7 @@ function Footer(props) {
     return (
         <footer className="footer">
             <div className="contact-details">
-                <h3>Reach out to us at</h3>
+                <h3>Get in touch</h3>
                 <a href="mailto:contact@newkin.studio">
                     <h3>contact@newkino.studio</h3>
                 </a>

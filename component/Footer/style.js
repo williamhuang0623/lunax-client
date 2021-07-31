@@ -37,7 +37,7 @@ export const footerStyles = css`
     }
 
     .contact-details a {
-        color: ${colors.red};
+        color: ${colors.turquoise};
         cursor: pointer;
         text-decoration: none;
     }
