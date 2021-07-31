@@ -1,1 +1,1 @@
-web: npm run build && npm run prod-start
+web: next build && npm run prod-start
