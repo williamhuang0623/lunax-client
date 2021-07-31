@@ -1,9 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
+import Fade from 'react-reveal/Fade';
 
 import { homeStyles } from './style';
 import { s3Url } from 'lib/constants';
 import Footer from 'component/Footer';
+import { motion } from 'framer-motion';
+
+// const isServer = () => typeof window === 'undefined';
 
 const BGVideos = [
     {
@@ -78,6 +82,16 @@ const nfts = [
         alt: 'unfortunate_spaceman',
     },
 ];
+
+const variants = {
+    visible: (i) => ({
+        opacity: 1,
+        transition: {
+            delay: i * 1.5,
+        },
+    }),
+    hidden: { opacity: 0 },
+};
 
 class Home extends React.Component {
     constructor(props) {
@@ -161,24 +175,27 @@ class Home extends React.Component {
                             type="video/mp4"
                         ></source>
                     </video>
+
                     <div className="main-text">
-                        <h1>We are World Builders</h1>
-                        <p className="description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
-                        </p>
-                        <div className="cta-wrapper">
-                            <a href="/work">
-                                <button>Explore our work</button>
-                            </a>
-                            <div>
-                                <a href="https://foundation.app/newkino" target="_blank">
-                                    Visit our Foundation &gt;
+                        <motion.div initial="hidden" animate="visible" variants={variants}>
+                            <h1>We are World Builders</h1>
+                            <p className="description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                aliquip ex ea commodo consequat.
+                            </p>
+                            <div className="cta-wrapper">
+                                <a href="/work">
+                                    <button>Explore our work</button>
                                 </a>
+                                <div>
+                                    <a href="https://foundation.app/newkino" target="_blank">
+                                        Visit our Foundation &gt;
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
                 <div className="brand-container">
@@ -195,62 +212,78 @@ class Home extends React.Component {
                     </div>
                 </div>
                 <div className="project-highlights-container">
-                    <h1>Project Highlights</h1>
-                    <p className="description">
-                        Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
-                        incididunt ut labore et dolore magna amet, consectetur adipiscing elit
-                        aliqua. Ut enim amet, consectetur adipiscing elit veniam amet, consectetur
-                        adipiscing elit, website link.
-                    </p>
+                    <Fade top>
+                        <>
+                            <h1>Project Highlights</h1>
+                            <p className="description">
+                                Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
+                                incididunt ut labore et dolore magna amet, consectetur adipiscing
+                                elit aliqua. Ut enim amet, consectetur adipiscing elit veniam amet,
+                                consectetur adipiscing elit, website link.
+                            </p>
+                        </>
+                    </Fade>
 
-                    <div className="gridContainer">
-                        {media.map((m, i) => {
-                            if (m.type === 'video') {
-                                return (
-                                    <figure className={`gallery-item gallery-item--${i + 1}`}>
-                                        <video src={m.src} loop autoPlay muted></video>
-                                    </figure>
-                                );
-                            } else {
-                                return (
-                                    <figure className={`gallery-item gallery-item--${i + 1}`}>
-                                        <img src={m.src} alt={m.alt} />
-                                    </figure>
-                                );
-                            }
-                        })}
-                    </div>
+                    <Fade bottom>
+                        <div className="gridContainer">
+                            {media.map((m, i) => {
+                                if (m.type === 'video') {
+                                    return (
+                                        <figure
+                                            className={`gallery-item gallery-item--${i + 1}`}
+                                            key={i}
+                                        >
+                                            <video src={m.src} loop autoPlay muted></video>
+                                        </figure>
+                                    );
+                                } else {
+                                    return (
+                                        <figure
+                                            className={`gallery-item gallery-item--${i + 1}`}
+                                            key={i}
+                                        >
+                                            <img src={m.src} alt={m.alt} />
+                                        </figure>
+                                    );
+                                }
+                            })}
+                        </div>
+                    </Fade>
                 </div>
                 <div className="nft-highlights-container">
-                    <h1>Our NFTs</h1>
-                    <p className="description">
-                        Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
-                        incididunt ut labore et dolore magna amet, consectetur adipiscing elit
-                        aliqua. Ut enim amet, consectetur adipiscing elit veniam amet, consectetur
-                        adipiscing elit, website link.
-                        <br /> <br />
-                        <a href="https://foundation.app/newkino" target="_blank">
-                            Visit our Foundation &gt;
-                        </a>
-                    </p>
+                    <Fade top>
+                        <h1>Our NFTs</h1>
+                        <p className="description">
+                            Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
+                            incididunt ut labore et dolore magna amet, consectetur adipiscing elit
+                            aliqua. Ut enim amet, consectetur adipiscing elit veniam amet,
+                            consectetur adipiscing elit, website link.
+                            <br /> <br />
+                            <a href="https://foundation.app/newkino" target="_blank">
+                                Visit our Foundation &gt;
+                            </a>
+                        </p>
+                    </Fade>
 
-                    <div className="gridContainer">
-                        {nfts.map((nft, i) => {
-                            if (nft.type === 'video') {
-                                return (
-                                    <figure className={`gallery-item`}>
-                                        <video src={nft.src} loop autoPlay muted></video>
-                                    </figure>
-                                );
-                            } else {
-                                return (
-                                    <figure className={`gallery-item`}>
-                                        <img src={nft.src} alt={nft.alt} />
-                                    </figure>
-                                );
-                            }
-                        })}
-                    </div>
+                    <Fade bottom>
+                        <div className="gridContainer">
+                            {nfts.map((nft, i) => {
+                                if (nft.type === 'video') {
+                                    return (
+                                        <figure className={`gallery-item`} key={i}>
+                                            <video src={nft.src} loop autoPlay muted></video>
+                                        </figure>
+                                    );
+                                } else {
+                                    return (
+                                        <figure className={`gallery-item`} key={i}>
+                                            <img src={nft.src} alt={nft.alt} />
+                                        </figure>
+                                    );
+                                }
+                            })}
+                        </div>
+                    </Fade>
                 </div>
                 <Footer />
                 <style jsx>{homeStyles}</style>
