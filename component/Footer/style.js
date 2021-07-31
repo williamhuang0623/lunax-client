@@ -10,15 +10,13 @@ export const footerStyles = css`
     .sub-footer {
         display: flex;
         justify-content: space-between;
-        padding-left: 34px;
-        padding-top: 110px;
+        padding: 0 224px;
         padding-bottom: 48px;
     }
 
     .footer-links {
         list-style-type: none;
         display: flex;
-        margin-right: 40px;
     }
 
     .footer-links a {
@@ -29,8 +27,7 @@ export const footerStyles = css`
     }
 
     .contact-details {
-        padding-left: 48px;
-        padding-top: 48px;
+        padding: 0 224px;
         color: ${colors.pureWhite};
     }
 

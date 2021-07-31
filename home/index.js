@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { homeStyles } from './style';
 import { s3Url } from 'lib/constants';
+import Footer from 'component/Footer';
 
 const BGVideos = [
     {
@@ -17,24 +18,66 @@ const BGVideos = [
     },
 ];
 
-const images = [{}];
+const media = [
+    {
+        src: `${s3Url}/home/project-highlights/TICKET.mp4`,
+        type: 'video',
+        alt: 'ticket',
+    },
+    {
+        src: `${s3Url}/home/project-highlights/PRISM.mp4`,
+        type: 'video',
+        alt: 'prism',
+    },
+    {
+        src: `${s3Url}/home/project-highlights/Sleepystill.png`,
+        type: 'image',
+        alt: 'sleepy',
+    },
+    {
+        src: `${s3Url}/home/project-highlights/KYOTO_2067.mov`,
+        type: 'video',
+        alt: 'kyoto',
+    },
+    {
+        src: `${s3Url}/home/project-highlights/nike.mp4`,
+        type: 'video',
+        alt: 'nike',
+    },
+];
 
-function ImageGridItem(image) {
-    const style = {
-        gridColumnEnd: `span ${getSpanEstimate(image.width)}`,
-        gridRowEnd: `span ${getSpanEstimate(image.height)}`,
-    };
-
-    return <img style={style} src={image.url} alt={image.alt} />;
-}
-
-function getSpanEstimate(size) {
-    if (size > 250) {
-        return 2;
-    }
-
-    return 1;
-}
+const nfts = [
+    {
+        src: `${s3Url}/home/nft-highlights/enter_the_void.mp4`,
+        type: 'video',
+        alt: 'enter-void',
+    },
+    {
+        src: `${s3Url}/home/nft-highlights/eva.mp4`,
+        type: 'video',
+        alt: 'eva',
+    },
+    {
+        src: `${s3Url}/home/nft-highlights/interstellar_overdrive.mp4`,
+        type: 'video',
+        alt: 'interstellar_overdrive',
+    },
+    {
+        src: `${s3Url}/home/nft-highlights/ourania_lightspeed.mp4`,
+        type: 'video',
+        alt: 'ourania_lightspeed',
+    },
+    {
+        src: `${s3Url}/home/nft-highlights/ourania_three_worlds.mp4`,
+        type: 'video',
+        alt: 'ourania_three_worlds',
+    },
+    {
+        src: `${s3Url}/home/nft-highlights/unfortunate_spaceman.mp4`,
+        type: 'video',
+        alt: 'unfortunate_spaceman',
+    },
+];
 
 class Home extends React.Component {
     constructor(props) {
@@ -160,8 +203,56 @@ class Home extends React.Component {
                         adipiscing elit, website link.
                     </p>
 
-                    <div className="gridContainer"></div>
+                    <div className="gridContainer">
+                        {media.map((m, i) => {
+                            if (m.type === 'video') {
+                                return (
+                                    <figure className={`gallery-item gallery-item--${i + 1}`}>
+                                        <video src={m.src} loop autoPlay muted></video>
+                                    </figure>
+                                );
+                            } else {
+                                return (
+                                    <figure className={`gallery-item gallery-item--${i + 1}`}>
+                                        <img src={m.src} alt={m.alt} />
+                                    </figure>
+                                );
+                            }
+                        })}
+                    </div>
                 </div>
+                <div className="nft-highlights-container">
+                    <h1>Our NFTs</h1>
+                    <p className="description">
+                        Lorem ipsum sit amet, consectetur adipiscing elit, do eiusmod tempor
+                        incididunt ut labore et dolore magna amet, consectetur adipiscing elit
+                        aliqua. Ut enim amet, consectetur adipiscing elit veniam amet, consectetur
+                        adipiscing elit, website link.
+                        <br /> <br />
+                        <a href="https://foundation.app/newkino" target="_blank">
+                            Visit our Foundation &gt;
+                        </a>
+                    </p>
+
+                    <div className="gridContainer">
+                        {nfts.map((nft, i) => {
+                            if (nft.type === 'video') {
+                                return (
+                                    <figure className={`gallery-item`}>
+                                        <video src={nft.src} loop autoPlay muted></video>
+                                    </figure>
+                                );
+                            } else {
+                                return (
+                                    <figure className={`gallery-item`}>
+                                        <img src={nft.src} alt={nft.alt} />
+                                    </figure>
+                                );
+                            }
+                        })}
+                    </div>
+                </div>
+                <Footer />
                 <style jsx>{homeStyles}</style>
             </>
         );

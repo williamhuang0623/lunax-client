@@ -2,6 +2,10 @@ import css from 'styled-jsx/css';
 import { colors, breakpoints } from '../styles/vars';
 
 export const homeStyles = css`
+    figure {
+        margin: 0;
+    }
+
     .icon {
         height: 35px;
         width: 35px;
@@ -13,7 +17,7 @@ export const homeStyles = css`
         height: 100vh;
     }
 
-    video {
+    .jumbotron-container video {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -73,6 +77,7 @@ export const homeStyles = css`
         color: ${colors.black};
     }
 
+    .description a,
     .cta-wrapper a {
         font-family: Roboto;
         font-style: normal;
@@ -97,7 +102,7 @@ export const homeStyles = css`
 
     .brand-container {
         padding: 52px 0px;
-        padding-bottom: 260px;
+        padding-bottom: 177px;
         color: ${colors.lightGray};
     }
 
@@ -123,9 +128,12 @@ export const homeStyles = css`
     .project-highlights-container {
         padding: 0px 224px;
         color: ${colors.whiteTwo};
+        margin-bottom: 177px;
     }
 
+    .nft-highlights-container h1,
     .project-highlights-container h1 {
+        color: ${colors.whiteTwo};
         font-family: Roboto;
         font-style: normal;
         font-weight: bold;
@@ -134,6 +142,7 @@ export const homeStyles = css`
         margin-bottom: 56px;
     }
 
+    .nft-highlights-container .description,
     .project-highlights-container .description {
         font-family: Roboto;
         font-style: normal;
@@ -142,14 +151,67 @@ export const homeStyles = css`
         line-height: 120%;
         max-width: 600px;
         color: ${colors.mediumGray};
+        margin-bottom: 80px;
     }
 
-    .gridContainer {
+    .nft-highlights-container {
+        padding: 0px 224px;
+        margin-bottom: 177px;
+    }
+
+    .project-highlights-container .gridContainer {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        grid-template-rows: repeat(auto-fit, 260px);
-        grid-auto-flow: dense;
-        grid-gap: 0.3rem;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(16, 5vw);
+        grid-gap: 15px;
+    }
+
+    .nft-highlights-container .gridContainer {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        width: 100%;
+        display: grid;
+        grid-gap: 15px;
+    }
+
+    .gallery-item {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .gallery-item--1 {
+        grid-column: 1 / span 2;
+        grid-row: 1 / span 6;
+    }
+
+    .gallery-item--2 {
+        grid-column: 3 / span 2;
+        grid-row: 1 / span 6;
+    }
+
+    .gallery-item--3 {
+        grid-column: 1 / span 4;
+        grid-row: 7 / span 4;
+    }
+
+    .gallery-item--4 {
+        grid-column: 1 / span 2;
+        grid-row: 11 / span 5;
+    }
+
+    .gallery-item--5 {
+        grid-column: 3 / span 2;
+        grid-row: 11 / span 5;
+    }
+
+    .gallery-item img,
+    .gallery-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     @media (max-width: ${breakpoints.xl}) {
