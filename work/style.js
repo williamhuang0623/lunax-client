@@ -16,6 +16,7 @@ export const workStyles = css`
 
     .filterSection {
         display: flex;
+        justify-content: center;
     }
 
     #workTable {
@@ -93,7 +94,6 @@ export const workStyles = css`
 
 export const filtersStyle = css`
     .filters {
-        padding-left: 30px;
         margin-top: 30px;
     }
 
