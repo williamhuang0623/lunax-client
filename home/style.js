@@ -11,6 +11,10 @@ export const homeStyles = css`
         width: 35px;
     }
 
+    .home-container {
+        background-color: ${colors.black};
+    }
+
     .jumbotron-container {
         position: relative;
         width: 100vw;

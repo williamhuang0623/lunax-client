@@ -159,7 +159,7 @@ class Home extends React.Component {
 
     render() {
         return (
-            <>
+            <div className="home-container">
                 <div className="jumbotron-container">
                     <video
                         id="videoBg"
@@ -287,7 +287,7 @@ class Home extends React.Component {
                 </div>
                 <Footer />
                 <style jsx>{homeStyles}</style>
-            </>
+            </div>
         );
     }
 }
