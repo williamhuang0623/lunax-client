@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity ^0.8.3;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import '@openzeppelin/contracts/utils/Counters.sol';
+import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
-import "hardhat/console.sol";
+import 'hardhat/console.sol';
 
 contract NFTMarket is ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -52,11 +52,8 @@ contract NFTMarket is ReentrancyGuard {
         uint256 tokenId,
         uint256 price
     ) public payable nonReentrant {
-        require(price > 0, "Price must be at least 1 wei");
-        require(
-            msg.value == listingPrice,
-            "Price must be equal to listing price"
-        );
+        require(price > 0, 'Price must be at least 1 wei');
+        require(msg.value == listingPrice, 'Price must be equal to listing price');
 
         _itemIds.increment();
         uint256 itemId = _itemIds.current();
@@ -73,29 +70,17 @@ contract NFTMarket is ReentrancyGuard {
 
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
 
-        emit MarketItemCreated(
-            itemId,
-            nftContract,
-            tokenId,
-            msg.sender,
-            address(0),
-            price,
-            false
-        );
+        emit MarketItemCreated(itemId, nftContract, tokenId, msg.sender, address(0), price, false);
     }
 
     /* Creates the sale of a marketplace item */
     /* Transfers ownership of the item, as well as funds between parties */
-    function createMarketSale(address nftContract, uint256 itemId)
-        public
-        payable
-        nonReentrant
-    {
+    function createMarketSale(address nftContract, uint256 itemId) public payable nonReentrant {
         uint256 price = idToMarketItem[itemId].price;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         require(
             msg.value == price,
-            "Please submit the asking price in order to complete the purchase"
+            'Please submit the asking price in order to complete the purchase'
         );
 
         idToMarketItem[itemId].seller.transfer(msg.value);

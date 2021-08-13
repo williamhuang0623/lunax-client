@@ -1,21 +1,23 @@
 import React from 'react';
 import AdminLayout from 'layout/admin/layout';
 import { ethers } from 'ethers'
-import Web3Modal from 'web3modal'
+
 import axios from 'axios'
+import Web3Modal from "web3modal"
+
 import {
-    nftaddress, nftmarketaddress
+    nftmarketaddress, nftaddress
 } from '../../config'
 
-import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
+import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
+
 
 class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             nfts: [],
-            sold: [],
             loadingState: 'not-loaded'
         }
     }
@@ -35,7 +37,7 @@ class Admin extends React.Component {
 
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
-        const data = await marketContract.fetchItemsCreated()
+        const data = await marketContract.fetchMyNFTs()
 
         const items = await Promise.all(data.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
@@ -46,26 +48,21 @@ class Admin extends React.Component {
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
                 owner: i.owner,
-                sold: i.sold,
                 image: meta.data.image,
             }
             return item
         }))
-        /* create a filtered array of items that have been sold */
-        const soldItems = items.filter(i => i.sold)
-        this.setState({ sold: soldItems })
         this.setState({ nfts: items })
         this.setState({ loadingState: 'loaded' })
     }
 
     render() {
-        if (this.state.loadingState === 'loaded' && !this.state.nfts.length) return (<h1 className="">No assets created</h1>)
+        if (this.state.loadingState === 'loaded' && !this.state.nfts.length) return (<h1 className="">No assets owned</h1>)
         return (
             <AdminLayout>
-                <h1>NFT Manager</h1>
-                <div>
+                <h1>NFTs you own</h1>
+                <div className="">
                     <div className="">
-                        <h2 className="">Items Created</h2>
                         <div className="">
                             {
                                 this.state.nfts.map((nft, i) => (
@@ -78,27 +75,6 @@ class Admin extends React.Component {
                                 ))
                             }
                         </div>
-                    </div>
-                    <div className="px-4">
-                        {
-                            Boolean(this.state.sold.length) && (
-                                <div>
-                                    <h2 className="">Items sold</h2>
-                                    <div className="">
-                                        {
-                                            this.state.sold.map((nft, i) => (
-                                                <div key={i} className="">
-                                                    <img src={nft.image} className="" />
-                                                    <div className="">
-                                                        <p className="">Price - {nft.price} Eth</p>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        }
                     </div>
                 </div>
             </AdminLayout>
