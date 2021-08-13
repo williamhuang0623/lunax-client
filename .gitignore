@@ -40,3 +40,11 @@ yarn-error.log*
 
 # Vscode bindings
 .vscode*
+
+# Hardhat files
+cache
+artifacts
+
+# Testing wallet
+.secret
+ 
