@@ -131,7 +131,11 @@ class Admin extends React.Component {
                             {
                                 this.state.marketNFTs.map((nft, i) => (
                                     <div key={i} className="">
+<<<<<<< HEAD
                                         <img src={nft.image} width='200px'/>
+=======
+                                        <img src={nft.image} width="400px" />
+>>>>>>> made images smaller
                                         <div className="">
                                             <p style={{ height: '64px' }} className="">{nft.name}</p>
                                             <div style={{ height: '70px', overflow: 'hidden' }}>

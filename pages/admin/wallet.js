@@ -67,7 +67,7 @@ class Admin extends React.Component {
                             {
                                 this.state.nfts.map((nft, i) => (
                                     <div key={i} className="">
-                                        <img src={nft.image} className="" />
+                                        <img src={nft.image} width="400px" />
                                         <div className="">
                                             <p className="">Price - {nft.price} Eth</p>
                                         </div>
