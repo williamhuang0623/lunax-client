@@ -9,9 +9,18 @@ module.exports = {
       chainId: 1337
     },
     mumbai: {
+<<<<<<< HEAD
       url: "https://matic-mumbai.chainstacklabs.com",
       accounts: [privateKey],
       gasPrice: 8000000000
+=======
+      url: "https://rpc-mumbai.matic.today",
+      accounts: [privateKey]
+    },
+    matic: {
+      url: "https://rpc-mainnet.matic.network",
+      accounts: [privateKey]
+>>>>>>> added polygon mainnet to config
     }
   },
   solidity: {
