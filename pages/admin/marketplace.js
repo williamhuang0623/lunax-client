@@ -44,7 +44,6 @@ class Admin extends React.Component {
         */
         const marketItems = await Promise.all(marketData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
-            console.log(tokenUri)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
             let item = {
@@ -61,7 +60,6 @@ class Admin extends React.Component {
         }))
         const auctionItems = await Promise.all(auctionData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
-            console.log(tokenUri)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
             let item = {
