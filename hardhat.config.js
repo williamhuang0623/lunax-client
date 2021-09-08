@@ -9,8 +9,9 @@ module.exports = {
       chainId: 1337
     },
     mumbai: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: "https://polygon-mumbai.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2",
       accounts: [privateKey],
+      gas: 2100000,
       gasPrice: 8000000000
     }
   },

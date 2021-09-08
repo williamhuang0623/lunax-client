@@ -32,7 +32,7 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
+        const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2')
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
         const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
@@ -119,12 +119,18 @@ class Admin extends React.Component {
         this.loadNFTs()
     }
 
-    async getBidsOnItem(tokenId) {
+    async getBidsOnItem(auctionTokenId) {
         const query = `{
-            HighestBidIncreaseds(tokenId: )
-        }`
+            highestBidIncreaseds(where: {tokenId: ${auctionTokenId}}) {
+              id
+              tokenId
+              amount
+              bidder
+            }
+          }`
         const bids = await request("", query)
-        return (<p></p>);
+        console.log(bids)
+        // return (<p></p>);
     }
 
     render() {
@@ -170,6 +176,9 @@ class Admin extends React.Component {
                                             <p className="">{nft.price} ETH</p>
                                             <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange} />
                                             <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
+                                        </div>
+                                        <div>
+                                            {this.getBidsOnItem(nft.tokenId)}
                                         </div>
                                     </div>
                                 ))}
