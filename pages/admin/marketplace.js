@@ -32,7 +32,7 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider('')
+        const provider = new ethers.providers.JsonRpcProvider('https://matic-mumbai.chainstacklabs.com')
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
         const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
@@ -56,7 +56,7 @@ class Admin extends React.Component {
                 name: meta.data.name,
                 description: meta.data.description,
             }
-            
+
             return item
         }))
         const auctionItems = await Promise.all(auctionData.map(async i => {
@@ -82,7 +82,7 @@ class Admin extends React.Component {
 
     async onChange(e) {
         const bidValue = e.target.value
-        this.setState({bidValue: bidValue})
+        this.setState({ bidValue: bidValue })
 
     }
 
@@ -112,7 +112,7 @@ class Admin extends React.Component {
         const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
 
         /* user will be prompted to pay the asking proces to complete the transaction */
-        
+
         const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
         const transaction = await contract.bid(nft.tokenId, {
             value: price
@@ -131,11 +131,7 @@ class Admin extends React.Component {
                             {
                                 this.state.marketNFTs.map((nft, i) => (
                                     <div key={i} className="">
-<<<<<<< HEAD
-                                        <img src={nft.image} width='200px'/>
-=======
-                                        <img src={nft.image} width="400px" />
->>>>>>> made images smaller
+                                        <img src={nft.image} width='200px' />
                                         <div className="">
                                             <p style={{ height: '64px' }} className="">{nft.name}</p>
                                             <div style={{ height: '70px', overflow: 'hidden' }}>
@@ -151,10 +147,10 @@ class Admin extends React.Component {
                             }
                         </div>
                         <div className="auction-items">
-                            {                          
+                            {
                                 this.state.auctionNFTs.map((nft, i) => (
                                     <div key={i} className="">
-                                        <img src={nft.image} width='200px'/>
+                                        <img src={nft.image} width='200px' />
                                         <div className="">
                                             <p style={{ height: '64px' }} className="">{nft.name}</p>
                                             <div style={{ height: '70px', overflow: 'hidden' }}>
@@ -163,7 +159,7 @@ class Admin extends React.Component {
                                         </div>
                                         <div className="">
                                             <p className="">{nft.price} ETH</p>
-                                            <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange}/>
+                                            <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange} />
                                             <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
                                         </div>
                                     </div>
