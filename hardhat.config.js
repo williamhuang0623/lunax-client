@@ -9,7 +9,7 @@ module.exports = {
       chainId: 1337
     },
     mumbai: {
-      url: "https://matic-mumbai.chainstacklabs.com",
+      url: "https://rpc-mumbai.maticvigil.com",
       accounts: [privateKey],
       gasPrice: 8000000000
     }

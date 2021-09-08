@@ -6,8 +6,9 @@ dataSources:
     name: NFTAuction
     network: mumbai
     source:
-      address: "0xB4fA3fE4E98C649C2F8FF3f955D987C1293F7e0f"
+      address: "0xD8c1E54B801cD7A342a3964A172d19dA74ED6e0D"
       abi: NFTAuction
+      startBlock: 13185767
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

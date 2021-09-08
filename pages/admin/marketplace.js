@@ -11,7 +11,7 @@ import {
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
-
+import request from 'graphql-request'
 
 class Admin extends React.Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider('https://matic-mumbai.chainstacklabs.com')
+        const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
         const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
@@ -119,6 +119,14 @@ class Admin extends React.Component {
         this.loadNFTs()
     }
 
+    async getBidsOnItem(tokenId) {
+        const query = `{
+            HighestBidIncreaseds(tokenId: )
+        }`
+        const bids = await request("", query)
+        return (<p></p>);
+    }
+
     render() {
         if (this.state.loadingState === 'loaded' && !this.state.marketNFTs.length && !this.state.auctionNFTs.length) return (<h1 className="">No items in marketplace</h1>)
         return (
@@ -139,6 +147,9 @@ class Admin extends React.Component {
                                         <div className="">
                                             <p className="">{nft.price} ETH</p>
                                             <button className="" onClick={() => this.buyNft(nft)}>Buy</button>
+                                        </div>
+                                        <div>
+                                            {getBidsOnItem(nft.tokenId)}
                                         </div>
                                     </div>
                                 ))
