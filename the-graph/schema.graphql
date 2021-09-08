@@ -17,6 +17,7 @@ type AuctionItemCreated @entity {
 
 type HighestBidIncreased @entity {
   id: ID!
+  tokenId: BigInt! # uint256
   bidder: Bytes! # address
   amount: BigInt! # uint256
 }

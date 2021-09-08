@@ -38,6 +38,7 @@ export function handleHighestBidIncreased(
   let entity = new HighestBidIncreased(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
+  entity.tokenId = event.params.tokenId
   entity.bidder = event.params.bidder
   entity.amount = event.params.amount
   entity.save()

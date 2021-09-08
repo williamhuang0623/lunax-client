@@ -6,7 +6,7 @@ dataSources:
     name: NFTAuction
     network: mumbai
     source:
-      address: "0xe87E3a9241d4125CEDF2A3449f44270fe3Bb427f"
+      address: "0xB4fA3fE4E98C649C2F8FF3f955D987C1293F7e0f"
       abi: NFTAuction
     mapping:
       kind: ethereum/events
@@ -25,6 +25,6 @@ dataSources:
         - event: AuctionItemCreated(indexed uint256,indexed address,indexed
             uint256,address,address,uint256,bool)
           handler: handleAuctionItemCreated
-        - event: HighestBidIncreased(address,uint256)
+        - event: HighestBidIncreased(uint256,address,uint256)
           handler: handleHighestBidIncreased
       file: NFTAuction/NFTAuction.wasm
