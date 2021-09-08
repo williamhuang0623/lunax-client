@@ -5,21 +5,26 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Web3Modal from "web3modal"
 import {
-    nftaddress, nftmarketaddress
+    nftaddress, nftmarketaddress, nftauctionaddress
 } from '../../config'
 
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
+import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 
 
 class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nfts: [],
-            loadingState: 'not-loaded'
+            marketNFTs: [],
+            auctionNFTs: [],
+            loadingState: 'not-loaded',
+            bidValue: 0
         }
+        this.onChange = this.onChange.bind(this);
     }
+
 
     componentDidMount() {
         this.loadNFTs()
@@ -27,17 +32,36 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+        const provider = new ethers.providers.JsonRpcProvider('')
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
-        const data = await marketContract.fetchMarketItems()
-
+        const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
+        const marketData = await marketContract.fetchMarketItems()
+        const auctionData = await auctionContract.fetchAuctionItems()
         /*
         *  map over items returned from smart contract and format 
         *  them as well as fetch their token metadata
         */
-        const items = await Promise.all(data.map(async i => {
+        const marketItems = await Promise.all(marketData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
+            console.log(tokenUri)
+            const meta = await axios.get(tokenUri)
+            let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+            let item = {
+                price,
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                image: meta.data.image,
+                name: meta.data.name,
+                description: meta.data.description,
+            }
+            
+            return item
+        }))
+        const auctionItems = await Promise.all(auctionData.map(async i => {
+            const tokenUri = await tokenContract.tokenURI(i.tokenId)
+            console.log(tokenUri)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
             let item = {
@@ -51,8 +75,15 @@ class Admin extends React.Component {
             }
             return item
         }))
-        this.setState({ nfts: items })
+        this.setState({ marketNFTs: marketItems })
+        this.setState({ auctionNFTs: auctionItems })
         this.setState({ loadingState: 'loaded' })
+    }
+
+    async onChange(e) {
+        const bidValue = e.target.value
+        this.setState({bidValue: bidValue})
+
     }
 
     async buyNft(nft) {
@@ -72,17 +103,35 @@ class Admin extends React.Component {
         this.loadNFTs()
     }
 
+    async bidNft(nft) {
+        /* needs the user to sign the transaction, so will use Web3Provider and sign it */
+        const web3Modal = new Web3Modal()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.providers.Web3Provider(connection)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+
+        /* user will be prompted to pay the asking proces to complete the transaction */
+        
+        const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
+        const transaction = await contract.bid(nft.tokenId, {
+            value: price
+        })
+        await transaction.wait()
+        this.loadNFTs()
+    }
+
     render() {
-        if (this.state.loadingState === 'loaded' && !this.state.nfts.length) return (<h1 className="">No items in marketplace</h1>)
+        if (this.state.loadingState === 'loaded' && !this.state.marketNFTs.length && !this.state.auctionNFTs.length) return (<h1 className="">No items in marketplace</h1>)
         return (
             <AdminLayout>
                 <div className="">
                     <div className="" style={{ maxWidth: '400px' }}>
-                        <div className="">
+                        <div className="market-items">
                             {
-                                this.state.nfts.map((nft, i) => (
+                                this.state.marketNFTs.map((nft, i) => (
                                     <div key={i} className="">
-                                        <img src={nft.image} />
+                                        <img src={nft.image} width='200px'/>
                                         <div className="">
                                             <p style={{ height: '64px' }} className="">{nft.name}</p>
                                             <div style={{ height: '70px', overflow: 'hidden' }}>
@@ -96,6 +145,25 @@ class Admin extends React.Component {
                                     </div>
                                 ))
                             }
+                        </div>
+                        <div className="auction-items">
+                            {                          
+                                this.state.auctionNFTs.map((nft, i) => (
+                                    <div key={i} className="">
+                                        <img src={nft.image} width='200px'/>
+                                        <div className="">
+                                            <p style={{ height: '64px' }} className="">{nft.name}</p>
+                                            <div style={{ height: '70px', overflow: 'hidden' }}>
+                                                <p className="">{nft.description}</p>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            <p className="">{nft.price} ETH</p>
+                                            <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange}/>
+                                            <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
+                                        </div>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>

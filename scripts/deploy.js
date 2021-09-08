@@ -7,14 +7,21 @@ async function main() {
     await nftMarket.deployed();
     console.log("nftMarket deployed to:", nftMarket.address);
 
+    const NFTAuction = await hre.ethers.getContractFactory("NFTAuction");
+    const nftAuction = await NFTAuction.deploy();
+    await nftAuction.deployed();
+    console.log("nftAuction deployed to:", nftAuction.address);
+
     const NFT = await hre.ethers.getContractFactory("NFT");
-    const nft = await NFT.deploy(nftMarket.address);
+    const nft = await NFT.deploy(nftMarket.address, nftAuction.address);
     await nft.deployed();
     console.log("nft deployed to:", nft.address);
 
     let config = `
   export const nftmarketaddress = "${nftMarket.address}"
+  export const nftauctionaddress = "${nftAuction.address}"
   export const nftaddress = "${nft.address}"
+
   `
 
     let data = JSON.stringify(config)

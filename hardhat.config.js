@@ -9,8 +9,9 @@ module.exports = {
       chainId: 1337
     },
     mumbai: {
-      url: "https://rpc-mumbai.matic.today",
-      accounts: [privateKey]
+      url: "https://matic-mumbai.chainstacklabs.com",
+      accounts: [privateKey],
+      gasPrice: 8000000000
     }
   },
   solidity: {

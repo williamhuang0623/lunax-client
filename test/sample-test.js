@@ -6,30 +6,47 @@ describe("NFTMarket", function () {
     await market.deployed()
     const marketAddress = market.address
 
+    /* deploy the Auction contract */
+    const Auction = await ethers.getContractFactory("NFTAuction")
+    const auction = await Auction.deploy()
+    await auction.deployed()
+    const auctionAddress = auction.address
+
     /* deploy the NFT contract */
     const NFT = await ethers.getContractFactory("NFT")
-    const nft = await NFT.deploy(marketAddress)
+    const nft = await NFT.deploy(marketAddress, auctionAddress)
     await nft.deployed()
     const nftContractAddress = nft.address
 
     let listingPrice = await market.getListingPrice()
     listingPrice = listingPrice.toString()
 
+    const marketPrice = ethers.utils.parseUnits('1', 'ether')
     const auctionPrice = ethers.utils.parseUnits('1', 'ether')
 
     /* create two tokens */
     await nft.createToken("https://www.mytokenlocation.com")
     await nft.createToken("https://www.mytokenlocation2.com")
+    await nft.createToken("https://www.mytokenlocation3.com")
 
-    /* put both tokens for sale */
-    await market.createMarketItem(nftContractAddress, 1, auctionPrice, { value: listingPrice })
-    await market.createMarketItem(nftContractAddress, 2, auctionPrice, { value: listingPrice })
+
+    // /* put both tokens for sale */
+    await market.createMarketItem(nftContractAddress, 1, marketPrice, { value: listingPrice })
+    await market.createMarketItem(nftContractAddress, 2, marketPrice, { value: listingPrice })
+
+    /* put tokens on auction */
+    await auction.createAuctionItem(nftContractAddress, 3, auctionPrice, 20000)
 
     const [_, buyerAddress] = await ethers.getSigners()
 
     /* execute sale of token to another user */
-    await market.connect(buyerAddress).createMarketSale(nftContractAddress, 1, { value: auctionPrice })
+    await market.connect(buyerAddress).createMarketSale(nftContractAddress, 1, { value: marketPrice })
 
+    /* Bid on auction */
+    await auction.connect(buyerAddress).bid(1, { value: auctionPrice })
+    await auction.connect(buyerAddress).bid(1, { value: auctionPrice + 1 })
+
+    
     /* query for and return the unsold items */
     items = await market.fetchMarketItems()
     items = await Promise.all(items.map(async i => {

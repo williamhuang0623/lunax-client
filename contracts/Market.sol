@@ -1,14 +1,17 @@
-// SPDX-License-Identifier: MIT OR Apache-2.0
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3;
 
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 import 'hardhat/console.sol';
 
 contract NFTMarket is ReentrancyGuard {
     using Counters for Counters.Counter;
+    using SafeMath for uint256;
+    using Address for address;
     Counters.Counter private _itemIds;
     Counters.Counter private _itemsSold;
 

@@ -9,11 +9,12 @@ import { useRouter } from 'next/router';
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import {
-    nftaddress, nftmarketaddress
+    nftaddress, nftmarketaddress, nftauctionaddress
 } from '../../config'
 
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
+import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 
 export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
@@ -52,6 +53,23 @@ export default function CreateItem() {
         }
     }
 
+    async function createAuction() {
+        const { name, description, price } = formInput
+        if (!name || !description || !price || !fileUrl) return
+        /* first, upload to IPFS */
+        const data = JSON.stringify({
+            name, description, image: fileUrl
+        })
+        try {
+            const added = await client.add(data)
+            const url = `https://ipfs.infura.io/ipfs/${added.path}`
+            /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
+            createAuctionItem(url)
+        } catch (error) {
+            console.log('Error uploading file: ', error)
+        }
+    }
+
     async function createSale(url) {
         const web3Modal = new Web3Modal()
         const connection = await web3Modal.connect()
@@ -76,6 +94,31 @@ export default function CreateItem() {
         await transaction.wait()
         router.push('/admin')
     }
+
+    async function createAuctionItem(url) {
+        const web3Modal = new Web3Modal()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.providers.Web3Provider(connection)
+        const signer = provider.getSigner()
+        console.log(`URLLLL: ${url}`)
+        /* next, create the item */
+        let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
+        let transaction = await contract.createToken(url)
+        let tx = await transaction.wait()
+        let event = tx.events[0]
+        let value = event.args[2]
+        let tokenId = value.toNumber()
+        const price = ethers.utils.parseUnits(formInput.price, 'ether')
+
+        /* then list the item for sale on the marketplace */
+        contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+        let listingPrice = await contract.getListingPrice()
+        listingPrice = listingPrice.toString()
+
+        transaction = await contract.createAuctionItem(nftaddress, tokenId, price, 2000, { value: listingPrice })
+        await transaction.wait()
+        router.push('/admin')
+    }
     return (
         <AdminLayout>
             <h1>NFT Creator</h1>
@@ -92,7 +135,7 @@ export default function CreateItem() {
                         onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
                     />
                     <input
-                        placeholder="Asset Price in Eth"
+                        placeholder="Asset Price in Matic"
                         className=""
                         onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
                     />
@@ -108,7 +151,10 @@ export default function CreateItem() {
                         )
                     }
                     <button onClick={createMarket} className="">
-                        Create Digital Asset
+                        Sell at market
+                    </button>
+                    <button onClick={createAuction} className="">
+                        Sell as auction
                     </button>
                 </div>
             </div>

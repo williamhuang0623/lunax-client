@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import axios from 'axios'
 import {
-    nftaddress, nftmarketaddress
+    nftaddress, nftmarketaddress, nftauctionaddress
 } from '../../config'
 
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
@@ -34,9 +34,12 @@ class Admin extends React.Component {
         const signer = provider.getSigner()
 
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
-        const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
-        const data = await marketContract.fetchItemsCreated()
+        const auctionContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
 
+        const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
+        const marketData = await marketContract.fetchItemsCreated()
+        const auctionData = await auctionContract.fetchItemsCreated()
+        const data = marketData.concat(auctionData)
         const items = await Promise.all(data.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
