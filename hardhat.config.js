@@ -8,11 +8,10 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
-    mumbai: {
-      url: "https://polygon-mumbai.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2",
+    matic: {
+      url: "https://rpc-mumbai.maticvigil.com",
       accounts: [privateKey],
-      gas: 2100000,
-      gasPrice: 8000000000
+      gasPrice: 8000000000,
     }
   },
   solidity: {

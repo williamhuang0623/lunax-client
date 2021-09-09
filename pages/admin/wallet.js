@@ -69,7 +69,7 @@ class Admin extends React.Component {
                                     <div key={i} className="">
                                         <img src={nft.image} width="400px" />
                                         <div className="">
-                                            <p className="">Price - {nft.price} Eth</p>
+                                            <p className="">Price - {nft.price} Matic</p>
                                         </div>
                                     </div>
                                 ))

@@ -32,7 +32,7 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider('https://polygon-mumbai.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2')
+        const provider = new ethers.providers.JsonRpcProvider(web3.currentProvider)
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
         const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
