@@ -11,7 +11,8 @@ import {
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
-import request from 'graphql-request'
+import { GraphQLClient, gql } from 'graphql-request'
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 class Admin extends React.Component {
     constructor(props) {
@@ -32,7 +33,9 @@ class Admin extends React.Component {
 
     async loadNFTs() {
         /* create a generic provider and query for unsold market items */
-        const provider = new ethers.providers.JsonRpcProvider(web3.currentProvider)
+        const web3Modal = new Web3Modal()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.providers.Web3Provider(connection)
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
         const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
@@ -58,6 +61,7 @@ class Admin extends React.Component {
 
             return item
         }))
+        console.log(marketItems)
         const auctionItems = await Promise.all(auctionData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
@@ -73,9 +77,12 @@ class Admin extends React.Component {
             }
             return item
         }))
-        this.setState({ marketNFTs: marketItems })
-        this.setState({ auctionNFTs: auctionItems })
-        this.setState({ loadingState: 'loaded' })
+        console.log(auctionItems)
+        this.setState({ 
+            marketNFTs: marketItems,
+            auctionNFTs: [...auctionItems],
+            loadingState: 'loaded' 
+        })
     }
 
     async onChange(e) {
@@ -111,15 +118,23 @@ class Admin extends React.Component {
 
         /* user will be prompted to pay the asking proces to complete the transaction */
 
-        const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
+        const price = ethers.utils.parseUnits(this.state.bidValue, 'ether')
         const transaction = await contract.bid(nft.tokenId, {
-            value: price
+            value: price,
+            gasLimit: 1000000
         })
         await transaction.wait()
         this.loadNFTs()
     }
 
     async getBidsOnItem(auctionTokenId) {
+        const endpoint = 'https://api.studio.thegraph.com/query/8310/luna-mainnet/v0.0.3'
+        const graphQLClient = new GraphQLClient(endpoint, {
+            headers: {
+                authorization: process.env.THE_GRAPH_KEY,
+            },
+        })
+
         const query = `{
             highestBidIncreaseds(where: {tokenId: ${auctionTokenId}}) {
               id
@@ -128,20 +143,26 @@ class Admin extends React.Component {
               bidder
             }
           }`
-        const bids = await request("", query)
-        console.log(bids)
-        // return (<p></p>);
+
+        const data = await graphQLClient.request(query)
+        console.log(JSON.stringify(data, undefined, 2))
     }
 
     render() {
         if (this.state.loadingState === 'loaded' && !this.state.marketNFTs.length && !this.state.auctionNFTs.length) return (<h1 className="">No items in marketplace</h1>)
+        const auctionBids = {};
+
+        this.state.auctionNFTs && this.state.auctionNFTs.every(async (nft, i) => {
+            auctionBids[nft.tokenId] = await this.getBidsOnItem(nft.tokenId);
+        })
         return (
             <AdminLayout>
                 <div className="">
                     <div className="" style={{ maxWidth: '400px' }}>
                         <div className="market-items">
                             {
-                                this.state.marketNFTs.map((nft, i) => (
+                                this.state.marketNFTs.length && this.state.marketNFTs.map((nft, i) => {
+                                    return (
                                     <div key={i} className="">
                                         <img src={nft.image} width='200px' />
                                         <div className="">
@@ -154,16 +175,14 @@ class Admin extends React.Component {
                                             <p className="">{nft.price} ETH</p>
                                             <button className="" onClick={() => this.buyNft(nft)}>Buy</button>
                                         </div>
-                                        <div>
-                                            {getBidsOnItem(nft.tokenId)}
-                                        </div>
                                     </div>
-                                ))
+                                )})
                             }
                         </div>
                         <div className="auction-items">
                             {
-                                this.state.auctionNFTs.map((nft, i) => (
+                                this.state.auctionNFTs.length && this.state.auctionNFTs.map((nft, i) => {
+                                    return (
                                     <div key={i} className="">
                                         <img src={nft.image} width='200px' />
                                         <div className="">
@@ -178,10 +197,16 @@ class Admin extends React.Component {
                                             <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
                                         </div>
                                         <div>
-                                            {this.getBidsOnItem(nft.tokenId)}
+                                            {auctionBids[nft.tokenId] && auctionBids[nft.tokenId].map((bid, i) => {
+                                                return (
+                                                    <div>
+                                                        <p>{bid.amount}</p>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
-                                ))}
+                                )})}
                         </div>
                     </div>
                 </div>

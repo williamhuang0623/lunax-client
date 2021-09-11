@@ -6,7 +6,7 @@ dataSources:
     name: NFTAuction
     network: mumbai
     source:
-      address: "0xD8c1E54B801cD7A342a3964A172d19dA74ED6e0D"
+      address: "0x3BCC126fEEdb70870D1B5272dd0e78D7B53FC824"
       abi: NFTAuction
       startBlock: 13185767
     mapping:
