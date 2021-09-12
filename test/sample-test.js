@@ -18,9 +18,6 @@ describe("NFTMarket", function () {
     await nft.deployed()
     const nftContractAddress = nft.address
 
-    let listingPrice = await market.getListingPrice()
-    listingPrice = listingPrice.toString()
-
     const marketPrice = ethers.utils.parseUnits('1', 'ether')
     const auctionPrice = ethers.utils.parseUnits('1', 'ether')
 
@@ -31,8 +28,8 @@ describe("NFTMarket", function () {
 
 
     // /* put both tokens for sale */
-    await market.createMarketItem(nftContractAddress, 1, marketPrice, { value: listingPrice })
-    await market.createMarketItem(nftContractAddress, 2, marketPrice, { value: listingPrice })
+    await market.createMarketItem(nftContractAddress, 1, marketPrice)
+    await market.createMarketItem(nftContractAddress, 2, marketPrice)
 
     /* put tokens on auction */
     await auction.createAuctionItem(nftContractAddress, 3, auctionPrice, 20000)
@@ -46,7 +43,7 @@ describe("NFTMarket", function () {
     await auction.connect(buyerAddress).bid(1, { value: auctionPrice })
     await auction.connect(buyerAddress).bid(1, { value: auctionPrice + 1 })
 
-    
+
     /* query for and return the unsold items */
     items = await market.fetchMarketItems()
     items = await Promise.all(items.map(async i => {
