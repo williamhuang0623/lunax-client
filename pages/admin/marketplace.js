@@ -12,7 +12,18 @@ import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 import { GraphQLClient, gql } from 'graphql-request'
-import { ContactSupportOutlined } from '@material-ui/icons';
+
+let subgraphendpoint = '';
+import { subGraphTestnetEndpoint, subGraphMainnetEndpoint } from '../../lib/constants';
+console.log(process.env.SMART_CONTRACT_ENV)
+if (process.env.SMART_CONTRACT_ENV == 'mainnet') {
+    console.log("hello")
+    subgraphendpoint = subGraphMainnetEndpoint;
+}
+else {
+    console.log("noway")
+    subgraphendpoint = subGraphTestnetEndpoint;
+}
 
 class Admin extends React.Component {
     constructor(props) {
@@ -78,10 +89,10 @@ class Admin extends React.Component {
             return item
         }))
         console.log(auctionItems)
-        this.setState({ 
+        this.setState({
             marketNFTs: marketItems,
             auctionNFTs: [...auctionItems],
-            loadingState: 'loaded' 
+            loadingState: 'loaded'
         })
     }
 
@@ -117,8 +128,7 @@ class Admin extends React.Component {
         const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
 
         /* user will be prompted to pay the asking proces to complete the transaction */
-
-        const price = ethers.utils.parseUnits(this.state.bidValue, 'ether')
+        const price = ethers.utils.parseUnits(this.state.bidValue.toString(), 'ether')
         const transaction = await contract.bid(nft.tokenId, {
             value: price,
             gasLimit: 1000000
@@ -128,8 +138,7 @@ class Admin extends React.Component {
     }
 
     async getBidsOnItem(auctionTokenId) {
-        const endpoint = 'https://api.studio.thegraph.com/query/8310/luna-mainnet/v0.0.3'
-        const graphQLClient = new GraphQLClient(endpoint, {
+        const graphQLClient = new GraphQLClient(subgraphendpoint, {
             headers: {
                 authorization: process.env.THE_GRAPH_KEY,
             },
@@ -145,12 +154,12 @@ class Admin extends React.Component {
           }`
 
         const data = await graphQLClient.request(query)
-        console.log(JSON.stringify(data, undefined, 2))
+        console.log(data.highestBidIncreaseds)
+        return data.highestBidIncreaseds
     }
-
     render() {
         if (this.state.loadingState === 'loaded' && !this.state.marketNFTs.length && !this.state.auctionNFTs.length) return (<h1 className="">No items in marketplace</h1>)
-        const auctionBids = {};
+        let auctionBids = {};
 
         this.state.auctionNFTs && this.state.auctionNFTs.every(async (nft, i) => {
             auctionBids[nft.tokenId] = await this.getBidsOnItem(nft.tokenId);
@@ -163,50 +172,52 @@ class Admin extends React.Component {
                             {
                                 this.state.marketNFTs.length && this.state.marketNFTs.map((nft, i) => {
                                     return (
-                                    <div key={i} className="">
-                                        <img src={nft.image} width='200px' />
-                                        <div className="">
-                                            <p style={{ height: '64px' }} className="">{nft.name}</p>
-                                            <div style={{ height: '70px', overflow: 'hidden' }}>
-                                                <p className="">{nft.description}</p>
+                                        <div key={i} className="">
+                                            <img src={nft.image} width='200px' />
+                                            <div className="">
+                                                <p style={{ height: '64px' }} className="">{nft.name}</p>
+                                                <div style={{ height: '70px', overflow: 'hidden' }}>
+                                                    <p className="">{nft.description}</p>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                <p className="">{nft.price} MATIC</p>
+                                                <button className="" onClick={() => this.buyNft(nft)}>Buy</button>
                                             </div>
                                         </div>
-                                        <div className="">
-                                            <p className="">{nft.price} ETH</p>
-                                            <button className="" onClick={() => this.buyNft(nft)}>Buy</button>
-                                        </div>
-                                    </div>
-                                )})
+                                    )
+                                })
                             }
                         </div>
                         <div className="auction-items">
                             {
                                 this.state.auctionNFTs.length && this.state.auctionNFTs.map((nft, i) => {
                                     return (
-                                    <div key={i} className="">
-                                        <img src={nft.image} width='200px' />
-                                        <div className="">
-                                            <p style={{ height: '64px' }} className="">{nft.name}</p>
-                                            <div style={{ height: '70px', overflow: 'hidden' }}>
-                                                <p className="">{nft.description}</p>
+                                        <div key={i} className="">
+                                            <img src={nft.image} width='200px' />
+                                            <div className="">
+                                                <p style={{ height: '64px' }} className="">{nft.name}</p>
+                                                <div style={{ height: '70px', overflow: 'hidden' }}>
+                                                    <p className="">{nft.description}</p>
+                                                </div>
+                                            </div>
+                                            <div className="">
+                                                <p className="">{nft.price} MATIC</p>
+                                                <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange} />
+                                                <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
+                                            </div>
+                                            <div>
+                                                {auctionBids[nft.tokenId] && auctionBids[nft.tokenId].map((bid, i) => {
+                                                    return (
+                                                        <div>
+                                                            <p>{bid.amount}</p>
+                                                        </div>
+                                                    )
+                                                })}
                                             </div>
                                         </div>
-                                        <div className="">
-                                            <p className="">{nft.price} ETH</p>
-                                            <input type="text" name="bid-value" className="" value={this.state.bidValue} onChange={this.onChange} />
-                                            <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
-                                        </div>
-                                        <div>
-                                            {auctionBids[nft.tokenId] && auctionBids[nft.tokenId].map((bid, i) => {
-                                                return (
-                                                    <div>
-                                                        <p>{bid.amount}</p>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                )})}
+                                    )
+                                })}
                         </div>
                     </div>
                 </div>
