@@ -13,7 +13,6 @@ export function handleAuctionEnded(event: AuctionEndedEvent): void {
   let entity = new AuctionEnded(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity.createdAtTimestamp = event.block.timestamp;
   entity.winner = event.params.winner
   entity.amount = event.params.amount
   entity.save()
@@ -23,7 +22,6 @@ export function handleAuctionItemCreated(event: AuctionItemCreatedEvent): void {
   let entity = new AuctionItemCreated(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity.createdAtTimestamp = event.block.timestamp;
   entity.itemId = event.params.itemId
   entity.nftContract = event.params.nftContract
   entity.tokenId = event.params.tokenId
@@ -40,7 +38,6 @@ export function handleHighestBidIncreased(
   let entity = new HighestBidIncreased(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   )
-  entity.createdAtTimestamp = event.block.timestamp;
   entity.tokenId = event.params.tokenId
   entity.bidder = event.params.bidder
   entity.amount = event.params.amount

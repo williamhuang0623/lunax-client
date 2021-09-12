@@ -1,12 +1,12 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: NFTAuction
-    network: matic
+    network: mumbai
     source:
-      address: "0xb9267148949dDd0985d02b2a4C16FB37f4b02dcf"
+      address: "0x0EE8c4EBCf75f7362E54f268422EeAEA5a82c32d"
       abi: NFTAuction
       startBlock: 18793155
     mapping:
@@ -19,12 +19,13 @@ dataSources:
         - HighestBidIncreased
       abis:
         - name: NFTAuction
-          file: ./abis/NFTAuction.json
+          file: NFTAuction/abis/NFTAuction.json
       eventHandlers:
         - event: AuctionEnded(address,uint256)
           handler: handleAuctionEnded
-        - event: AuctionItemCreated(indexed uint256,indexed address,indexed uint256,address,address,uint256,bool)
+        - event: AuctionItemCreated(indexed uint256,indexed address,indexed
+            uint256,address,address,uint256,bool)
           handler: handleAuctionItemCreated
         - event: HighestBidIncreased(uint256,address,uint256)
           handler: handleHighestBidIncreased
-      file: ./src/mapping.ts
+      file: NFTAuction/NFTAuction.wasm

@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: NFTAuction
-    network: mumbai
+    network: matic
     source:
-      address: "0x3BCC126fEEdb70870D1B5272dd0e78D7B53FC824"
+      address: "0xb9267148949dDd0985d02b2a4C16FB37f4b02dcf"
       abi: NFTAuction
-      startBlock: 13185767
+      startBlock: 18793155
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

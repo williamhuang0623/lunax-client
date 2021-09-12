@@ -20,4 +20,5 @@ type HighestBidIncreased @entity {
   tokenId: BigInt! # uint256
   bidder: Bytes! # address
   amount: BigInt! # uint256
+  createdAtTimestamp: BigInt!
 }
