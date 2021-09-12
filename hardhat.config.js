@@ -8,8 +8,13 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
+    mumbai: {
+      url: "https://polygon-mumbai.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2",
+      accounts: [privateKey],
+      gasPrice: 8000000000,
+    },
     matic: {
-      url: "https://polygon-rpc.com/",
+      url: "https://polygon-mainnet.infura.io/v3/b331fcdfec914408a07f98be92b3f9f2",
       accounts: [privateKey],
       gasPrice: 8000000000,
     }
