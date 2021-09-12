@@ -87,10 +87,10 @@ export default function CreateItem() {
 
         /* then list the item for sale on the marketplace */
         contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
-        let listingPrice = await contract.getListingPrice()
-        listingPrice = listingPrice.toString()
 
-        transaction = await contract.createMarketItem(nftaddress, tokenId, price, { value: listingPrice })
+        transaction = await contract.createMarketItem(nftaddress, tokenId, price, {
+            value: 0
+        })
         await transaction.wait()
         router.push('/admin')
     }
@@ -111,10 +111,10 @@ export default function CreateItem() {
 
         /* then list the item for sale on the marketplace */
         contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
-        let listingPrice = await contract.getListingPrice()
-        listingPrice = listingPrice.toString()
 
-        transaction = await contract.createAuctionItem(nftaddress, tokenId, price, 2000, { value: listingPrice })
+        transaction = await contract.createAuctionItem(nftaddress, tokenId, price, 86400, {
+            value: 0
+        })
         await transaction.wait()
         router.push('/admin')
     }
