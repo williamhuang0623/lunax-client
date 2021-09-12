@@ -4,8 +4,8 @@ pragma solidity ^0.8.3;
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/utils/Address.sol";
+import '@openzeppelin/contracts/utils/math/SafeMath.sol';
+import '@openzeppelin/contracts/utils/Address.sol';
 import 'hardhat/console.sol';
 
 contract NFTMarket is ReentrancyGuard {
@@ -16,7 +16,6 @@ contract NFTMarket is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address payable owner;
-    uint256 listingPrice = 0.025 ether;
 
     constructor() {
         owner = payable(msg.sender);
@@ -44,11 +43,6 @@ contract NFTMarket is ReentrancyGuard {
         bool sold
     );
 
-    /* Returns the listing price of the contract */
-    function getListingPrice() public view returns (uint256) {
-        return listingPrice;
-    }
-
     /* Places an item for sale on the marketplace */
     function createMarketItem(
         address nftContract,
@@ -56,8 +50,6 @@ contract NFTMarket is ReentrancyGuard {
         uint256 price
     ) public payable nonReentrant {
         require(price > 0, 'Price must be at least 1 wei');
-        require(msg.value == listingPrice, 'Price must be equal to listing price');
-
         _itemIds.increment();
         uint256 itemId = _itemIds.current();
 
@@ -86,12 +78,12 @@ contract NFTMarket is ReentrancyGuard {
             'Please submit the asking price in order to complete the purchase'
         );
 
-        idToMarketItem[itemId].seller.transfer(msg.value);
+        idToMarketItem[itemId].seller.transfer(msg.value.div(100).mul(90));
         IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
         idToMarketItem[itemId].owner = payable(msg.sender);
         idToMarketItem[itemId].sold = true;
         _itemsSold.increment();
-        payable(owner).transfer(listingPrice);
+        payable(owner).transfer(msg.value.div(100).mul(10));
     }
 
     /* Returns all unsold market items */

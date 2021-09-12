@@ -17,7 +17,6 @@ contract NFTAuction is ReentrancyGuard {
 
     // Deployment address
     address private owner;
-    uint256 listingPrice = 0.025 ether;
 
     constructor() {
         owner = msg.sender;
@@ -64,6 +63,7 @@ contract NFTAuction is ReentrancyGuard {
         address seller,
         address owner,
         uint256 price,
+        uint256 endTime,
         bool ended
     );
 
@@ -100,6 +100,7 @@ contract NFTAuction is ReentrancyGuard {
             msg.sender,
             address(0),
             _price,
+            block.timestamp + _timeoutPeriod,
             false
         );
     }
@@ -107,22 +108,27 @@ contract NFTAuction is ReentrancyGuard {
     /// Bid on the auction with the value sent
     // the value will be refuneded if the auction is not won.
     function bid(uint256 itemId) public payable {
-        AuctionItem storage auction = idToAuctionItem[itemId];
-        // require(auction.seller != address(0));
-        require(msg.value >= auction.price);
+        uint256 price = idToAuctionItem[itemId].price;
+        uint256 highestBid = idToAuctionItem[itemId].highestBid;
+        address highestBidder = idToAuctionItem[itemId].highestBidder;
+        uint256 endTime = idToAuctionItem[itemId].endTime;
+        // address seller = idToAuctionItem[itemId].seller;
+
+        // require(seller != address(0));
+        require(msg.value >= price);
 
         // Revert call if bidding period is over
-        if (block.timestamp > auction.endTime) revert AuctionAlreadyEnded();
+        if (block.timestamp > endTime) revert AuctionAlreadyEnded();
 
         // If the bid is not higher send,
         // the money back
-        if (msg.value <= auction.highestBid) revert BidNotHighEnough(auction.highestBid);
+        if (msg.value <= highestBid) revert BidNotHighEnough(highestBid);
 
-        if (auction.highestBid != 0) {
-            pendingReturns[itemId][auction.highestBidder] += auction.highestBid;
+        if (highestBid != 0) {
+            pendingReturns[itemId][highestBidder] += highestBid;
         }
-        auction.highestBidder = payable(msg.sender);
-        auction.highestBid = msg.value;
+        idToAuctionItem[itemId].highestBidder = payable(msg.sender);
+        idToAuctionItem[itemId].highestBid = msg.value;
         emit HighestBidIncreased(itemId, msg.sender, msg.value);
     }
 
@@ -145,25 +151,27 @@ contract NFTAuction is ReentrancyGuard {
     /// End the auction and send the highest bid
     /// to the beneficiary
     function auctionEnd(uint256 itemId) public {
-        AuctionItem storage auction = idToAuctionItem[itemId];
-        if (block.timestamp < auction.endTime) revert AuctionNotYetEnded();
-        if (auction.ended) revert AuctionEndAlreadyCalled();
+        uint256 endTime = idToAuctionItem[itemId].endTime;
+        bool ended = idToAuctionItem[itemId].ended;
+        address highestBidder = idToAuctionItem[itemId].highestBidder;
+        uint256 highestBid = idToAuctionItem[itemId].highestBid;
+        address payable seller = idToAuctionItem[itemId].seller;
+        address nftContract = idToAuctionItem[itemId].nftContract;
+        uint256 tokenId = idToAuctionItem[itemId].tokenId;
+
+        if (block.timestamp < endTime) revert AuctionNotYetEnded();
+        if (ended) revert AuctionEndAlreadyCalled();
 
         // 2. Effects
-        auction.ended = true;
-        emit AuctionEnded(auction.highestBidder, auction.highestBid);
+        idToAuctionItem[itemId].ended = true;
+        emit AuctionEnded(highestBidder, highestBid);
 
         // 3. Interaction
-        auction.seller.transfer(auction.highestBid);
-        payable(owner).transfer(listingPrice);
-        IERC721(auction.nftContract).transferFrom(address(this), msg.sender, auction.tokenId);
-        auction.owner = payable(msg.sender);
+        seller.transfer(highestBid.div(100).mul(90));
+        payable(owner).transfer(highestBid.div(100).mul(10));
+        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
+        idToAuctionItem[itemId].owner = payable(msg.sender);
         _itemsSold.increment();
-    }
-
-    /* Returns the listing price of the contract */
-    function getListingPrice() public view returns (uint256) {
-        return listingPrice;
     }
 
     /* Returns all unsold market items */
