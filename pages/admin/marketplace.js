@@ -15,13 +15,10 @@ import { GraphQLClient, gql } from 'graphql-request'
 
 let subgraphendpoint = '';
 import { subGraphTestnetEndpoint, subGraphMainnetEndpoint } from '../../lib/constants';
-console.log(process.env.SMART_CONTRACT_ENV)
 if (process.env.SMART_CONTRACT_ENV == 'mainnet') {
-    console.log("hello")
     subgraphendpoint = subGraphMainnetEndpoint;
 }
 else {
-    console.log("noway")
     subgraphendpoint = subGraphTestnetEndpoint;
 }
 
@@ -137,6 +134,22 @@ class Admin extends React.Component {
         this.loadNFTs()
     }
 
+    async endAuction(nft) {
+        /* needs the user to sign the transaction, so will use Web3Provider and sign it */
+        const web3Modal = new Web3Modal()
+        const connection = await web3Modal.connect()
+        const provider = new ethers.providers.Web3Provider(connection)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+
+        /* user will be prompted to pay the asking proces to complete the transaction */
+        const transaction = await contract.auctionEnd(nft.tokenId, {
+            gasLimit: 1000000
+        })
+        await transaction.wait()
+        this.loadNFTs()
+    }
+
     async getBidsOnItem(auctionTokenId) {
         const graphQLClient = new GraphQLClient(subgraphendpoint, {
             headers: {
@@ -214,6 +227,9 @@ class Admin extends React.Component {
                                                         </div>
                                                     )
                                                 })}
+                                            </div>
+                                            <div>
+                                                <button className="" onClick={() => this.endAuction(nft)}>End Auction</button>
                                             </div>
                                         </div>
                                     )

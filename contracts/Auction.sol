@@ -47,15 +47,6 @@ contract NFTAuction is ReentrancyGuard {
     event HighestBidIncreased(uint256 tokenId, address bidder, uint256 amount);
     event AuctionEnded(address winner, uint256 amount);
 
-    /// The auction has already ended.
-    error AuctionAlreadyEnded();
-    /// There is already a higher or equal bid.
-    error BidNotHighEnough(uint256 highestBid);
-    /// The auction has not ended yet.
-    error AuctionNotYetEnded();
-    /// The function auctionEnd has already been called.
-    error AuctionEndAlreadyCalled();
-
     event AuctionItemCreated(
         uint256 indexed itemId,
         address indexed nftContract,
@@ -115,14 +106,14 @@ contract NFTAuction is ReentrancyGuard {
         // address seller = idToAuctionItem[itemId].seller;
 
         // require(seller != address(0));
-        require(msg.value >= price);
+        require(msg.value >= price, 'msg value must be greater than or equal to price');
 
         // Revert call if bidding period is over
-        if (block.timestamp > endTime) revert AuctionAlreadyEnded();
+        if (block.timestamp > endTime) revert('auction already ended');
 
         // If the bid is not higher send,
         // the money back
-        if (msg.value <= highestBid) revert BidNotHighEnough(highestBid);
+        if (msg.value <= highestBid) revert('bid not high enough');
 
         if (highestBid != 0) {
             pendingReturns[itemId][highestBidder] += highestBid;
@@ -159,8 +150,8 @@ contract NFTAuction is ReentrancyGuard {
         address nftContract = idToAuctionItem[itemId].nftContract;
         uint256 tokenId = idToAuctionItem[itemId].tokenId;
 
-        if (block.timestamp < endTime) revert AuctionNotYetEnded();
-        if (ended) revert AuctionEndAlreadyCalled();
+        if (block.timestamp < endTime) revert('auction not over yet');
+        if (ended) revert('auction already ended');
 
         // 2. Effects
         idToAuctionItem[itemId].ended = true;
