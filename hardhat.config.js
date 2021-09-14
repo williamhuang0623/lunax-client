@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-ethers")
+require("hardhat-gas-reporter");
 const fs = require('fs')
 const privateKey = fs.readFileSync(".secret").toString().trim() || "01234567890123456789"
 
@@ -27,5 +28,9 @@ module.exports = {
         runs: 200
       }
     }
+  },
+  gasReporter: {
+    currency: 'USD',
+    gasPrice: 21
   }
 }
