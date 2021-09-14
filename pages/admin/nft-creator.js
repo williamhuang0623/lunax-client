@@ -15,6 +15,7 @@ import {
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
+import PolygonApi from 'lib/api/Polygon';
 
 export default function CreateItem() {
     const [fileUrl, setFileUrl] = useState(null)
@@ -76,23 +77,29 @@ export default function CreateItem() {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = provider.getSigner()
 
-        /* next, create the item */
         let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
-        let transaction = await contract.createToken(url)
-        let tx = await transaction.wait()
-        let event = tx.events[0]
-        let value = event.args[2]
-        let tokenId = value.toNumber()
-        const price = ethers.utils.parseUnits(formInput.price, 'ether')
+        try {
+            const gas = await new PolygonApi().getGas();
+            let transaction = await contract.createToken(url, {
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            let tx = await transaction.wait()
+            let event = tx.events[0]
+            let value = event.args[2]
+            let tokenId = value.toNumber()
+            const price = ethers.utils.parseUnits(formInput.price, 'ether')
+            console.log(price)
+            contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
 
-        /* then list the item for sale on the marketplace */
-        contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+            transaction = await contract.createMarketItem(nftaddress, tokenId, price, {
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            await transaction.wait()
+            router.push('/admin/marketplace')
+        } catch (error) {
+            throw new Error(error.message)
+        }
 
-        transaction = await contract.createMarketItem(nftaddress, tokenId, price, {
-            value: 0
-        })
-        await transaction.wait()
-        router.push('/admin')
     }
 
     async function createAuctionItem(url) {
@@ -101,22 +108,29 @@ export default function CreateItem() {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = provider.getSigner()
         /* next, create the item */
-        let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
-        let transaction = await contract.createToken(url)
-        let tx = await transaction.wait()
-        let event = tx.events[0]
-        let value = event.args[2]
-        let tokenId = value.toNumber()
-        const price = ethers.utils.parseUnits(formInput.price, 'ether')
+        try {
+            const gas = await new PolygonApi().getGas();
+            let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
+            let transaction = await contract.createToken(url, {
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            let tx = await transaction.wait()
+            let event = tx.events[0]
+            let value = event.args[2]
+            let tokenId = value.toNumber()
+            const price = ethers.utils.parseUnits(formInput.price, 'ether')
 
-        /* then list the item for sale on the marketplace */
-        contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
-
-        transaction = await contract.createAuctionItem(nftaddress, tokenId, price, 86400, {
-            value: 0
-        })
-        await transaction.wait()
-        router.push('/admin')
+            contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+            const auctionTimeInSeconds = 86400;
+            transaction = await contract.createAuctionItem(nftaddress, tokenId, price, auctionTimeInSeconds, {
+                value: 0,
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            await transaction.wait()
+            router.push('/admin/marketplace')
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
     return (
         <AdminLayout>
