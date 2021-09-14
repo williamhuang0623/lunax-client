@@ -74,23 +74,28 @@ class Admin extends React.Component {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+            const date = new Date(parseInt(i.endTime._hex * 1000))
             let item = {
                 price,
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
                 owner: i.owner,
+                ended: i.ended,
+                endTime: date,
                 image: meta.data.image,
                 name: meta.data.name,
                 description: meta.data.description,
             }
             return item
         }))
+
         console.log(auctionItems)
         this.setState({
             marketNFTs: marketItems,
             auctionNFTs: [...auctionItems],
             loadingState: 'loaded'
         })
+
     }
 
     async onChange(e) {
@@ -110,7 +115,8 @@ class Admin extends React.Component {
         /* user will be prompted to pay the asking proces to complete the transaction */
         const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
         const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
-            value: price
+            value: price,
+            gasLimit: 1000000
         })
         await transaction.wait()
         this.loadNFTs()
@@ -126,6 +132,7 @@ class Admin extends React.Component {
 
         /* user will be prompted to pay the asking proces to complete the transaction */
         const price = ethers.utils.parseUnits(this.state.bidValue.toString(), 'ether')
+        console.log(`bid on ${nft.tokenId}`)
         const transaction = await contract.bid(nft.tokenId, {
             value: price,
             gasLimit: 1000000
@@ -212,7 +219,10 @@ class Admin extends React.Component {
                                                 <p style={{ height: '64px' }} className="">{nft.name}</p>
                                                 <div style={{ height: '70px', overflow: 'hidden' }}>
                                                     <p className="">{nft.description}</p>
+                                                    <p className="">{String(nft.ended)}</p>
+                                                    <p className="">{String(nft.endTime)}</p>
                                                 </div>
+
                                             </div>
                                             <div className="">
                                                 <p className="">{nft.price} MATIC</p>
