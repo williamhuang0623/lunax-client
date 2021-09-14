@@ -109,7 +109,7 @@ contract NFTAuction is ReentrancyGuard {
         require(msg.value >= price, 'msg value must be greater than or equal to price');
 
         // Revert call if bidding period is over
-        if (block.timestamp > endTime) revert('auction already ended');
+        if (block.timestamp > endTime) revert('auction is over no more bidding');
 
         // If the bid is not higher send,
         // the money back
