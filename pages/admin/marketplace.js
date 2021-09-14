@@ -7,6 +7,7 @@ import Web3Modal from "web3modal"
 import {
     nftaddress, nftmarketaddress, nftauctionaddress
 } from '../../config'
+import PolygonApi from 'lib/api/Polygon';
 
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
@@ -28,15 +29,30 @@ class Admin extends React.Component {
         this.state = {
             marketNFTs: [],
             auctionNFTs: [],
+            auctionBids: {},
             loadingState: 'not-loaded',
             bidValue: 0
         }
+        this.loadNFTs = this.loadNFTs.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.getAuctionBids = this.getAuctionBids.bind(this);
+
     }
 
 
-    componentDidMount() {
-        this.loadNFTs()
+    async componentDidMount() {
+        await this.loadNFTs()
+        await this.getAuctionBids()
+    }
+
+    async getAuctionBids() {
+        const { auctionNFTs } = this.state
+        const auctionBids = {};
+        for (let i = 0; i < auctionNFTs.length; i++) {
+            const tokenId = auctionNFTs[i].tokenId;
+            auctionBids[tokenId] = await this.getBidsOnItem(tokenId)
+        }
+        this.setState({ auctionBids: { ...auctionBids } })
     }
 
     async loadNFTs() {
@@ -58,7 +74,7 @@ class Admin extends React.Component {
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
             let item = {
-                price,
+                price: price,
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
                 owner: i.owner,
@@ -69,14 +85,13 @@ class Admin extends React.Component {
 
             return item
         }))
-        console.log(marketItems)
         const auctionItems = await Promise.all(auctionData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
             const date = new Date(parseInt(i.endTime._hex * 1000))
             let item = {
-                price,
+                price: price,
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
                 owner: i.owner,
@@ -84,12 +99,12 @@ class Admin extends React.Component {
                 endTime: date,
                 image: meta.data.image,
                 name: meta.data.name,
+                highestBidder: i.highestBidder,
                 description: meta.data.description,
             }
             return item
         }))
 
-        console.log(auctionItems)
         this.setState({
             marketNFTs: marketItems,
             auctionNFTs: [...auctionItems],
@@ -111,15 +126,21 @@ class Admin extends React.Component {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+        try {
+            const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
+            console.log(price)
+            const gas = await new PolygonApi().getGas();
+            const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
+                value: price,
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            await transaction.wait()
+            this.loadNFTs()
+        } catch (error) {
+            throw new Error(error.message)
+        }
 
         /* user will be prompted to pay the asking proces to complete the transaction */
-        const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
-        const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
-            value: price,
-            gasLimit: 1000000
-        })
-        await transaction.wait()
-        this.loadNFTs()
     }
 
     async bidNft(nft) {
@@ -129,16 +150,20 @@ class Admin extends React.Component {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+        try {
+            const price = ethers.utils.parseUnits(this.state.bidValue.toString(), 'ether')
+            const gas = await new PolygonApi().getGas();
 
-        /* user will be prompted to pay the asking proces to complete the transaction */
-        const price = ethers.utils.parseUnits(this.state.bidValue.toString(), 'ether')
-        console.log(`bid on ${nft.tokenId}`)
-        const transaction = await contract.bid(nft.tokenId, {
-            value: price,
-            gasLimit: 1000000
-        })
-        await transaction.wait()
-        this.loadNFTs()
+            const transaction = await contract.bid(nft.tokenId, {
+                value: price,
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            await transaction.wait()
+            this.loadNFTs()
+        } catch (error) {
+            throw new Error(error.message)
+        }
+
     }
 
     async endAuction(nft) {
@@ -148,13 +173,18 @@ class Admin extends React.Component {
         const provider = new ethers.providers.Web3Provider(connection)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
+        try {
+            const gas = await new PolygonApi().getGas();
+            const transaction = await contract.auctionEnd(nft.tokenId, {
+                gasPrice: gas ? gas.fast * 10 ** 9 : 5000000000
+            })
+            await transaction.wait()
+            this.loadNFTs()
+        } catch (error) {
+            throw new Error(error.message)
+        }
 
-        /* user will be prompted to pay the asking proces to complete the transaction */
-        const transaction = await contract.auctionEnd(nft.tokenId, {
-            gasLimit: 1000000
-        })
-        await transaction.wait()
-        this.loadNFTs()
+
     }
 
     async getBidsOnItem(auctionTokenId) {
@@ -174,16 +204,10 @@ class Admin extends React.Component {
           }`
 
         const data = await graphQLClient.request(query)
-        console.log(data.highestBidIncreaseds)
         return data.highestBidIncreaseds
     }
     render() {
         if (this.state.loadingState === 'loaded' && !this.state.marketNFTs.length && !this.state.auctionNFTs.length) return (<h1 className="">No items in marketplace</h1>)
-        let auctionBids = {};
-
-        this.state.auctionNFTs && this.state.auctionNFTs.every(async (nft, i) => {
-            auctionBids[nft.tokenId] = await this.getBidsOnItem(nft.tokenId);
-        })
         return (
             <AdminLayout>
                 <div className="">
@@ -230,13 +254,19 @@ class Admin extends React.Component {
                                                 <button className="" onClick={() => this.bidNft(nft)}>Bid</button>
                                             </div>
                                             <div>
-                                                {auctionBids[nft.tokenId] && auctionBids[nft.tokenId].map((bid, i) => {
+                                                {Object.keys(this.state.auctionBids).length && this.state.auctionBids[nft.tokenId].map((bid, i) => {
                                                     return (
-                                                        <div>
-                                                            <p>{bid.amount}</p>
-                                                        </div>
+                                                        <>
+                                                            <div>
+                                                                {bid.amount / 10 ** 18} MATIC
+                                                            </div>
+                                                            <div>
+                                                                {bid.bidder}
+                                                            </div>
+                                                        </>
                                                     )
-                                                })}
+                                                })
+                                                }
                                             </div>
                                             <div>
                                                 <button className="" onClick={() => this.endAuction(nft)}>End Auction</button>
