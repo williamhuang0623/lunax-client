@@ -1,5 +1,5 @@
 
-        export const _nftmarketaddress_local = "0x69dCdC14f6bE3a54a997b84C8AEFF4849DAB24B7"
-        export const _nftauctionaddress_local = "0x0EE8c4EBCf75f7362E54f268422EeAEA5a82c32d"
-        export const _nftaddress_local = "0x1bFe81C5cc49203fF61c318c030096cA70eA3Ed0"
+        export const _nftmarketaddress_local = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+        export const _nftauctionaddress_local = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+        export const _nftaddress_local = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
         
