@@ -2,6 +2,7 @@ type AuctionEnded @entity {
   id: ID!
   winner: Bytes! # address
   amount: BigInt! # uint256
+  createdAtTimestamp: BigInt!
 }
 
 type AuctionItemCreated @entity {
@@ -13,6 +14,7 @@ type AuctionItemCreated @entity {
   owner: Bytes! # address
   price: BigInt! # uint256
   ended: Boolean! # bool
+  createdAtTimestamp: BigInt!
 }
 
 type HighestBidIncreased @entity {
