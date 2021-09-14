@@ -144,7 +144,7 @@ contract NFTAuction is ReentrancyGuard {
     function auctionEnd(uint256 itemId) public {
         uint256 endTime = idToAuctionItem[itemId].endTime;
         bool ended = idToAuctionItem[itemId].ended;
-        address highestBidder = idToAuctionItem[itemId].highestBidder;
+        address payable highestBidder = idToAuctionItem[itemId].highestBidder;
         uint256 highestBid = idToAuctionItem[itemId].highestBid;
         address payable seller = idToAuctionItem[itemId].seller;
         address nftContract = idToAuctionItem[itemId].nftContract;
@@ -160,8 +160,8 @@ contract NFTAuction is ReentrancyGuard {
         // 3. Interaction
         seller.transfer(highestBid.div(100).mul(90));
         payable(owner).transfer(highestBid.div(100).mul(10));
-        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
-        idToAuctionItem[itemId].owner = payable(msg.sender);
+        IERC721(nftContract).transferFrom(address(this), highestBidder, tokenId);
+        idToAuctionItem[itemId].owner = highestBidder;
         _itemsSold.increment();
     }
 
