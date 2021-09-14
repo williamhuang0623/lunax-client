@@ -9,12 +9,14 @@ import {
 
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
+import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 
 class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nfts: [],
+            marketItems: [],
+            auctionItems: [],
             sold: [],
             loadingState: 'not-loaded'
         }
@@ -32,13 +34,12 @@ class Admin extends React.Component {
         const signer = provider.getSigner()
 
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
-        const auctionContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+        const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, signer)
 
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
         const marketData = await marketContract.fetchItemsCreated()
         const auctionData = await auctionContract.fetchItemsCreated()
-        const data = marketData.concat(auctionData)
-        const items = await Promise.all(data.map(async i => {
+        const marketItems = await Promise.all(marketData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
@@ -52,15 +53,36 @@ class Admin extends React.Component {
             }
             return item
         }))
+
+        const auctionItems = await Promise.all(auctionData.map(async i => {
+            const tokenUri = await tokenContract.tokenURI(i.tokenId)
+            const meta = await axios.get(tokenUri)
+            let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+            const date = new Date(parseInt(i.endTime._hex * 1000))
+            let item = {
+                price,
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                ended: i.ended,
+                endTime: date,
+                image: meta.data.image,
+                name: meta.data.name,
+                highestBidder: i.highestBidder,
+                description: meta.data.description,
+            }
+            return item
+        }))
+
         /* create a filtered array of items that have been sold */
-        const soldItems = items.filter(i => i.sold)
+        const soldItems = marketItems.filter(i => i.sold)
         this.setState({ sold: soldItems })
-        this.setState({ nfts: items })
+        this.setState({ marketItems: marketItems, auctionItems: auctionItems })
         this.setState({ loadingState: 'loaded' })
     }
 
     render() {
-        if (this.state.loadingState === 'loaded' && !this.state.nfts.length) return (<h1 className="">No assets created</h1>)
+        if (this.state.loadingState === 'loaded' && !this.state.marketItems.length) return (<h1 className="">No assets created</h1>)
         return (
             <AdminLayout>
                 <h1>NFT Manager</h1>
@@ -69,7 +91,7 @@ class Admin extends React.Component {
                         <h2 className="">Items Created</h2>
                         <div className="">
                             {
-                                this.state.nfts.map((nft, i) => (
+                                this.state.marketItems.map((nft, i) => (
                                     <div key={i} className="">
                                         <img src={nft.image} width="400px" />
                                         <div className="">

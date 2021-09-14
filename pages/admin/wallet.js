@@ -11,13 +11,15 @@ import {
 
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
 import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
+import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 
 
 class Admin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nfts: [],
+            marketItems: [],
+            auctionItems: [],
             loadingState: 'not-loaded'
         }
     }
@@ -34,9 +36,12 @@ class Admin extends React.Component {
 
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
-        const data = await marketContract.fetchMyNFTs()
+        const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider)
 
-        const items = await Promise.all(data.map(async i => {
+        const marketData = await marketContract.fetchMyNFTs()
+        const auctionData = await auctionContract.fetchMyNFTs()
+
+        const marketItems = await Promise.all(marketData.map(async i => {
             const tokenUri = await tokenContract.tokenURI(i.tokenId)
             const meta = await axios.get(tokenUri)
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
@@ -49,12 +54,32 @@ class Admin extends React.Component {
             }
             return item
         }))
-        this.setState({ nfts: items })
+        const auctionItems = await Promise.all(auctionData.map(async i => {
+            const tokenUri = await tokenContract.tokenURI(i.tokenId)
+            const meta = await axios.get(tokenUri)
+            let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+            const date = new Date(parseInt(i.endTime._hex * 1000))
+            let item = {
+                price,
+                tokenId: i.tokenId.toNumber(),
+                seller: i.seller,
+                owner: i.owner,
+                ended: i.ended,
+                endTime: date,
+                image: meta.data.image,
+                name: meta.data.name,
+                highestBidder: i.highestBidder,
+                description: meta.data.description,
+            }
+            return item
+        }))
+
+        this.setState({ marketItems: marketItems, auctionItems: auctionItems })
         this.setState({ loadingState: 'loaded' })
     }
 
     render() {
-        if (this.state.loadingState === 'loaded' && !this.state.nfts.length) return (<h1 className="">No assets owned</h1>)
+        if (this.state.loadingState === 'loaded' && !this.state.marketItems.length && !this.state.auctionItems.length) return (<h1 className="">No assets owned</h1>)
         return (
             <AdminLayout>
                 <h1>NFTs you own</h1>
@@ -62,7 +87,7 @@ class Admin extends React.Component {
                     <div className="">
                         <div className="">
                             {
-                                this.state.nfts.map((nft, i) => (
+                                this.state.marketItems.map((nft, i) => (
                                     <div key={i} className="">
                                         <img src={nft.image} width="400px" />
                                         <div className="">
@@ -72,6 +97,19 @@ class Admin extends React.Component {
                                 ))
                             }
                         </div>
+                        <div>
+                            {
+                                this.state.auctionItems.map((nft, i) => (
+                                    <div key={i} className="">
+                                        <img src={nft.image} width="400px" />
+                                        <div className="">
+                                            <p className="">Price - {nft.price} Matic</p>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
                     </div>
                 </div>
             </AdminLayout>
