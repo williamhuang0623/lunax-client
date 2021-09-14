@@ -1,10 +1,10 @@
-require("@nomiclabs/hardhat-ethers")
+require("@nomiclabs/hardhat-waffle")
 require("hardhat-gas-reporter");
 const fs = require('fs')
 const privateKey = fs.readFileSync(".secret").toString().trim() || "01234567890123456789"
 
 module.exports = {
-  defaultNetwork: "matic",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 1337
@@ -19,6 +19,9 @@ module.exports = {
       accounts: [privateKey],
       gasPrice: 8000000000,
     }
+  },
+  mocha: {
+    timeout: 50000,
   },
   solidity: {
     version: "0.8.4",
