@@ -30,7 +30,6 @@ class Admin extends React.Component {
     async componentDidMount() {
         await this.loadNFTs()
         await this.getAuctionBids()
-        console.log(this.state.auctionBids)
     }
 
     async getAuctionBids() {
@@ -117,8 +116,7 @@ class Admin extends React.Component {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer);
         try {
-            const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
-            console.log(price);
+            const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
             const gas = await new PolygonApi().getGas();
             const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
                 value: price,
