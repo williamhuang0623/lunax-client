@@ -118,7 +118,7 @@ export default function CreateItem() {
             const price = ethers.utils.parseUnits(formInput.price, 'ether');
 
             contract = new ethers.Contract(nftauctionaddress, Auction.abi, signer);
-            const auctionTimeInSeconds = 86400;
+            const auctionTimeInSeconds = 600;
             transaction = await contract.createAuctionItem(
                 nftaddress,
                 tokenId,
