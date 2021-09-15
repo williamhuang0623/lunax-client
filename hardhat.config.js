@@ -1,7 +1,7 @@
 require("@nomiclabs/hardhat-waffle")
 require("hardhat-gas-reporter");
-const fs = require('fs')
-const privateKey = fs.readFileSync(".secret").toString().trim() || "01234567890123456789"
+require('dotenv').config()
+const privateKey = process.env.NEWKINO_PRIV_KEY.toString().trim() || "01234567890123456789"
 
 module.exports = {
   defaultNetwork: "hardhat",
