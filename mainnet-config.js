@@ -1,5 +1,3 @@
-
-        export const _nftmarketaddress_mainnet = "0x3BB29c38209633d3501368E572a04f1B516876cb"
-        export const _nftauctionaddress_mainnet = "0x05f9472E14A9501C43902BC561119d29B1a1F196"
-        export const _nftaddress_mainnet = "0x9d9DA1b94d7c96fa474589BE48e4B5d8A79A3C12"      
-        
+export const _nftmarketaddress_mainnet = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+export const _nftauctionaddress_mainnet = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+export const _nftaddress_mainnet = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';

@@ -24,7 +24,6 @@ const NavLinks = [
         title: 'Analytics',
         slug: '/admin/analytics',
     },
-
 ];
 
 class AdminLayout extends React.Component {
