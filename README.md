@@ -38,6 +38,29 @@ Currency Symbol: Matic
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Deploying on-chain
+
+Change network to mumbai for testnet or keep as matic for mainnet
+
+```
+yarn hardhat run scripts/deploy.js --network matic
+```
+Note: this will redeploy the contracts and the old contract addresses will be lost,
+so if you are redeploying then cd into 'the-graph' for mainnet or 'the-graph-testnet' for testnet
+and redeploy the graph to the right contract address by grabbing the auction contract address from your hardhat deploy,
+and put into 'the-graph/subgraph.yaml' where it says address:
+
+Lastly, change the graph endpoint in `lib/constants` to match new verison of subgraph
+
+Go into .env and change SMART_CONTRACT_ENV to match desired chain(local, testnet, or mainnet)
+
+Run the frontend
+```
+yarn dev
+```
+
+Finally, make sure to switch network in Metamask to match :)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
