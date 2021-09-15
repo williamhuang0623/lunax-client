@@ -7,6 +7,10 @@ module.exports = {
     defaultNetwork: 'hardhat',
     networks: {
         hardhat: {
+            mining: {
+                auto: true,
+                interval: 5000,
+            },
             chainId: 1337,
         },
         mumbai: {
