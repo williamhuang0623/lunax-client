@@ -7,18 +7,9 @@ import Web3Modal from 'web3modal';
 import { nftaddress, nftmarketaddress, nftauctionaddress } from '../../config';
 import PolygonApi from 'lib/api/Polygon';
 
-import NFT from '../../artifacts/contracts/NFT.sol/NFT.json';
-import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json';
-import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json';
-import { GraphQLClient, gql } from 'graphql-request';
-
-let subgraphendpoint = '';
-import { subGraphTestnetEndpoint, subGraphMainnetEndpoint } from '../../lib/constants';
-if (process.env.SMART_CONTRACT_ENV == 'mainnet') {
-    subgraphendpoint = subGraphMainnetEndpoint;
-} else {
-    subgraphendpoint = subGraphTestnetEndpoint;
-}
+import NFT from '../../artifacts/contracts/NFT.sol/NFT.json'
+import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json'
+import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json'
 
 class Admin extends React.Component {
     constructor(props) {
@@ -33,11 +24,13 @@ class Admin extends React.Component {
         this.loadNFTs = this.loadNFTs.bind(this);
         this.onChange = this.onChange.bind(this);
         this.getAuctionBids = this.getAuctionBids.bind(this);
+        this.getBidsOnItem = this.getBidsOnItem.bind(this);
     }
 
     async componentDidMount() {
-        await this.loadNFTs();
-        await this.getAuctionBids();
+        await this.loadNFTs()
+        await this.getAuctionBids()
+        console.log(this.state.auctionBids)
     }
 
     async getAuctionBids() {
@@ -182,23 +175,8 @@ class Admin extends React.Component {
     }
 
     async getBidsOnItem(auctionTokenId) {
-        const graphQLClient = new GraphQLClient(subgraphendpoint, {
-            headers: {
-                authorization: process.env.THE_GRAPH_KEY,
-            },
-        });
-
-        const query = `{
-            highestBidIncreaseds(where: {tokenId: ${auctionTokenId}}) {
-              id
-              tokenId
-              amount
-              bidder
-            }
-          }`;
-
-        const data = await graphQLClient.request(query);
-        return data.highestBidIncreaseds;
+        const data = await axios.get(`/api/bids/${auctionTokenId}`)
+        return data.data.data
     }
     render() {
         if (
