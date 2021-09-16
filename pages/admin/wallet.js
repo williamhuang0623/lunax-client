@@ -1,12 +1,14 @@
 import React from 'react';
 import AdminLayout from 'layout/admin/layout';
 import { ethers } from 'ethers';
-import Web3Modal from 'web3modal';
-import axios from 'axios';
-import { nftaddress, nftmarketaddress, nftauctionaddress } from '../../config';
 
-import NFT from '../../artifacts/contracts/NFT.sol/NFT.json';
+import axios from 'axios';
+import Web3Modal from 'web3modal';
+
+import { nftmarketaddress, nftaddress, nftauctionaddress } from '../../config';
+
 import Market from '../../artifacts/contracts/Market.sol/NFTMarket.json';
+import NFT from '../../artifacts/contracts/NFT.sol/NFT.json';
 import Auction from '../../artifacts/contracts/Auction.sol/NFTAuction.json';
 
 class Admin extends React.Component {
@@ -15,7 +17,6 @@ class Admin extends React.Component {
         this.state = {
             marketItems: [],
             auctionItems: [],
-            sold: [],
             loadingState: 'not-loaded',
         };
     }
@@ -31,11 +32,12 @@ class Admin extends React.Component {
         const signer = provider.getSigner();
 
         const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer);
-        const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, signer);
-
         const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
-        const marketData = await marketContract.fetchItemsCreated();
-        const auctionData = await auctionContract.fetchItemsCreated();
+        const auctionContract = new ethers.Contract(nftauctionaddress, Auction.abi, provider);
+
+        const marketData = await marketContract.fetchMyNFTs();
+        const auctionData = await auctionContract.fetchMyNFTs();
+
         const marketItems = await Promise.all(
             marketData.map(async (i) => {
                 const tokenUri = await tokenContract.tokenURI(i.tokenId);
@@ -46,13 +48,11 @@ class Admin extends React.Component {
                     tokenId: i.tokenId.toNumber(),
                     seller: i.seller,
                     owner: i.owner,
-                    sold: i.sold,
                     image: meta.data.image,
                 };
                 return item;
             })
         );
-
         const auctionItems = await Promise.all(
             auctionData.map(async (i) => {
                 const tokenUri = await tokenContract.tokenURI(i.tokenId);
@@ -75,49 +75,42 @@ class Admin extends React.Component {
             })
         );
 
-        /* create a filtered array of items that have been sold */
-        const soldItems = marketItems.filter((i) => i.sold);
-        this.setState({ sold: soldItems });
         this.setState({ marketItems: marketItems, auctionItems: auctionItems });
         this.setState({ loadingState: 'loaded' });
     }
 
     render() {
-        if (this.state.loadingState === 'loaded' && !this.state.marketItems.length)
-            return <h1 className="">No assets created</h1>;
+        if (
+            this.state.loadingState === 'loaded' &&
+            !this.state.marketItems.length &&
+            !this.state.auctionItems.length
+        )
+            return <h1 className="">No assets owned</h1>;
         return (
             <AdminLayout>
-                <h1>NFT Manager</h1>
-                <div>
+                <h1>NFTs you own</h1>
+                <div className="">
                     <div className="">
-                        <h2 className="">Items Created</h2>
                         <div className="">
                             {this.state.marketItems.map((nft, i) => (
                                 <div key={i} className="">
                                     <img src={nft.image} width="400px" />
                                     <div className="">
-                                        <p className="">Price - {nft.price} Eth</p>
+                                        <p className="">Price - {nft.price} Matic</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="px-4">
-                        {Boolean(this.state.sold.length) && (
-                            <div>
-                                <h2 className="">Items sold</h2>
-                                <div className="">
-                                    {this.state.sold.map((nft, i) => (
-                                        <div key={i} className="">
-                                            <img src={nft.image} width="400px" />
-                                            <div className="">
-                                                <p className="">Price - {nft.price} Eth</p>
-                                            </div>
-                                        </div>
-                                    ))}
+                        <div>
+                            {this.state.auctionItems.map((nft, i) => (
+                                <div key={i} className="">
+                                    <img src={nft.image} width="400px" />
+                                    <div className="">
+                                        <p className="">Price - {nft.price} Matic</p>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </AdminLayout>

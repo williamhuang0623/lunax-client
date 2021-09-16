@@ -5,6 +5,14 @@ import { adminLayoutStyles } from './layout.style';
 
 const NavLinks = [
     {
+        title: 'Marketplace',
+        slug: '/admin/marketplace',
+    },
+    {
+        title: 'Wallet',
+        slug: '/admin/wallet',
+    },
+    {
         title: 'NFT Creator',
         slug: '/admin/nft-creator',
     },

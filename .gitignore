@@ -3,9 +3,11 @@
 # dependencies
 .git*
 /node_modules
+node_modules/
 /.pnp
 .pnp.js
-
+**/node_modules
+.env
 # testing
 /coverage
 
@@ -40,3 +42,11 @@ yarn-error.log*
 
 # Vscode bindings
 .vscode*
+
+# Hardhat files
+cache
+artifacts
+
+# Wallet
+.secret
+ 
