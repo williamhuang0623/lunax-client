@@ -120,6 +120,7 @@ contract NFTAuction is ReentrancyGuard {
         }
         idToAuctionItem[itemId].highestBidder = payable(msg.sender);
         idToAuctionItem[itemId].highestBid = msg.value;
+        // TODO: Withdraw last highestBidders funds
         emit HighestBidIncreased(itemId, msg.sender, msg.value);
     }
 
